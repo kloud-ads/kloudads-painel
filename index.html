@@ -2,36 +2,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="300">
-<title>Painel KloudAds</title>
+<title>KloudAds Premium</title>
 
 <style>
 body {
   margin: 0;
   background: #0d0d0d;
-  color: #d4af37;
+  overflow: hidden;
   font-family: Arial;
+  color: #d4af37;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 50% 50%;
+  position: relative;
+  width: 100%;
   height: 100vh;
-  gap: 10px;
-  padding: 10px;
 }
 
-.box {
-  background: #1a1a1a;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-iframe {
+.tela {
+  position: absolute;
   width: 100%;
   height: 100%;
-  border: none;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s ease;
+  text-align: center;
+}
+
+.ativa {
+  top: 0;
+}
+
+.saindo {
+  top: 100%;
+}
+
+h1 {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 30px;
+  color: white;
+  max-width: 80%;
 }
 </style>
 </head>
@@ -40,27 +57,71 @@ iframe {
 
 <div class="container">
 
-<div class="box">
-<h2>Clima - Americana</h2>
-<iframe src="https://wttr.in/Americana?format=3"></iframe>
+<div class="tela ativa">
+  <h1>Clima</h1>
+  <p>☀️ Americana - 25°C</p>
 </div>
 
-<div class="box">
-<h2>Notícias</h2>
-<iframe src="https://g1.globo.com/sp/campinas-regiao/"></iframe>
+<div class="tela">
+  <h1>Hora</h1>
+  <p id="hora"></p>
 </div>
 
-<div class="box">
-<h2>Hora</h2>
-<iframe src="https://time.is/pt/Americana"></iframe>
+<div class="tela">
+  <h1>Notícias</h1>
+  <p>Campinas e região seguem em crescimento econômico</p>
 </div>
 
-<div class="box">
-<h2>Loterias</h2>
-<iframe src="https://loterias.caixa.gov.br/"></iframe>
+<div class="tela">
+  <h1>Esportes</h1>
+  <p>Últimos resultados do futebol brasileiro</p>
+</div>
+
+<div class="tela">
+  <h1>Loterias</h1>
+  <p>Mega-Sena: 12 - 23 - 34 - 45 - 56 - 60</p>
+</div>
+
+<div class="tela">
+  <h1>Horóscopo</h1>
+  <p>Hoje é um dia de oportunidades e decisões importantes</p>
 </div>
 
 </div>
+
+<script>
+let telas = document.querySelectorAll('.tela');
+let atual = 0;
+
+function trocarTela() {
+  telas[atual].classList.remove('ativa');
+  telas[atual].classList.add('saindo');
+
+  atual = (atual + 1) % telas.length;
+
+  telas[atual].classList.add('ativa');
+
+  setTimeout(() => {
+    document.querySelectorAll('.tela').forEach(t => {
+      if (!t.classList.contains('ativa')) {
+        t.classList.remove('saindo');
+        t.style.top = "100%";
+      }
+    });
+  }, 1000);
+}
+
+setInterval(trocarTela, 5000);
+
+// Hora em tempo real
+function atualizarHora() {
+  const agora = new Date();
+  document.getElementById("hora").innerText =
+    agora.toLocaleTimeString();
+}
+
+setInterval(atualizarHora, 1000);
+</script>
 
 </body>
 </html>
