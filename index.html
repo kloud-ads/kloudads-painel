@@ -3,174 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KloudAds Elite - Oficial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <title>KloudAds Painel Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        
         body {
-            background: radial-gradient(circle at center, #1a2a6c 0%, #122240 100%);
-            height: 100vh; width: 100vw;
+            /* Fundo idêntico à imagem de estética sugerida */
+            background: radial-gradient(circle at center, #1e3c72 0%, #122240 100%);
+            height: 100vh;
+            width: 100vw;
             font-family: 'Montserrat', sans-serif;
-            color: white; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
+            color: white;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        #topo { position: absolute; top: 40px; text-align: center; width: 100%; z-index: 10; }
-        #relogio { font-size: 110px; font-weight: 900; line-height: 1; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #data-extenso { font-size: 28px; text-transform: uppercase; margin-top: 10px; opacity: 0.8; letter-spacing: 2px; }
-
-        .painel-vidro {
-            width: 90%; height: 55%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-            margin-top: 100px; position: relative;
+        /* Header Simétrico */
+        header {
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            height: 150px;
         }
 
-        .slide { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease; }
+        .header-side { width: 300px; }
+        #data-topo { font-size: 24px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; text-align: left; opacity: 0.9; }
+        #hora-topo { font-size: 60px; font-weight: 900; text-align: right; line-height: 1; }
+
+        .logo-center {
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Filtro para limpar a logo e manter a parte interna branca */
+        .logo-center img {
+            height: 120px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+        }
+
+        /* Painel de Vidro Ultra-Fosco (Estética da Imagem) */
+        .glass-container {
+            width: 92%;
+            height: 65%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 60px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .slide { display: none; width: 100%; text-align: center; animation: fadeUp 1s ease; }
         .active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-
-        .tag { font-size: 20px; letter-spacing: 6px; opacity: 0.5; text-transform: uppercase; margin-bottom: 15px; display: block; }
-        .cidade { font-size: 40px; color: #fdbb2d; text-transform: uppercase; margin-bottom: 10px; }
-        
-        /* Clima */
-        .clima-row { display: flex; align-items: center; justify-content: center; gap: 30px; }
-        #clima-emoji { font-size: 130px; }
-        .temp-txt { font-size: 160px; font-weight: 900; }
-        .desc-clima { font-size: 35px; opacity: 0.9; text-transform: capitalize; }
-
-        /* Loterias */
-        .lot-titulo { font-size: 70px; font-weight: 900; margin-bottom: 5px; }
-        .lot-meta { font-size: 24px; opacity: 0.7; margin-bottom: 20px; }
-        .bolas-wrap { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-        .bola-num {
-            width: 75px; height: 75px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 35px; font-weight: 900; border: 2px solid rgba(255,255,255,0.2);
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* News */
-        .news-flex { display: flex; align-items: center; padding: 0 50px; gap: 40px; text-align: left; }
-        #news-img { width: 400px; height: 300px; border-radius: 30px; object-fit: cover; border: 4px solid rgba(255,255,255,0.1); }
-        .news-titulo { font-size: 38px; font-weight: 700; line-height: 1.2; flex: 1; }
+        .tag-main { font-size: 18px; letter-spacing: 10px; text-transform: uppercase; opacity: 0.5; margin-bottom: 30px; }
+        
+        /* Clima */
+        .clima-content { display: flex; align-items: center; justify-content: center; gap: 40px; }
+        .temp-main { font-size: 200px; font-weight: 900; letter-spacing: -5px; }
+        #emoji-clima { font-size: 150px; }
+        .desc-main { font-size: 40px; font-weight: 400; text-transform: capitalize; opacity: 0.8; }
+
+        /* Loterias */
+        .lot-title { font-size: 80px; font-weight: 900; margin-bottom: 10px; }
+        .lot-sub { font-size: 24px; opacity: 0.6; margin-bottom: 30px; }
+        .balls-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .ball-item {
+            width: 90px; height: 90px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 40px; font-weight: 900; border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Notícias */
+        .news-layout { display: flex; align-items: center; padding: 0 80px; gap: 60px; text-align: left; }
+        #img-news { width: 500px; height: 350px; border-radius: 40px; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
+        .txt-news { font-size: 45px; font-weight: 700; line-height: 1.2; flex: 1; }
+
     </style>
 </head>
 <body>
 
-    <div id="topo">
-        <div id="relogio">--:--:--</div>
-        <div id="data-extenso">Carregando data...</div>
-    </div>
+    <header>
+        <div class="header-side">
+            <div id="data-topo">Sábado, 04 de Abril</div>
+        </div>
+        <div class="logo-center">
+            <img src="Logo KloudAds Atualizada.png" alt="KloudAds">
+        </div>
+        <div class="header-side">
+            <div id="hora-topo">00:00:00</div>
+        </div>
+    </header>
 
-    <div class="painel-vidro">
-        <div class="slide active" id="slide-clima">
-            <span class="tag">Previsão do Tempo</span>
-            <div class="cidade">Americana - SP</div>
-            <div class="clima-row">
-                <div id="clima-emoji">🌡️</div>
-                <div class="temp-txt" id="display-temp">--°C</div>
+    <div class="glass-container">
+        <div class="slide active">
+            <div class="tag-main">Previsão do Tempo</div>
+            <div style="font-size: 35px; color:#fdbb2d; margin-bottom: 10px;">Americana - SP</div>
+            <div class="clima-content">
+                <div id="emoji-clima">☀️</div>
+                <div class="temp-main" id="temp-val">--°</div>
             </div>
-            <div class="desc-clima" id="display-desc">Atualizando...</div>
+            <div class="desc-main" id="temp-desc">Carregando...</div>
         </div>
 
         <div class="slide">
-            <span class="tag">Loterias Caixa</span>
-            <div class="lot-titulo" style="color: #209869;">MEGA-SENA</div>
-            <div class="lot-meta" id="mega-info">Buscando resultados...</div>
-            <div class="bolas-wrap" id="mega-balls"></div>
+            <div class="tag-main">Loterias Caixa</div>
+            <div class="lot-title" style="color: #209869;">MEGA-SENA</div>
+            <div class="lot-sub" id="meta-mega">Concurso ---</div>
+            <div class="balls-row" id="balls-mega"></div>
         </div>
 
         <div class="slide">
-            <span class="tag">Loterias Caixa</span>
-            <div class="lot-titulo" style="color: #930089;">LOTOFÁCIL</div>
-            <div class="lot-meta" id="loto-info">Buscando resultados...</div>
-            <div class="bolas-wrap" id="loto-balls"></div>
+            <div class="tag-main">Loterias Caixa</div>
+            <div class="lot-title" style="color: #930089;">LOTOFÁCIL</div>
+            <div class="lot-sub" id="meta-loto">Concurso ---</div>
+            <div class="balls-row" id="balls-loto"></div>
         </div>
 
         <div class="slide">
-            <span class="tag">GNews • Brasil</span>
-            <div class="news-flex">
-                <img id="news-img" src="">
-                <div class="news-titulo" id="news-txt">Conectando ao servidor de notícias...</div>
+            <div class="tag-main">Últimas Notícias</div>
+            <div class="news-layout">
+                <img id="img-news" src="">
+                <div class="txt-news" id="txt-news">Buscando as notícias mais importantes...</div>
             </div>
         </div>
     </div>
 
     <script>
-        const API_WEATHER = 'b0b0fbf4fb3bac7908252d23111a524d';
-        const API_GNEWS = '572a3b63c9f2a22dcf62bd79b812308c';
+        const KEY_W = 'b0b0fbf4fb3bac7908252d23111a524d';
+        const KEY_N = '572a3b63c9f2a22dcf62bd79b812308c';
 
-        // 1. Relógio Independente (Para nunca travar)
-        function startClock() {
-            setInterval(() => {
-                const agora = new Date();
-                document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
-                document.getElementById('data-extenso').innerText = agora.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-            }, 1000);
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('hora-topo').innerText = now.toLocaleTimeString('pt-BR', { hour12: false });
+            document.getElementById('data-topo').innerText = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
         }
+        setInterval(updateClock, 1000);
 
-        // 2. Mapeamento de Emojis iPhone
-        function getWeatherEmoji(code) {
-            const map = {
-                '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️',
-                '03d': '☁️', '03n': '☁️', '04d': '☁️', '04n': '☁️',
-                '09d': '🌧️', '10d': '🌦️', '11d': '⛈️', '13d': '❄️', '50d': '🌫️'
-            };
+        function getEmoji(code) {
+            const map = { '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️', '03d': '☁️', '03n': '☁️', '04d': '☁️', '04n': '☁️', '09d': '🌧️', '10d': '🌦️', '11d': '⛈️', '13d': '❄️', '50d': '🌫️' };
             return map[code] || '🌡️';
         }
 
-        // 3. Busca de Dados
-        async function fetchData() {
+        async function getData() {
             try {
                 // Clima
-                const wRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_WEATHER}`);
-                const wData = await wRes.json();
-                if(wData.main) {
-                    document.getElementById('display-temp').innerText = Math.round(wData.main.temp) + '°C';
-                    document.getElementById('display-desc').innerText = wData.weather[0].description;
-                    document.getElementById('clima-emoji').innerText = getWeatherEmoji(wData.weather[0].icon);
-                }
+                const w = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${KEY_W}`).then(r => r.json());
+                document.getElementById('temp-val').innerText = Math.round(w.main.temp) + '°';
+                document.getElementById('temp-desc').innerText = w.weather[0].description;
+                document.getElementById('emoji-clima').innerText = getEmoji(w.weather[0].icon);
 
                 // Loterias
-                const mega = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest').then(r => r.json());
-                document.getElementById('mega-info').innerText = `Concurso ${mega.concurso} (${mega.data})`;
-                document.getElementById('mega-balls').innerHTML = mega.dezenas.map(n => `<div class="bola-num" style="background:#209869">${n}</div>`).join('');
+                const m = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest').then(r => r.json());
+                document.getElementById('meta-mega').innerText = `Concurso ${m.concurso} • ${m.data}`;
+                document.getElementById('balls-mega').innerHTML = m.dezenas.map(n => `<div class="ball-item" style="background:#209869">${n}</div>`).join('');
 
-                const loto = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest').then(r => r.json());
-                document.getElementById('loto-info').innerText = `Concurso ${loto.concurso} (${loto.data})`;
-                document.getElementById('loto-balls').innerHTML = loto.dezenas.map(n => `<div class="bola-num" style="background:#930089; width:60px; height:60px; font-size:28px;">${n}</div>`).join('');
+                const l = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest').then(r => r.json());
+                document.getElementById('meta-loto').innerText = `Concurso ${l.concurso} • ${l.data}`;
+                document.getElementById('balls-loto').innerHTML = l.dezenas.map(n => `<div class="ball-item" style="background:#930089; width:65px; height:65px; font-size:30px;">${n}</div>`).join('');
 
                 // Notícias
-                const news = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_GNEWS}`).then(r => r.json());
-                if(news.articles && news.articles.length > 0) {
-                    document.getElementById('news-txt').innerText = news.articles[0].title;
-                    document.getElementById('news-img').src = news.articles[0].image;
+                const n = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${KEY_N}`).then(r => r.json());
+                if(n.articles.length > 0) {
+                    document.getElementById('txt-news').innerText = n.articles[0].title;
+                    document.getElementById('img-news').src = n.articles[0].image;
                 }
-            } catch (err) {
-                console.log("Erro na atualização, tentando novamente em breve...");
-            }
+            } catch(e) { console.log("Erro na rede"); }
         }
 
-        // 4. Sistema de Slides
-        let slideIndex = 0;
+        let idx = 0;
+        const slides = document.querySelectorAll('.slide');
         function rotate() {
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach(s => s.classList.remove('active'));
-            slideIndex = (slideIndex + 1) % slides.length;
-            slides[slideIndex].classList.add('active');
+            slides[idx].classList.remove('active');
+            idx = (idx + 1) % slides.length;
+            slides[idx].classList.add('active');
         }
 
-        // Inicialização
-        startClock();
-        fetchData();
-        setInterval(rotate, 15000); // Troca slide a cada 15s
-        setInterval(fetchData, 600000); // Atualiza dados a cada 10 min
+        updateClock();
+        getData();
+        setInterval(rotate, 15000);
+        setInterval(getData, 600000);
     </script>
 </body>
 </html>
