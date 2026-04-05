@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KloudAds TV</title>
+    <title>Painel Americana - KloudAds</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; } /* Esconde o mouse */
         
         body {
-            background: radial-gradient(circle, #1e3c72 0%, #122240 100%);
+            background: radial-gradient(circle, #1a2a6c 0%, #122240 100%);
             height: 100vh;
             width: 100vw;
             font-family: 'Montserrat', sans-serif;
@@ -17,61 +17,62 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Centraliza tudo verticalmente */
+            justify-content: center;
             overflow: hidden;
         }
 
-        /* Relógio no Topo */
+        /* Relógio Centralizado no Topo */
         #topo {
             position: absolute;
-            top: 60px;
+            top: 50px;
             text-align: center;
+            width: 100%;
         }
-        #relogio { font-size: 120px; font-weight: 900; line-height: 1; letter-spacing: -2px; }
-        #data { font-size: 35px; text-transform: uppercase; margin-top: 10px; opacity: 0.8; }
+        #relogio { font-size: 130px; font-weight: 900; line-height: 1; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #data { font-size: 35px; text-transform: uppercase; margin-top: 10px; opacity: 0.8; letter-spacing: 2px; }
 
-        /* Painel de Vidro Central */
+        /* Painel de Vidro (Layout Centralizado) */
         .painel-vidro {
             width: 85%;
-            height: 55%;
+            height: 60%;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 60px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-            margin-top: 140px; /* Compensa a altura do relógio */
+            box-shadow: 0 50px 100px rgba(0,0,0,0.6);
+            margin-top: 120px;
         }
 
-        .slide { display: none; text-align: center; animation: surge 0.5s ease-out forwards; width: 100%; }
+        .slide { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease-out forwards; }
         .active { display: block; }
 
-        @keyframes surge { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Estilo Clima */
-        .cidade { font-size: 40px; color: #fdbb2d; text-transform: uppercase; margin-bottom: 10px; }
-        .temperatura { font-size: 200px; font-weight: 900; line-height: 1; }
-        .condicao { font-size: 40px; text-transform: capitalize; opacity: 0.9; }
+        /* Clima sem a bola marrom */
+        .cidade { font-size: 45px; color: #fdbb2d; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 5px; }
+        .temperatura { font-size: 220px; font-weight: 900; line-height: 1; }
+        .condicao { font-size: 45px; text-transform: capitalize; opacity: 0.9; margin-top: 10px; }
 
-        /* Estilo Loterias */
-        .lot-nome { font-size: 70px; font-weight: 900; margin-bottom: 20px; }
-        .dezenas { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 30px; }
+        /* Loterias */
+        .lot-nome { font-size: 80px; font-weight: 900; margin-bottom: 25px; }
+        .dezenas { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
         .bola {
-            width: 90px; height: 90px; border-radius: 50%;
+            width: 100px; height: 100px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 45px; font-weight: 900; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
-        /* Estilo Notícias */
-        .news-grid { display: flex; align-items: center; padding: 0 80px; gap: 50px; text-align: left; }
-        #n-img { width: 450px; height: 350px; border-radius: 40px; object-fit: cover; border: 4px solid rgba(255,255,255,0.2); }
-        .n-titulo { font-size: 45px; font-weight: 700; line-height: 1.2; }
+        /* Notícias */
+        .news-grid { display: flex; align-items: center; padding: 0 100px; gap: 60px; text-align: left; }
+        #n-img { width: 500px; height: 350px; border-radius: 40px; object-fit: cover; border: 5px solid rgba(255,255,255,0.2); }
+        .n-titulo { font-size: 45px; font-weight: 700; line-height: 1.3; }
 
-        .tag { font-size: 22px; letter-spacing: 8px; opacity: 0.5; text-transform: uppercase; margin-bottom: 25px; }
+        .tag { font-size: 25px; letter-spacing: 10px; opacity: 0.5; text-transform: uppercase; margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -85,7 +86,7 @@
         <div class="slide active">
             <div class="tag">Previsão do Tempo</div>
             <div class="cidade">Americana - SP</div>
-            <div class="temperatura" id="temp-v">--°</div>
+            <div class="temperatura" id="temp-v">--°C</div>
             <div class="condicao" id="cond-v">Carregando...</div>
         </div>
 
@@ -102,60 +103,66 @@
         </div>
 
         <div class="slide">
-            <div class="tag">GNews • Notícias</div>
+            <div class="tag">Últimas Notícias • GNews</div>
             <div class="news-grid">
-                <img id="n-img" src="">
-                <div class="n-titulo" id="n-txt">Buscando informações...</div>
+                <img id="n-img" src="https://via.placeholder.com/500x350?text=KloudAds">
+                <div class="n-titulo" id="n-txt">Sincronizando manchetes do dia...</div>
             </div>
         </div>
     </div>
 
     <script>
-        const API_W = 'b0b0fbf4fb3bac7908252d23111a524d';
-        const API_N = '572a3b63c9f2a22dcf62bd79b812308c';
+        // SUAS CHAVES DE API CONFIGURADAS
+        const API_WEATHER = 'b0b0fbf4fb3bac7908252d23111a524d';
+        const API_GNEWS = '572a3b63c9f2a22dcf62bd79b812308c';
 
-        function updateTime() {
+        function updateClock() {
             const d = new Date();
             document.getElementById('relogio').innerText = d.toLocaleTimeString('pt-BR');
             document.getElementById('data').innerText = d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
         }
-        setInterval(updateTime, 1000);
+        setInterval(updateClock, 1000);
 
-        async function loadData() {
+        async function fetchData() {
             try {
-                // Clima
-                const w = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_W}`).then(r => r.json());
-                document.getElementById('temp-v').innerText = Math.round(w.main.temp) + '°';
-                document.getElementById('cond-v').innerText = w.weather[0].description;
+                // CLIMA AMERICANA
+                const wRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_WEATHER}`);
+                const wData = await wRes.json();
+                document.getElementById('temp-v').innerText = Math.round(wData.main.temp) + '°C';
+                document.getElementById('cond-v').innerText = wData.weather[0].description;
 
-                // Loterias
-                const m = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest').then(r => r.json());
-                document.getElementById('mega-d').innerHTML = m.dezenas.map(n => `<div class="bola" style="background:#209869">${n}</div>`).join('');
+                // MEGA-SENA
+                const mRes = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest');
+                const mData = await mRes.json();
+                document.getElementById('mega-d').innerHTML = mData.dezenas.map(n => `<div class="bola" style="background:#209869">${n}</div>`).join('');
                 
-                const l = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest').then(r => r.json());
-                document.getElementById('loto-d').innerHTML = l.dezenas.map(n => `<div class="bola" style="background:#930089; width:70px; height:70px; font-size:30px;">${n}</div>`).join('');
+                // LOTOFÁCIL
+                const lRes = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest');
+                const lData = await lRes.json();
+                document.getElementById('loto-d').innerHTML = lData.dezenas.map(n => `<div class="bola" style="background:#930089; width:80px; height:80px; font-size:35px;">${n}</div>`).join('');
 
-                // Notícias
-                const n = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_N}`).then(r => r.json());
-                if(n.articles.length > 0) {
-                    document.getElementById('n-txt').innerText = n.articles[0].title;
-                    document.getElementById('n-img').src = n.articles[0].image;
+                // GNEWS
+                const nRes = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_GNEWS}`);
+                const nData = await nRes.json();
+                if(nData.articles.length > 0) {
+                    document.getElementById('n-txt').innerText = nData.articles[0].title;
+                    document.getElementById('n-img').src = nData.articles[0].image;
                 }
-            } catch(e) { console.log("Erro na carga"); }
+            } catch(e) { console.error("Erro ao buscar dados das APIs"); }
         }
 
-        let current = 0;
+        let slideIdx = 0;
         const slides = document.querySelectorAll('.slide');
         function rotate() {
-            slides[current].classList.remove('active');
-            current = (current + 1) % slides.length;
-            slides[current].classList.add('active');
+            slides[slideIdx].classList.remove('active');
+            slideIdx = (slideIdx + 1) % slides.length;
+            slides[slideIdx].classList.add('active');
         }
 
-        loadData();
-        updateTime();
-        setInterval(rotate, 15000); // 15 seg cada tela
-        setInterval(loadData, 600000); // Recarrega APIs a cada 10 min
+        fetchData();
+        updateClock();
+        setInterval(rotate, 15000); // 15 segundos cada tela
+        setInterval(fetchData, 900000); // Atualiza APIs a cada 15 min
     </script>
 </body>
 </html>
