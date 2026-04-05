@@ -2,53 +2,89 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>KloudAds Premium</title>
+<title>KloudAds Premium Motion</title>
 
 <style>
 body {
   margin: 0;
-  background: #0d0d0d;
+  background: radial-gradient(circle at center, #1a1a1a, #000);
   overflow: hidden;
-  font-family: Arial;
+  font-family: 'Arial', sans-serif;
   color: #d4af37;
 }
 
+/* container */
 .container {
   position: relative;
   width: 100%;
   height: 100vh;
 }
 
+/* telas */
 .tela {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 100%;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: all 1s ease;
+  opacity: 0;
+  transform: translateY(-80px) scale(0.98);
+  filter: blur(10px);
+  transition: all 1.2s ease;
   text-align: center;
+  padding: 40px;
 }
 
-.ativa {
-  top: 0;
+/* ativa */
+.tela.ativa {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
-.saindo {
-  top: 100%;
+/* saindo */
+.tela.saindo {
+  opacity: 0;
+  transform: translateY(80px) scale(0.98);
+  filter: blur(10px);
 }
 
+/* título */
 h1 {
-  font-size: 60px;
-  margin-bottom: 20px;
+  font-size: 110px;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d4af37;
+  text-shadow: 0 0 20px rgba(212,175,55,0.6);
 }
 
+/* conteúdo */
 p {
-  font-size: 30px;
-  color: white;
+  font-size: 60px;
+  color: #ffffff;
   max-width: 80%;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* destaque relógio */
+#hora {
+  font-size: 110px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+/* linha decorativa */
+.linha {
+  width: 200px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 20px 0;
 }
 </style>
 </head>
@@ -59,31 +95,37 @@ p {
 
 <div class="tela ativa">
   <h1>Clima</h1>
+  <div class="linha"></div>
   <p>☀️ Americana - 25°C</p>
 </div>
 
 <div class="tela">
   <h1>Hora</h1>
+  <div class="linha"></div>
   <p id="hora"></p>
 </div>
 
 <div class="tela">
   <h1>Notícias</h1>
-  <p>Campinas e região seguem em crescimento econômico</p>
+  <div class="linha"></div>
+  <p>Campinas e região seguem em crescimento e desenvolvimento urbano</p>
 </div>
 
 <div class="tela">
   <h1>Esportes</h1>
-  <p>Últimos resultados do futebol brasileiro</p>
+  <div class="linha"></div>
+  <p>Rodada do futebol brasileiro movimenta o final de semana</p>
 </div>
 
 <div class="tela">
   <h1>Loterias</h1>
+  <div class="linha"></div>
   <p>Mega-Sena: 12 - 23 - 34 - 45 - 56 - 60</p>
 </div>
 
 <div class="tela">
   <h1>Horóscopo</h1>
+  <div class="linha"></div>
   <p>Hoje é um dia de oportunidades e decisões importantes</p>
 </div>
 
@@ -94,26 +136,24 @@ let telas = document.querySelectorAll('.tela');
 let atual = 0;
 
 function trocarTela() {
-  telas[atual].classList.remove('ativa');
-  telas[atual].classList.add('saindo');
-
+  let anterior = atual;
   atual = (atual + 1) % telas.length;
 
-  telas[atual].classList.add('ativa');
+  telas.forEach((tela, i) => {
+    tela.classList.remove('ativa', 'saindo');
 
-  setTimeout(() => {
-    document.querySelectorAll('.tela').forEach(t => {
-      if (!t.classList.contains('ativa')) {
-        t.classList.remove('saindo');
-        t.style.top = "100%";
-      }
-    });
-  }, 1000);
+    if (i === atual) {
+      tela.classList.add('ativa');
+    } else if (i === anterior) {
+      tela.classList.add('saindo');
+    }
+  });
 }
 
-setInterval(trocarTela, 5000);
+// tempo mais premium (8 segundos)
+setInterval(trocarTela, 8000);
 
-// Hora em tempo real
+// relógio em tempo real
 function atualizarHora() {
   const agora = new Date();
   document.getElementById("hora").innerText =
@@ -121,6 +161,7 @@ function atualizarHora() {
 }
 
 setInterval(atualizarHora, 1000);
+atualizarHora();
 </script>
 
 </body>
