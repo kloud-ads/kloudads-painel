@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel KloudAds Elite</title>
+    <title>Painel KloudAds Elite V4</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
@@ -12,54 +12,64 @@
             height: 100vh; width: 100vw;
             font-family: 'Montserrat', sans-serif;
             color: white; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            overflow: hidden;
+            align-items: center; justify-content: space-between; /* Espaçamento entre topo, meio e rodapé */
+            overflow: hidden; padding: 40px 0;
         }
 
-        /* Topo: Data e Hora Invertidos */
-        #topo { position: absolute; top: 40px; text-align: center; width: 100%; z-index: 10; }
-        #data-extenso { font-size: 28px; text-transform: uppercase; font-weight: 700; opacity: 0.8; letter-spacing: 3px; margin-bottom: 5px; }
-        #relogio { font-size: 110px; font-weight: 900; line-height: 1; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* Topo Organizado */
+        #topo { text-align: center; z-index: 10; }
+        #data-extenso { 
+            font-size: 26px; text-transform: uppercase; 
+            font-weight: 700; opacity: 0.8; letter-spacing: 3px;
+        }
+        #relogio { 
+            font-size: 110px; font-weight: 900; line-height: 1; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
 
+        /* Painel Central com Respiro */
         .painel-vidro {
-            width: 90%; height: 55%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
+            width: 85%; height: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
             display: flex; align-items: center; justify-content: center;
-            margin-top: 130px; position: relative;
+            position: relative;
         }
 
-        .slide { display: none; width: 100%; text-align: center; padding: 20px; }
-        .active { display: block; animation: fadeIn 0.8s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide { display: none; width: 100%; text-align: center; animation: fadeIn 0.6s ease-out; }
+        .active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .tag { font-size: 18px; letter-spacing: 5px; opacity: 0.6; text-transform: uppercase; margin-bottom: 20px; display: block; color: #00d2ff; }
-        #clima-emoji { font-size: 130px; display: block; }
-        .temp-txt { font-size: 160px; font-weight: 900; line-height: 1; }
-        .desc-clima { font-size: 35px; opacity: 0.9; text-transform: capitalize; }
-
-        /* Loterias - Ajuste das Colunas */
-        .lot-titulo { font-size: 65px; font-weight: 900; margin-bottom: 15px; }
-        .bolas-wrap { display: grid; gap: 12px; justify-content: center; margin: 0 auto; }
+        .tag { font-size: 16px; letter-spacing: 4px; opacity: 0.6; text-transform: uppercase; margin-bottom: 15px; color: #00d2ff; }
         
-        /* Mega-Sena: 6 bolas em 1 linha */
+        /* Clima */
+        #clima-emoji { font-size: 100px; margin-bottom: 10px; }
+        .temp-txt { font-size: 140px; font-weight: 900; line-height: 0.9; }
+        .desc-clima { font-size: 32px; opacity: 0.9; text-transform: capitalize; }
+
+        /* Loterias - Ajuste das 3 Linhas */
+        .lot-titulo { font-size: 55px; font-weight: 900; margin-bottom: 20px; }
+        .bolas-wrap { display: grid; gap: 12px; justify-content: center; }
+        
+        /* Mega: 1 linha | Loto: 3 linhas de 5 */
         #mega-balls { grid-template-columns: repeat(6, 1fr); }
-        
-        /* Lotofácil: 15 bolas em 3 linhas de 5 */
         #loto-balls { grid-template-columns: repeat(5, 1fr); }
-
+        
         .bola-num {
-            width: 75px; height: 75px; border-radius: 50%;
+            width: 65px; height: 65px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 35px; font-weight: 900; border: 2px solid rgba(255,255,255,0.3);
+            font-size: 32px; font-weight: 900; border: 2px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.1);
         }
 
-        .news-titulo { font-size: 42px; font-weight: 700; line-height: 1.3; padding: 0 60px; }
+        /* Notícias */
+        .news-titulo { font-size: 38px; font-weight: 700; line-height: 1.3; padding: 0 50px; }
 
-        /* Logo no Rodapé */
-        #rodape-logo { position: absolute; bottom: 30px; height: 85px; width: auto; }
+        /* Rodapé com Logo Real */
+        #container-logo { width: 100%; display: flex; justify-content: center; }
+        #rodape-logo { height: 90px; width: auto; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); }
     </style>
 </head>
 <body>
@@ -74,12 +84,12 @@
             <span class="tag">Previsão do Tempo</span>
             <div id="clima-emoji">☀️</div>
             <div class="temp-txt" id="display-temp">--°C</div>
-            <div class="desc-clima" id="display-desc">Atualizando...</div>
+            <div class="desc-clima" id="display-desc">Carregando...</div>
         </div>
 
         <div class="slide">
-            <span class="tag">Notícias Americana e Região</span>
-            <div class="news-titulo" id="news-txt">Carregando manchetes...</div>
+            <span class="tag">Notícias Regionais 019</span>
+            <div class="news-titulo" id="news-txt">Sincronizando manchetes...</div>
         </div>
 
         <div class="slide">
@@ -95,7 +105,9 @@
         </div>
     </div>
 
-    <img src="image.png" id="rodape-logo" onerror="this.style.display='none'">
+    <div id="container-logo">
+        <img src="image.png" id="rodape-logo" alt="KloudAds">
+    </div>
 
     <script>
         function updateClock() {
@@ -106,26 +118,28 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        async function refreshData() {
+        async function fetchData() {
             try {
-                // Clima
+                // Clima Americana
                 const w = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=b0b0fbf4fb3bac7908252d23111a524d`).then(r => r.json());
                 document.getElementById('display-temp').innerText = Math.round(w.main.temp) + '°C';
                 document.getElementById('display-desc').innerText = w.weather[0].description;
-                const emojiMap = {'01d':'☀️','01n':'🌙','02d':'⛅','02n':'☁️','03d':'☁️','04d':'☁️','09d':'🌧️','10d':'🌦️','11d':'⛈️','13d':'❄️','50d':'🌫️'};
-                document.getElementById('clima-emoji').innerText = emojiMap[w.weather[0].icon] || '🌤️';
+                const icons = {'01d':'☀️','01n':'🌙','02d':'⛅','02n':'☁️','03d':'☁️','04d':'☁️','09d':'🌧️','10d':'🌦️','11d':'⛈️','13d':'❄️','50d':'🌫️'};
+                document.getElementById('clima-emoji').innerText = icons[w.weather[0].icon] || '🌤️';
 
                 // Loterias
                 const mega = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest').then(r => r.json());
-                document.getElementById('mega-balls').innerHTML = mega.dezenas.map(n => `<div class="bola-num" style="background:#209869">${n}</div>`).join('');
+                document.getElementById('mega-balls').innerHTML = mega.dezenas.map(n => `<div class="bola-num">${n}</div>`).join('');
 
                 const loto = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest').then(r => r.json());
-                document.getElementById('loto-balls').innerHTML = loto.dezenas.map(n => `<div class="bola-num" style="background:#930089">${n}</div>`).join('');
+                document.getElementById('loto-balls').innerHTML = loto.dezenas.map(n => `<div class="bola-num">${n}</div>`).join('');
 
-                // News
+                // News (G1 Campinas)
                 const news = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fg1.globo.com%2Fsp%2Fcampinas-regiao%2Frss%2Fg1%2F`).then(r => r.json());
                 if(news.items) document.getElementById('news-txt').innerText = news.items[0].title;
-            } catch (e) {}
+            } catch (e) {
+                console.error("Erro ao atualizar dados");
+            }
         }
 
         let currentSlide = 0;
@@ -136,9 +150,9 @@
             slides[currentSlide].classList.add('active');
         }
 
-        refreshData();
-        setInterval(rotate, 15000);
-        setInterval(refreshData, 600000);
+        fetchData();
+        setInterval(rotate, 15000); // 15 segundos cada tela
+        setInterval(fetchData, 600000); // Atualiza dados a cada 10 min
     </script>
 </body>
 </html>
