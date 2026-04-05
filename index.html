@@ -2,14 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>KloudAds Elite Final</title>
+<title>KloudAds Unified Pro</title>
 
 <style>
 body {
   margin:0;
   overflow:hidden;
   font-family:-apple-system, Arial;
-  background:black;
 }
 
 /* TRANSIÇÃO */
@@ -18,138 +17,106 @@ body {
   width:100%;
   height:100%;
   opacity:0;
-  transform: scale(1.05);
-  transition: all 1.2s ease;
+  transform:scale(1.08);
+  transition:all 1.2s ease;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 .tela.ativa {
   opacity:1;
-  transform: scale(1);
+  transform:scale(1);
 }
 
-/* ================= CLIMA ================= */
-.clima-bg {
+/* FUNDO BASE */
+.bg {
   width:100%;
   height:100%;
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
-  background: linear-gradient(#4facfe,#00f2fe);
 }
 
-/* partículas */
-.clima-bg::after {
-  content:"";
-  position:absolute;
-  width:200%;
-  height:200%;
-  background: radial-gradient(circle,rgba(255,255,255,0.08) 1px,transparent 1px);
-  background-size:60px 60px;
-  animation:particles 40s linear infinite;
-}
-
-@keyframes particles {
-  from { transform:translateY(0); }
-  to { transform:translateY(-200px); }
-}
-
-/* glass */
-.glass {
-  backdrop-filter: blur(30px);
+/* GLASS PADRÃO */
+.card {
+  backdrop-filter: blur(25px);
   background: rgba(255,255,255,0.12);
-  padding: 70px 90px;
-  border-radius: 35px;
+  border-radius:30px;
+  padding:70px 90px;
   text-align:center;
   color:white;
   box-shadow:0 30px 80px rgba(0,0,0,0.4);
 }
 
-.glass h1 { font-size:100px; margin:0; }
-.glass p { font-size:75px; }
-
-/* ================= HORA ================= */
-.hora-bg {
-  width:100%;
-  height:100%;
-  background: radial-gradient(circle,#111,#000);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+.card h1 {
+  font-size:90px;
+  margin:0;
 }
 
-.hora-bg h1 {
-  font-size:60px;
-  color:#d4af37;
-  letter-spacing:4px;
-}
-
-.hora-bg p {
-  font-size:190px;
-  color:white;
-  text-shadow:0 0 60px rgba(255,255,255,0.4);
-}
-
-/* ================= NOTÍCIAS ================= */
-.noticia-bg {
-  width:100%;
-  height:100%;
-  background: linear-gradient(#0f2027,#203a43,#2c5364);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-
-.noticia-bg h1 { font-size:100px; color:white; }
-
-.fade-text {
+.card p {
   font-size:65px;
-  color:white;
-  max-width:80%;
-  text-align:center;
-  transition:opacity 0.8s;
+  margin-top:20px;
 }
 
-/* ================= LOTERIA ================= */
+/* FUNDOS TEMÁTICOS */
+
+/* CLIMA */
+.clima-bg {
+  background: linear-gradient(180deg,#4facfe,#00f2fe);
+}
+
+/* HORA */
+.hora-bg {
+  background: radial-gradient(circle,#111,#000);
+}
+
+/* NOTÍCIAS */
+.noticia-bg {
+  background: linear-gradient(180deg,#1e3c72,#2a5298);
+}
+
+/* LOTERIA */
 .loteria-bg {
-  width:100%;
-  height:100%;
-  background: radial-gradient(circle,#006400,#003300);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  background: radial-gradient(circle,#006400,#002200);
 }
 
-.loteria-bg h1 { font-size:100px; color:white; }
+/* HORA TEXTO */
+.hora {
+  font-size:180px !important;
+}
 
+/* LOTERIA NUMEROS */
 .numeros {
   display:flex;
-  gap:25px;
-  margin-top:50px;
+  justify-content:center;
+  gap:20px;
+  margin-top:30px;
 }
 
 .bola {
-  width:100px;
-  height:100px;
+  width:90px;
+  height:90px;
   border-radius:50%;
   background:white;
   color:black;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:45px;
+  font-size:40px;
   font-weight:bold;
-  animation:pop 0.5s ease;
+  animation:pop 0.4s ease;
 }
 
 @keyframes pop {
   from { transform:scale(0); }
   to { transform:scale(1); }
+}
+
+.sub {
+  font-size:40px;
+  opacity:0.8;
+  margin-top:10px;
 }
 </style>
 </head>
@@ -158,8 +125,8 @@ body {
 
 <!-- CLIMA -->
 <div class="tela ativa">
-  <div class="clima-bg" id="climaBg">
-    <div class="glass">
+  <div class="bg clima-bg">
+    <div class="card">
       <h1>Americana</h1>
       <p id="clima">Carregando...</p>
     </div>
@@ -168,25 +135,32 @@ body {
 
 <!-- HORA -->
 <div class="tela">
-  <div class="hora-bg">
-    <h1>HORÁRIO DE BRASÍLIA</h1>
-    <p id="hora"></p>
+  <div class="bg hora-bg">
+    <div class="card">
+      <h1>Horário de Brasília</h1>
+      <p id="hora" class="hora"></p>
+    </div>
   </div>
 </div>
 
 <!-- NOTÍCIAS -->
 <div class="tela">
-  <div class="noticia-bg">
-    <h1>NOTÍCIAS</h1>
-    <p id="noticias" class="fade-text"></p>
+  <div class="bg noticia-bg">
+    <div class="card">
+      <h1>Notícias</h1>
+      <p id="noticias">Carregando...</p>
+    </div>
   </div>
 </div>
 
 <!-- LOTERIA -->
 <div class="tela">
-  <div class="loteria-bg">
-    <h1>MEGA-SENA</h1>
-    <div id="numeros" class="numeros"></div>
+  <div class="bg loteria-bg">
+    <div class="card">
+      <h1>Mega-Sena</h1>
+      <div id="concurso" class="sub"></div>
+      <div id="numeros" class="numeros"></div>
+    </div>
   </div>
 </div>
 
@@ -214,39 +188,28 @@ async function clima(){
 
   document.getElementById("clima").innerText =
     Math.round(d.main.temp)+"°C - "+d.weather[0].description;
-
-  let bg=document.getElementById("climaBg");
-
-  if(d.weather[0].main.includes("Rain")){
-    bg.style.background="linear-gradient(#4e54c8,#8f94fb)";
-  } else if(d.weather[0].main.includes("Cloud")){
-    bg.style.background="linear-gradient(#757f9a,#d7dde8)";
-  } else {
-    bg.style.background="linear-gradient(#4facfe,#00f2fe)";
-  }
 }
 clima();
 setInterval(clima,300000);
 
 /* NOTÍCIAS */
 async function noticias(){
-  let r=await fetch("https://gnews.io/api/v4/top-headlines?lang=pt&country=br&token=572a3b63c9f2a22dcf62bd79b812308c");
-  let d=await r.json();
+  try{
+    let r=await fetch("https://gnews.io/api/v4/top-headlines?lang=pt&country=br&token=572a3b63c9f2a22dcf62bd79b812308c");
+    let d=await r.json();
 
-  let i=0;
-  setInterval(()=>{
-    let el=document.getElementById("noticias");
-    el.style.opacity=0;
-
-    setTimeout(()=>{
-      if(d.articles[i]){
-        el.innerText=d.articles[i].title;
+    let i=0;
+    setInterval(()=>{
+      if(d.articles && d.articles[i]){
+        document.getElementById("noticias").innerText =
+          d.articles[i].title;
         i=(i+1)%d.articles.length;
       }
-      el.style.opacity=1;
-    },500);
+    },5000);
 
-  },5000);
+  }catch{
+    document.getElementById("noticias").innerText="Erro ao carregar notícias";
+  }
 }
 noticias();
 
@@ -254,6 +217,9 @@ noticias();
 async function loteria(){
   let r=await fetch("https://loteriascaixa-api.herokuapp.com/api/megasena/latest");
   let d=await r.json();
+
+  document.getElementById("concurso").innerText =
+    "Concurso " + d.concurso;
 
   let c=document.getElementById("numeros");
   c.innerHTML="";
