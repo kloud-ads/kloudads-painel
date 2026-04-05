@@ -2,14 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>KloudAds Premium Motion</title>
+<title>KloudAds Premium PRO</title>
 
 <style>
 body {
   margin: 0;
-  background: radial-gradient(circle at center, #1a1a1a, #000);
+  background: #000;
   overflow: hidden;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   color: #d4af37;
 }
 
@@ -32,9 +32,8 @@ body {
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transform: translateY(-80px) scale(0.98);
-  filter: blur(10px);
-  transition: all 1.2s ease;
+  transform: translateY(-60px);
+  transition: all 1s ease;
   text-align: center;
   padding: 40px;
 }
@@ -42,49 +41,35 @@ body {
 /* ativa */
 .tela.ativa {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
+  transform: translateY(0);
 }
 
 /* saindo */
 .tela.saindo {
   opacity: 0;
-  transform: translateY(80px) scale(0.98);
-  filter: blur(10px);
+  transform: translateY(60px);
 }
 
-/* título */
+/* TITULO GRANDE */
 h1 {
-  font-size: 110px;
+  font-size: 120px;
   margin-bottom: 30px;
-  letter-spacing: 2px;
   text-transform: uppercase;
-  color: #d4af37;
-  text-shadow: 0 0 20px rgba(212,175,55,0.6);
+  text-shadow: 0 0 15px rgba(212,175,55,0.6);
 }
 
-/* conteúdo */
+/* TEXTO GRANDE */
 p {
-  font-size: 60px;
-  color: #ffffff;
-  max-width: 80%;
-  line-height: 1.4;
-  opacity: 0.9;
+  font-size: 70px;
+  color: #fff;
+  max-width: 85%;
+  line-height: 1.3;
 }
 
-/* destaque relógio */
+/* relógio */
 #hora {
-  font-size: 110px;
+  font-size: 140px;
   font-weight: bold;
-  letter-spacing: 3px;
-}
-
-/* linha decorativa */
-.linha {
-  width: 200px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #d4af37, transparent);
-  margin: 20px 0;
 }
 </style>
 </head>
@@ -95,38 +80,32 @@ p {
 
 <div class="tela ativa">
   <h1>Clima</h1>
-  <div class="linha"></div>
   <p>☀️ Americana - 25°C</p>
 </div>
 
 <div class="tela">
   <h1>Hora</h1>
-  <div class="linha"></div>
   <p id="hora"></p>
 </div>
 
 <div class="tela">
   <h1>Notícias</h1>
-  <div class="linha"></div>
-  <p>Campinas e região seguem em crescimento e desenvolvimento urbano</p>
+  <p>Campinas e região seguem em crescimento e desenvolvimento econômico</p>
 </div>
 
 <div class="tela">
   <h1>Esportes</h1>
-  <div class="linha"></div>
   <p>Rodada do futebol brasileiro movimenta o final de semana</p>
 </div>
 
 <div class="tela">
   <h1>Loterias</h1>
-  <div class="linha"></div>
-  <p>Mega-Sena: 12 - 23 - 34 - 45 - 56 - 60</p>
+  <p id="loteria"></p>
 </div>
 
 <div class="tela">
   <h1>Horóscopo</h1>
-  <div class="linha"></div>
-  <p>Hoje é um dia de oportunidades e decisões importantes</p>
+  <p id="horoscopo"></p>
 </div>
 
 </div>
@@ -150,18 +129,60 @@ function trocarTela() {
   });
 }
 
-// tempo mais premium (8 segundos)
-setInterval(trocarTela, 8000);
+// troca a cada 7s
+setInterval(trocarTela, 7000);
 
-// relógio em tempo real
+/* RELÓGIO */
 function atualizarHora() {
   const agora = new Date();
   document.getElementById("hora").innerText =
     agora.toLocaleTimeString();
 }
-
 setInterval(atualizarHora, 1000);
 atualizarHora();
+
+/* LOTERIAS (simulado profissional) */
+let loterias = [
+  "Mega-Sena: 12 - 23 - 34 - 45 - 56 - 60",
+  "Lotofácil: 01 - 03 - 05 - 07 - 09 - 11 - 13 - 15",
+  "Lotomania: 02 - 10 - 22 - 35 - 44 - 55 - 66"
+];
+
+let iLoteria = 0;
+
+function atualizarLoteria() {
+  document.getElementById("loteria").innerText = loterias[iLoteria];
+  iLoteria = (iLoteria + 1) % loterias.length;
+}
+
+setInterval(atualizarLoteria, 3000);
+atualizarLoteria();
+
+/* HORÓSCOPO DINÂMICO */
+let signos = [
+  "Áries: Momento de decisões importantes.",
+  "Touro: Estabilidade e foco trazem resultados.",
+  "Gêmeos: Comunicação será essencial hoje.",
+  "Câncer: Cuide das emoções e do bem-estar.",
+  "Leão: Destaque e reconhecimento no caminho.",
+  "Virgem: Organização será sua força.",
+  "Libra: Busque equilíbrio nas decisões.",
+  "Escorpião: Transformações positivas chegando.",
+  "Sagitário: Oportunidades inesperadas surgirão.",
+  "Capricórnio: Persistência traz conquistas.",
+  "Aquário: Inovação e criatividade em alta.",
+  "Peixes: Intuição será seu guia hoje."
+];
+
+let iSigno = 0;
+
+function atualizarHoroscopo() {
+  document.getElementById("horoscopo").innerText = signos[iSigno];
+  iSigno = (iSigno + 1) % signos.length;
+}
+
+setInterval(atualizarHoroscopo, 4000);
+atualizarHoroscopo();
 </script>
 
 </body>
