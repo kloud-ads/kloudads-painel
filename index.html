@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Americana - KloudAds</title>
+    <title>KloudAds Elite - Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; } /* Esconde o mouse */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         
         body {
-            background: radial-gradient(circle, #1a2a6c 0%, #122240 100%);
+            background: radial-gradient(circle at center, #1a2a6c 0%, #122240 100%);
             height: 100vh;
             width: 100vw;
             font-family: 'Montserrat', sans-serif;
@@ -21,148 +21,171 @@
             overflow: hidden;
         }
 
-        /* Relógio Centralizado no Topo */
-        #topo {
-            position: absolute;
-            top: 50px;
-            text-align: center;
-            width: 100%;
-        }
+        /* Relógio e Data no Topo */
+        #topo { position: absolute; top: 40px; text-align: center; width: 100%; }
         #relogio { font-size: 130px; font-weight: 900; line-height: 1; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #data { font-size: 35px; text-transform: uppercase; margin-top: 10px; opacity: 0.8; letter-spacing: 2px; }
+        #data-extenso { font-size: 32px; text-transform: uppercase; margin-top: 5px; opacity: 0.8; letter-spacing: 2px; }
 
-        /* Painel de Vidro (Layout Centralizado) */
+        /* Painel de Vidro Centralizado */
         .painel-vidro {
-            width: 85%;
-            height: 60%;
+            width: 90%;
+            height: 58%;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 50px 100px rgba(0,0,0,0.6);
-            margin-top: 120px;
+            margin-top: 100px;
+            position: relative;
         }
 
-        .slide { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease-out forwards; }
+        .slide { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease-out; padding: 20px; }
         .active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        /* Clima sem a bola marrom */
-        .cidade { font-size: 45px; color: #fdbb2d; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 5px; }
-        .temperatura { font-size: 220px; font-weight: 900; line-height: 1; }
-        .condicao { font-size: 45px; text-transform: capitalize; opacity: 0.9; margin-top: 10px; }
+        /* Estilos de Conteúdo */
+        .tag { font-size: 22px; letter-spacing: 8px; opacity: 0.5; text-transform: uppercase; margin-bottom: 20px; display: block; }
+        
+        /* Clima com Emoji */
+        .clima-row { display: flex; align-items: center; justify-content: center; gap: 30px; }
+        #clima-emoji { font-size: 140px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
+        .temp-txt { font-size: 180px; font-weight: 900; }
+        .cidade { font-size: 40px; color: #fdbb2d; text-transform: uppercase; margin-bottom: 10px; }
+        .desc-clima { font-size: 35px; opacity: 0.9; text-transform: capitalize; }
 
         /* Loterias */
-        .lot-nome { font-size: 80px; font-weight: 900; margin-bottom: 25px; }
-        .dezenas { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .bola {
-            width: 100px; height: 100px; border-radius: 50%;
+        .lot-titulo { font-size: 75px; font-weight: 900; margin-bottom: 5px; }
+        .lot-meta { font-size: 28px; opacity: 0.7; margin-bottom: 25px; }
+        .bolas-wrap { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; max-width: 95%; margin: 0 auto; }
+        .bola-num {
+            width: 85px; height: 85px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 45px; font-weight: 900; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            border: 2px solid rgba(255,255,255,0.3);
+            font-size: 42px; font-weight: 900; border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
         /* Notícias */
-        .news-grid { display: flex; align-items: center; padding: 0 100px; gap: 60px; text-align: left; }
-        #n-img { width: 500px; height: 350px; border-radius: 40px; object-fit: cover; border: 5px solid rgba(255,255,255,0.2); }
-        .n-titulo { font-size: 45px; font-weight: 700; line-height: 1.3; }
-
-        .tag { font-size: 25px; letter-spacing: 10px; opacity: 0.5; text-transform: uppercase; margin-bottom: 30px; }
+        .news-flex { display: flex; align-items: center; padding: 0 60px; gap: 40px; text-align: left; }
+        #news-img { width: 450px; height: 320px; border-radius: 40px; object-fit: cover; border: 5px solid rgba(255,255,255,0.1); }
+        .news-titulo { font-size: 42px; font-weight: 700; line-height: 1.2; }
     </style>
 </head>
 <body>
 
     <div id="topo">
         <div id="relogio">00:00:00</div>
-        <div id="data">---</div>
+        <div id="data-extenso">Sábado, 4 de Abril</div>
     </div>
 
     <div class="painel-vidro">
         <div class="slide active">
-            <div class="tag">Previsão do Tempo</div>
+            <span class="tag">Previsão do Tempo</span>
             <div class="cidade">Americana - SP</div>
-            <div class="temperatura" id="temp-v">--°C</div>
-            <div class="condicao" id="cond-v">Carregando...</div>
+            <div class="clima-row">
+                <div id="clima-emoji">☀️</div>
+                <div class="temp-txt" id="display-temp">--°C</div>
+            </div>
+            <div class="desc-clima" id="display-desc">Carregando...</div>
         </div>
 
         <div class="slide">
-            <div class="tag">Loterias Caixa</div>
-            <div class="lot-nome" style="color: #209869;">MEGA-SENA</div>
-            <div class="dezenas" id="mega-d"></div>
+            <span class="tag">Loterias Caixa</span>
+            <div class="lot-titulo" style="color: #209869;">MEGA-SENA</div>
+            <div class="lot-meta" id="mega-info">Buscando concurso...</div>
+            <div class="bolas-wrap" id="mega-balls"></div>
         </div>
 
         <div class="slide">
-            <div class="tag">Loterias Caixa</div>
-            <div class="lot-nome" style="color: #930089;">LOTOFÁCIL</div>
-            <div class="dezenas" id="loto-d"></div>
+            <span class="tag">Loterias Caixa</span>
+            <div class="lot-titulo" style="color: #930089;">LOTOFÁCIL</div>
+            <div class="lot-meta" id="loto-info">Buscando concurso...</div>
+            <div class="bolas-wrap" id="loto-balls"></div>
         </div>
 
         <div class="slide">
-            <div class="tag">Últimas Notícias • GNews</div>
-            <div class="news-grid">
-                <img id="n-img" src="https://via.placeholder.com/500x350?text=KloudAds">
-                <div class="n-titulo" id="n-txt">Sincronizando manchetes do dia...</div>
+            <span class="tag">GNews • Brasil</span>
+            <div class="news-flex">
+                <img id="news-img" src="">
+                <div class="news-titulo" id="news-txt">Atualizando as principais notícias...</div>
             </div>
         </div>
     </div>
 
     <script>
-        // SUAS CHAVES DE API CONFIGURADAS
         const API_WEATHER = 'b0b0fbf4fb3bac7908252d23111a524d';
         const API_GNEWS = '572a3b63c9f2a22dcf62bd79b812308c';
+
+        // Lógica dos Emojis Inteligentes
+        function getWeatherEmoji(code) {
+            const map = {
+                '01d': '☀️', '01n': '🌙', // céu limpo
+                '02d': '⛅', '02n': '☁️', // poucas nuvens
+                '03d': '☁️', '03n': '☁️', // nuvens
+                '04d': '☁️', '04n': '☁️', // nublado
+                '09d': '🌧️', '09n': '🌧️', // chuva leve
+                '10d': '🌦️', '10n': '🌧️', // chuva
+                '11d': '⛈️', '11n': '⛈️', // tempestade
+                '13d': '❄️', '13n': '❄️', // neve
+                '50d': '🌫️', '50n': '🌫️'  // névoa
+            };
+            return map[code] || '🌡️';
+        }
 
         function updateClock() {
             const d = new Date();
             document.getElementById('relogio').innerText = d.toLocaleTimeString('pt-BR');
-            document.getElementById('data').innerText = d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+            document.getElementById('data-extenso').innerText = d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
         }
         setInterval(updateClock, 1000);
 
-        async function fetchData() {
+        async function refreshData() {
             try {
-                // CLIMA AMERICANA
+                // CLIMA
                 const wRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_WEATHER}`);
-                const wData = await wRes.json();
-                document.getElementById('temp-v').innerText = Math.round(wData.main.temp) + '°C';
-                document.getElementById('cond-v').innerText = wData.weather[0].description;
+                const w = await wRes.json();
+                document.getElementById('display-temp').innerText = Math.round(w.main.temp) + '°C';
+                document.getElementById('display-desc').innerText = w.weather[0].description;
+                document.getElementById('clima-emoji').innerText = getWeatherEmoji(w.weather[0].icon);
 
                 // MEGA-SENA
                 const mRes = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest');
-                const mData = await mRes.json();
-                document.getElementById('mega-d').innerHTML = mData.dezenas.map(n => `<div class="bola" style="background:#209869">${n}</div>`).join('');
-                
+                const m = await mRes.json();
+                document.getElementById('mega-info').innerText = `Concurso ${m.concurso} (${m.data})`;
+                document.getElementById('mega-balls').innerHTML = m.dezenas.map(n => `<div class="bola-num" style="background:#209869">${n}</div>`).join('');
+
                 // LOTOFÁCIL
                 const lRes = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest');
-                const lData = await lRes.json();
-                document.getElementById('loto-d').innerHTML = lData.dezenas.map(n => `<div class="bola" style="background:#930089; width:80px; height:80px; font-size:35px;">${n}</div>`).join('');
+                const l = await lRes.json();
+                document.getElementById('loto-info').innerText = `Concurso ${l.concurso} (${l.data})`;
+                document.getElementById('loto-balls').innerHTML = l.dezenas.map(n => `<div class="bola-num" style="background:#930089; width:65px; height:65px; font-size:32px;">${n}</div>`).join('');
 
                 // GNEWS
                 const nRes = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_GNEWS}`);
-                const nData = await nRes.json();
-                if(nData.articles.length > 0) {
-                    document.getElementById('n-txt').innerText = nData.articles[0].title;
-                    document.getElementById('n-img').src = nData.articles[0].image;
+                const n = await nRes.json();
+                if(n.articles.length > 0) {
+                    document.getElementById('news-txt').innerText = n.articles[0].title;
+                    document.getElementById('news-img').src = n.articles[0].image;
                 }
-            } catch(e) { console.error("Erro ao buscar dados das APIs"); }
+            } catch(e) { console.error("Falha ao sincronizar"); }
         }
 
-        let slideIdx = 0;
+        let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        function rotate() {
-            slides[slideIdx].classList.remove('active');
-            slideIdx = (slideIdx + 1) % slides.length;
-            slides[slideIdx].classList.add('active');
+        function rotateSlides() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
         }
 
-        fetchData();
+        refreshData();
         updateClock();
-        setInterval(rotate, 15000); // 15 segundos cada tela
-        setInterval(fetchData, 900000); // Atualiza APIs a cada 15 min
+        setInterval(rotateSlides, 15000);
+        setInterval(refreshData, 900000);
     </script>
 </body>
 </html>
