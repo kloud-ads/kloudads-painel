@@ -2,187 +2,228 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>KloudAds Premium PRO</title>
+<title>KloudAds Broadcast PRO</title>
 
 <style>
 body {
   margin: 0;
-  background: #000;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  color: #d4af37;
+  background: black;
 }
 
-/* container */
-.container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-}
-
-/* telas */
+/* TELAS */
 .tela {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
+  opacity: 0;
+  transition: all 1.2s ease;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  opacity: 0;
-  transform: translateY(-60px);
-  transition: all 1s ease;
-  text-align: center;
-  padding: 40px;
 }
 
-/* ativa */
-.tela.ativa {
+.ativa {
   opacity: 1;
-  transform: translateY(0);
 }
 
-/* saindo */
-.tela.saindo {
-  opacity: 0;
-  transform: translateY(60px);
+/* ===== CLIMA ===== */
+.clima-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#4facfe, #00c6ff);
+  position: relative;
+  overflow: hidden;
 }
 
-/* TITULO GRANDE */
-h1 {
-  font-size: 120px;
-  margin-bottom: 30px;
-  text-transform: uppercase;
-  text-shadow: 0 0 15px rgba(212,175,55,0.6);
+.nuvem {
+  position: absolute;
+  width: 300px;
+  height: 100px;
+  background: white;
+  border-radius: 100px;
+  opacity: 0.6;
+  animation: mover 40s linear infinite;
 }
 
-/* TEXTO GRANDE */
-p {
+@keyframes mover {
+  from { left: -300px; }
+  to { left: 110%; }
+}
+
+.sol {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle,#FFD700,#FFA500);
+  border-radius: 50%;
+  animation: pulsar 3s infinite;
+}
+
+@keyframes pulsar {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.chuva {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: white;
+  animation: cair 1s linear infinite;
+}
+
+@keyframes cair {
+  from { transform: translateY(-100px); }
+  to { transform: translateY(100vh); }
+}
+
+.glass {
+  backdrop-filter: blur(25px);
+  background: rgba(255,255,255,0.15);
+  padding: 60px;
+  border-radius: 25px;
+  text-align: center;
+  color: white;
+}
+
+.glass h1 {
+  font-size: 90px;
+}
+
+.glass p {
   font-size: 70px;
-  color: #fff;
-  max-width: 85%;
-  line-height: 1.3;
 }
 
-/* relógio */
-#hora {
-  font-size: 140px;
-  font-weight: bold;
+/* ===== HORA ===== */
+.relogio h1 {
+  font-size: 200px;
+  color: white;
+}
+
+/* ===== PADRÃO ===== */
+.padrao {
+  flex-direction: column;
+  text-align: center;
+}
+
+.padrao h1 {
+  font-size: 110px;
+  color: #d4af37;
+}
+
+.padrao p {
+  font-size: 65px;
+  color: white;
+  max-width: 80%;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
+<!-- CLIMA -->
 <div class="tela ativa">
-  <h1>Clima</h1>
-  <p>☀️ Americana - 25°C</p>
+  <div class="clima-bg" id="climaBg">
+    <div class="nuvem" style="top:20%"></div>
+    <div class="nuvem" style="top:50%"></div>
+
+    <div class="glass">
+      <div id="iconeClima"></div>
+      <h1>Americana</h1>
+      <p id="clima"></p>
+    </div>
+  </div>
 </div>
 
+<!-- HORA -->
 <div class="tela">
-  <h1>Hora</h1>
-  <p id="hora"></p>
+  <div class="relogio">
+    <h1 id="hora"></h1>
+  </div>
 </div>
 
-<div class="tela">
+<!-- NOTÍCIAS -->
+<div class="tela padrao">
   <h1>Notícias</h1>
-  <p>Campinas e região seguem em crescimento e desenvolvimento econômico</p>
+  <p id="noticias"></p>
 </div>
 
-<div class="tela">
-  <h1>Esportes</h1>
-  <p>Rodada do futebol brasileiro movimenta o final de semana</p>
-</div>
-
-<div class="tela">
+<!-- LOTERIA -->
+<div class="tela padrao">
   <h1>Loterias</h1>
   <p id="loteria"></p>
-</div>
-
-<div class="tela">
-  <h1>Horóscopo</h1>
-  <p id="horoscopo"></p>
-</div>
-
 </div>
 
 <script>
 let telas = document.querySelectorAll('.tela');
 let atual = 0;
 
-function trocarTela() {
-  let anterior = atual;
-  atual = (atual + 1) % telas.length;
-
-  telas.forEach((tela, i) => {
-    tela.classList.remove('ativa', 'saindo');
-
-    if (i === atual) {
-      tela.classList.add('ativa');
-    } else if (i === anterior) {
-      tela.classList.add('saindo');
-    }
-  });
+function trocarTela(){
+  telas.forEach(t=>t.classList.remove('ativa'));
+  atual=(atual+1)%telas.length;
+  telas[atual].classList.add('ativa');
 }
-
-// troca a cada 7s
-setInterval(trocarTela, 7000);
+setInterval(trocarTela,8000);
 
 /* RELÓGIO */
-function atualizarHora() {
-  const agora = new Date();
+setInterval(()=>{
   document.getElementById("hora").innerText =
-    agora.toLocaleTimeString();
+    new Date().toLocaleTimeString();
+},1000);
+
+/* CLIMA */
+async function clima(){
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=b0b0fbf4fb3bac7908252d23111a524d`;
+  let res = await fetch(url);
+  let data = await res.json();
+
+  let temp = Math.round(data.main.temp);
+  let cond = data.weather[0].main;
+
+  document.getElementById("clima").innerText = temp+"°C";
+
+  let icone = document.getElementById("iconeClima");
+  let bg = document.getElementById("climaBg");
+
+  if(cond.includes("Rain")){
+    icone.innerHTML = "🌧";
+    bg.style.background = "linear-gradient(#4e54c8,#8f94fb)";
+  } else if(cond.includes("Cloud")){
+    icone.innerHTML = "☁️";
+    bg.style.background = "linear-gradient(#757f9a,#d7dde8)";
+  } else {
+    icone.innerHTML = "<div class='sol'></div>";
+    bg.style.background = "linear-gradient(#4facfe,#00f2fe)";
+  }
 }
-setInterval(atualizarHora, 1000);
-atualizarHora();
+clima();
 
-/* LOTERIAS (simulado profissional) */
-let loterias = [
-  "Mega-Sena: 12 - 23 - 34 - 45 - 56 - 60",
-  "Lotofácil: 01 - 03 - 05 - 07 - 09 - 11 - 13 - 15",
-  "Lotomania: 02 - 10 - 22 - 35 - 44 - 55 - 66"
-];
+/* NOTÍCIAS (GNEWS) */
+async function noticias(){
+  let url = `https://gnews.io/api/v4/top-headlines?lang=pt&country=br&token=572a3b63c9f2a22dcf62bd79b812308c`;
+  let res = await fetch(url);
+  let data = await res.json();
 
-let iLoteria = 0;
-
-function atualizarLoteria() {
-  document.getElementById("loteria").innerText = loterias[iLoteria];
-  iLoteria = (iLoteria + 1) % loterias.length;
+  let i=0;
+  setInterval(()=>{
+    if(data.articles[i]){
+      document.getElementById("noticias").innerText = data.articles[i].title;
+      i=(i+1)%data.articles.length;
+    }
+  },5000);
 }
+noticias();
 
-setInterval(atualizarLoteria, 3000);
-atualizarLoteria();
+/* LOTERIA */
+async function loteria(){
+  let res = await fetch("https://loteriascaixa-api.herokuapp.com/api/megasena/latest");
+  let data = await res.json();
 
-/* HORÓSCOPO DINÂMICO */
-let signos = [
-  "Áries: Momento de decisões importantes.",
-  "Touro: Estabilidade e foco trazem resultados.",
-  "Gêmeos: Comunicação será essencial hoje.",
-  "Câncer: Cuide das emoções e do bem-estar.",
-  "Leão: Destaque e reconhecimento no caminho.",
-  "Virgem: Organização será sua força.",
-  "Libra: Busque equilíbrio nas decisões.",
-  "Escorpião: Transformações positivas chegando.",
-  "Sagitário: Oportunidades inesperadas surgirão.",
-  "Capricórnio: Persistência traz conquistas.",
-  "Aquário: Inovação e criatividade em alta.",
-  "Peixes: Intuição será seu guia hoje."
-];
-
-let iSigno = 0;
-
-function atualizarHoroscopo() {
-  document.getElementById("horoscopo").innerText = signos[iSigno];
-  iSigno = (iSigno + 1) % signos.length;
+  document.getElementById("loteria").innerText =
+    "Mega-Sena: " + data.dezenas.join(" ");
 }
-
-setInterval(atualizarHoroscopo, 4000);
-atualizarHoroscopo();
+loteria();
 </script>
 
 </body>
