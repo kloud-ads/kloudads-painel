@@ -3,141 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KloudAds Painel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>KloudAds TV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --glass: rgba(255, 255, 255, 0.12);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --font-main: 'Montserrat', sans-serif;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body {
-            background: radial-gradient(circle at center, #1e3c72, #2a5298); /* Fundo azul profundo das imagens */
+            background: radial-gradient(circle, #1e3c72 0%, #122240 100%);
             height: 100vh;
             width: 100vw;
-            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
             color: white;
-            font-family: var(--font-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Centraliza tudo verticalmente */
+            overflow: hidden;
+        }
+
+        /* Relógio no Topo */
+        #topo {
+            position: absolute;
+            top: 60px;
+            text-align: center;
+        }
+        #relogio { font-size: 120px; font-weight: 900; line-height: 1; letter-spacing: -2px; }
+        #data { font-size: 35px; text-transform: uppercase; margin-top: 10px; opacity: 0.8; }
+
+        /* Painel de Vidro Central */
+        .painel-vidro {
+            width: 85%;
+            height: 55%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            margin-top: 140px; /* Compensa a altura do relógio */
         }
 
-        /* Relógio Centralizado no Topo */
-        #header-clock {
-            position: absolute;
-            top: 50px;
-            text-align: center;
-            width: 100%;
-        }
+        .slide { display: none; text-align: center; animation: surge 0.5s ease-out forwards; width: 100%; }
+        .active { display: block; }
 
-        #clock { font-size: 110px; font-weight: 900; line-height: 1; }
-        #date { font-size: 30px; font-weight: 400; text-transform: uppercase; margin-top: 10px; opacity: 0.9; }
+        @keyframes surge { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        /* Painel Central (O Vidro Fosco) */
-        .glass-panel {
-            width: 1300px;
-            height: 600px;
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 150px;
-        }
+        /* Estilo Clima */
+        .cidade { font-size: 40px; color: #fdbb2d; text-transform: uppercase; margin-bottom: 10px; }
+        .temperatura { font-size: 200px; font-weight: 900; line-height: 1; }
+        .condicao { font-size: 40px; text-transform: capitalize; opacity: 0.9; }
 
-        .slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            padding: 60px;
-            text-align: center;
-            animation: scaleIn 0.6s ease-out;
-        }
-
-        .active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
-
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Loterias */
-        .ball-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 40px; }
-        .ball {
-            width: 95px; height: 95px; border-radius: 50%;
+        /* Estilo Loterias */
+        .lot-nome { font-size: 70px; font-weight: 900; margin-bottom: 20px; }
+        .dezenas { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 30px; }
+        .bola {
+            width: 90px; height: 90px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 42px; font-weight: 900; color: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            font-size: 45px; font-weight: 900; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
-        /* Clima */
-        .temp-val { font-size: 180px; font-weight: 900; letter-spacing: -5px; }
-        .weather-info { font-size: 45px; text-transform: uppercase; font-weight: 700; margin-bottom: 20px; color: #fdbb2d; }
+        /* Estilo Notícias */
+        .news-grid { display: flex; align-items: center; padding: 0 80px; gap: 50px; text-align: left; }
+        #n-img { width: 450px; height: 350px; border-radius: 40px; object-fit: cover; border: 4px solid rgba(255,255,255,0.2); }
+        .n-titulo { font-size: 45px; font-weight: 700; line-height: 1.2; }
 
-        /* Notícias */
-        .news-box { display: flex; align-items: center; gap: 60px; text-align: left; width: 100%; }
-        #news-img { width: 450px; height: 350px; border-radius: 30px; object-fit: cover; border: 5px solid var(--glass-border); }
-        .news-content { flex: 1; }
-        .news-title { font-size: 45px; font-weight: 800; line-height: 1.2; }
-
-        .label-cat { font-size: 25px; letter-spacing: 10px; opacity: 0.6; text-transform: uppercase; margin-bottom: 20px; }
+        .tag { font-size: 22px; letter-spacing: 8px; opacity: 0.5; text-transform: uppercase; margin-bottom: 25px; }
     </style>
 </head>
 <body>
 
-    <div id="header-clock">
-        <div id="clock">00:00:00</div>
-        <div id="date">Sábado, 4 de Abril</div>
+    <div id="topo">
+        <div id="relogio">00:00:00</div>
+        <div id="data">---</div>
     </div>
 
-    <div class="glass-panel">
-        <div class="slide active" id="slide-clima">
-            <div class="label-cat">Previsão do Tempo</div>
-            <div class="weather-info">Americana - SP</div>
-            <div style="display:flex; align-items: center; gap:30px;">
-                <div class="temp-val" id="temp">--°C</div>
+    <div class="painel-vidro">
+        <div class="slide active">
+            <div class="tag">Previsão do Tempo</div>
+            <div class="cidade">Americana - SP</div>
+            <div class="temperatura" id="temp-v">--°</div>
+            <div class="condicao" id="cond-v">Carregando...</div>
+        </div>
+
+        <div class="slide">
+            <div class="tag">Loterias Caixa</div>
+            <div class="lot-nome" style="color: #209869;">MEGA-SENA</div>
+            <div class="dezenas" id="mega-d"></div>
+        </div>
+
+        <div class="slide">
+            <div class="tag">Loterias Caixa</div>
+            <div class="lot-nome" style="color: #930089;">LOTOFÁCIL</div>
+            <div class="dezenas" id="loto-d"></div>
+        </div>
+
+        <div class="slide">
+            <div class="tag">GNews • Notícias</div>
+            <div class="news-grid">
+                <img id="n-img" src="">
+                <div class="n-titulo" id="n-txt">Buscando informações...</div>
             </div>
-            <div id="desc" style="font-size: 35px; opacity: 0.8;">Carregando...</div>
-        </div>
-
-        <div class="slide">
-            <div class="label-cat" style="color:#209869">Loterias Caixa</div>
-            <h1 style="font-size: 60px; color:#209869">MEGA-SENA</h1>
-            <p id="mega-conc" style="font-size: 30px; margin-top:10px;">Concurso ---</p>
-            <div class="ball-row" id="mega-balls"></div>
-        </div>
-
-        <div class="slide">
-            <div class="label-cat" style="color:#930089">Loterias Caixa</div>
-            <h1 style="font-size: 60px; color:#930089">LOTOFÁCIL</h1>
-            <p id="loto-conc" style="font-size: 30px; margin-top:10px;">Concurso ---</p>
-            <div class="ball-row" id="loto-balls"></div>
-        </div>
-
-        <div class="slide">
-            <div class="label-cat">GNews • Últimas Notícias</div>
-            <div class="news-box">
-                <img id="news-img" src="">
-                <div class="news-content">
-                    <div class="news-title" id="news-title">Carregando manchetes...</div>
-                    <p id="news-src" style="font-size: 25px; margin-top: 25px; color: #fdbb2d;"></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide">
-            <div class="label-cat">Horóscopo do Dia</div>
-            <h1 id="h-nome" style="font-size: 80px; color: #fdbb2d; text-transform: uppercase;">---</h1>
-            <p id="h-txt" style="font-size: 40px; margin-top: 40px; padding: 0 40px; font-style: italic; line-height: 1.4;"></p>
         </div>
     </div>
 
@@ -145,74 +114,48 @@
         const API_W = 'b0b0fbf4fb3bac7908252d23111a524d';
         const API_N = '572a3b63c9f2a22dcf62bd79b812308c';
 
-        function clock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('pt-BR');
-            document.getElementById('date').innerText = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        function updateTime() {
+            const d = new Date();
+            document.getElementById('relogio').innerText = d.toLocaleTimeString('pt-BR');
+            document.getElementById('data').innerText = d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
         }
-        setInterval(clock, 1000);
+        setInterval(updateTime, 1000);
 
-        async function getClima() {
+        async function loadData() {
             try {
-                const r = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_W}`);
-                const d = await r.json();
-                document.getElementById('temp').innerText = Math.round(d.main.temp) + '°C';
-                document.getElementById('desc').innerText = d.weather[0].description;
-            } catch(e) {}
-        }
+                // Clima
+                const w = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_W}`).then(r => r.json());
+                document.getElementById('temp-v').innerText = Math.round(w.main.temp) + '°';
+                document.getElementById('cond-v').innerText = w.weather[0].description;
 
-        async function getLoterias() {
-            try {
-                const r1 = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest');
-                const m = await r1.json();
-                document.getElementById('mega-conc').innerText = `Concurso ${m.concurso} (${m.data})`;
-                const mb = document.getElementById('mega-balls');
-                mb.innerHTML = m.dezenas.map(n => `<div class="ball" style="background:#209869">${n}</div>`).join('');
+                // Loterias
+                const m = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest').then(r => r.json());
+                document.getElementById('mega-d').innerHTML = m.dezenas.map(n => `<div class="bola" style="background:#209869">${n}</div>`).join('');
+                
+                const l = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest').then(r => r.json());
+                document.getElementById('loto-d').innerHTML = l.dezenas.map(n => `<div class="bola" style="background:#930089; width:70px; height:70px; font-size:30px;">${n}</div>`).join('');
 
-                const r2 = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest');
-                const l = await r2.json();
-                document.getElementById('loto-conc').innerText = `Concurso ${l.concurso}`;
-                const lb = document.getElementById('loto-balls');
-                lb.innerHTML = l.dezenas.map(n => `<div class="ball" style="background:#930089; width:70px; height:70px; font-size:30px;">${n}</div>`).join('');
-            } catch(e) {}
-        }
-
-        async function getNews() {
-            try {
-                const r = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_N}`);
-                const d = await r.json();
-                if(d.articles.length > 0) {
-                    document.getElementById('news-title').innerText = d.articles[0].title;
-                    document.getElementById('news-img').src = d.articles[0].image;
-                    document.getElementById('news-src').innerText = `Fonte: ${d.articles[0].source.name}`;
+                // Notícias
+                const n = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_N}`).then(r => r.json());
+                if(n.articles.length > 0) {
+                    document.getElementById('n-txt').innerText = n.articles[0].title;
+                    document.getElementById('n-img').src = n.articles[0].image;
                 }
-            } catch(e) {}
+            } catch(e) { console.log("Erro na carga"); }
         }
 
-        const signos = [
-            {n: "Touro", t: "Foque na estabilidade financeira. É um bom momento para planejar investimentos."},
-            {n: "Gêmeos", t: "Sua criatividade está em alta. Aproveite para colocar novas ideias em prática."},
-            {n: "Áries", t: "Energia renovada para novos projetos. Siga sua intuição e avance com coragem."}
-        ];
-        let hIdx = 0;
-        function signCycle() {
-            document.getElementById('h-nome').innerText = signos[hIdx].n;
-            document.getElementById('h-txt').innerText = `"${signos[hIdx].t}"`;
-            hIdx = (hIdx + 1) % signos.length;
-        }
-
-        let sIdx = 0;
+        let current = 0;
         const slides = document.querySelectorAll('.slide');
-        function cycle() {
-            slides[sIdx].classList.remove('active');
-            sIdx = (sIdx + 1) % slides.length;
-            slides[sIdx].classList.add('active');
-            if(sIdx === 4) signCycle();
+        function rotate() {
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
         }
 
-        getClima(); getLoterias(); getNews(); signCycle();
-        setInterval(cycle, 15000);
-        setInterval(getClima, 600000);
+        loadData();
+        updateTime();
+        setInterval(rotate, 15000); // 15 seg cada tela
+        setInterval(loadData, 600000); // Recarrega APIs a cada 10 min
     </script>
 </body>
 </html>
