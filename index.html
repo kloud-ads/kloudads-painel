@@ -2,120 +2,154 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>KloudAds Broadcast PRO</title>
+<title>KloudAds Elite Final</title>
 
 <style>
 body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: black;
+  margin:0;
+  overflow:hidden;
+  font-family:-apple-system, Arial;
+  background:black;
 }
 
-/* TELAS */
+/* TRANSIÇÃO */
 .tela {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
+  position:absolute;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transform: scale(1.05);
   transition: all 1.2s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.tela.ativa {
+  opacity:1;
+  transform: scale(1);
 }
 
-.ativa {
-  opacity: 1;
-}
-
-/* ===== CLIMA ===== */
+/* ================= CLIMA ================= */
 .clima-bg {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(#4facfe, #00c6ff);
-  position: relative;
-  overflow: hidden;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  background: linear-gradient(#4facfe,#00f2fe);
 }
 
-.nuvem {
-  position: absolute;
-  width: 300px;
-  height: 100px;
-  background: white;
-  border-radius: 100px;
-  opacity: 0.6;
-  animation: mover 40s linear infinite;
+/* partículas */
+.clima-bg::after {
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background: radial-gradient(circle,rgba(255,255,255,0.08) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:particles 40s linear infinite;
 }
 
-@keyframes mover {
-  from { left: -300px; }
-  to { left: 110%; }
+@keyframes particles {
+  from { transform:translateY(0); }
+  to { transform:translateY(-200px); }
 }
 
-.sol {
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle,#FFD700,#FFA500);
-  border-radius: 50%;
-  animation: pulsar 3s infinite;
-}
-
-@keyframes pulsar {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-.chuva {
-  position: absolute;
-  width: 2px;
-  height: 15px;
-  background: white;
-  animation: cair 1s linear infinite;
-}
-
-@keyframes cair {
-  from { transform: translateY(-100px); }
-  to { transform: translateY(100vh); }
-}
-
+/* glass */
 .glass {
-  backdrop-filter: blur(25px);
-  background: rgba(255,255,255,0.15);
-  padding: 60px;
-  border-radius: 25px;
-  text-align: center;
-  color: white;
+  backdrop-filter: blur(30px);
+  background: rgba(255,255,255,0.12);
+  padding: 70px 90px;
+  border-radius: 35px;
+  text-align:center;
+  color:white;
+  box-shadow:0 30px 80px rgba(0,0,0,0.4);
 }
 
-.glass h1 {
-  font-size: 90px;
+.glass h1 { font-size:100px; margin:0; }
+.glass p { font-size:75px; }
+
+/* ================= HORA ================= */
+.hora-bg {
+  width:100%;
+  height:100%;
+  background: radial-gradient(circle,#111,#000);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-.glass p {
-  font-size: 70px;
+.hora-bg h1 {
+  font-size:60px;
+  color:#d4af37;
+  letter-spacing:4px;
 }
 
-/* ===== HORA ===== */
-.relogio h1 {
-  font-size: 200px;
-  color: white;
+.hora-bg p {
+  font-size:190px;
+  color:white;
+  text-shadow:0 0 60px rgba(255,255,255,0.4);
 }
 
-/* ===== PADRÃO ===== */
-.padrao {
-  flex-direction: column;
-  text-align: center;
+/* ================= NOTÍCIAS ================= */
+.noticia-bg {
+  width:100%;
+  height:100%;
+  background: linear-gradient(#0f2027,#203a43,#2c5364);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-.padrao h1 {
-  font-size: 110px;
-  color: #d4af37;
+.noticia-bg h1 { font-size:100px; color:white; }
+
+.fade-text {
+  font-size:65px;
+  color:white;
+  max-width:80%;
+  text-align:center;
+  transition:opacity 0.8s;
 }
 
-.padrao p {
-  font-size: 65px;
-  color: white;
-  max-width: 80%;
+/* ================= LOTERIA ================= */
+.loteria-bg {
+  width:100%;
+  height:100%;
+  background: radial-gradient(circle,#006400,#003300);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.loteria-bg h1 { font-size:100px; color:white; }
+
+.numeros {
+  display:flex;
+  gap:25px;
+  margin-top:50px;
+}
+
+.bola {
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:white;
+  color:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:45px;
+  font-weight:bold;
+  animation:pop 0.5s ease;
+}
+
+@keyframes pop {
+  from { transform:scale(0); }
+  to { transform:scale(1); }
 }
 </style>
 </head>
@@ -125,103 +159,111 @@ body {
 <!-- CLIMA -->
 <div class="tela ativa">
   <div class="clima-bg" id="climaBg">
-    <div class="nuvem" style="top:20%"></div>
-    <div class="nuvem" style="top:50%"></div>
-
     <div class="glass">
-      <div id="iconeClima"></div>
       <h1>Americana</h1>
-      <p id="clima"></p>
+      <p id="clima">Carregando...</p>
     </div>
   </div>
 </div>
 
 <!-- HORA -->
 <div class="tela">
-  <div class="relogio">
-    <h1 id="hora"></h1>
+  <div class="hora-bg">
+    <h1>HORÁRIO DE BRASÍLIA</h1>
+    <p id="hora"></p>
   </div>
 </div>
 
 <!-- NOTÍCIAS -->
-<div class="tela padrao">
-  <h1>Notícias</h1>
-  <p id="noticias"></p>
+<div class="tela">
+  <div class="noticia-bg">
+    <h1>NOTÍCIAS</h1>
+    <p id="noticias" class="fade-text"></p>
+  </div>
 </div>
 
 <!-- LOTERIA -->
-<div class="tela padrao">
-  <h1>Loterias</h1>
-  <p id="loteria"></p>
+<div class="tela">
+  <div class="loteria-bg">
+    <h1>MEGA-SENA</h1>
+    <div id="numeros" class="numeros"></div>
+  </div>
 </div>
 
 <script>
-let telas = document.querySelectorAll('.tela');
-let atual = 0;
+let telas=document.querySelectorAll('.tela');
+let atual=0;
 
-function trocarTela(){
+function trocar(){
   telas.forEach(t=>t.classList.remove('ativa'));
   atual=(atual+1)%telas.length;
   telas[atual].classList.add('ativa');
 }
-setInterval(trocarTela,8000);
+setInterval(trocar,8000);
 
-/* RELÓGIO */
+/* HORA */
 setInterval(()=>{
   document.getElementById("hora").innerText =
-    new Date().toLocaleTimeString();
+    new Date().toLocaleTimeString("pt-BR");
 },1000);
 
 /* CLIMA */
 async function clima(){
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=b0b0fbf4fb3bac7908252d23111a524d`;
-  let res = await fetch(url);
-  let data = await res.json();
+  let r=await fetch("https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=b0b0fbf4fb3bac7908252d23111a524d");
+  let d=await r.json();
 
-  let temp = Math.round(data.main.temp);
-  let cond = data.weather[0].main;
+  document.getElementById("clima").innerText =
+    Math.round(d.main.temp)+"°C - "+d.weather[0].description;
 
-  document.getElementById("clima").innerText = temp+"°C";
+  let bg=document.getElementById("climaBg");
 
-  let icone = document.getElementById("iconeClima");
-  let bg = document.getElementById("climaBg");
-
-  if(cond.includes("Rain")){
-    icone.innerHTML = "🌧";
-    bg.style.background = "linear-gradient(#4e54c8,#8f94fb)";
-  } else if(cond.includes("Cloud")){
-    icone.innerHTML = "☁️";
-    bg.style.background = "linear-gradient(#757f9a,#d7dde8)";
+  if(d.weather[0].main.includes("Rain")){
+    bg.style.background="linear-gradient(#4e54c8,#8f94fb)";
+  } else if(d.weather[0].main.includes("Cloud")){
+    bg.style.background="linear-gradient(#757f9a,#d7dde8)";
   } else {
-    icone.innerHTML = "<div class='sol'></div>";
-    bg.style.background = "linear-gradient(#4facfe,#00f2fe)";
+    bg.style.background="linear-gradient(#4facfe,#00f2fe)";
   }
 }
 clima();
+setInterval(clima,300000);
 
-/* NOTÍCIAS (GNEWS) */
+/* NOTÍCIAS */
 async function noticias(){
-  let url = `https://gnews.io/api/v4/top-headlines?lang=pt&country=br&token=572a3b63c9f2a22dcf62bd79b812308c`;
-  let res = await fetch(url);
-  let data = await res.json();
+  let r=await fetch("https://gnews.io/api/v4/top-headlines?lang=pt&country=br&token=572a3b63c9f2a22dcf62bd79b812308c");
+  let d=await r.json();
 
   let i=0;
   setInterval(()=>{
-    if(data.articles[i]){
-      document.getElementById("noticias").innerText = data.articles[i].title;
-      i=(i+1)%data.articles.length;
-    }
+    let el=document.getElementById("noticias");
+    el.style.opacity=0;
+
+    setTimeout(()=>{
+      if(d.articles[i]){
+        el.innerText=d.articles[i].title;
+        i=(i+1)%d.articles.length;
+      }
+      el.style.opacity=1;
+    },500);
+
   },5000);
 }
 noticias();
 
 /* LOTERIA */
 async function loteria(){
-  let res = await fetch("https://loteriascaixa-api.herokuapp.com/api/megasena/latest");
-  let data = await res.json();
+  let r=await fetch("https://loteriascaixa-api.herokuapp.com/api/megasena/latest");
+  let d=await r.json();
 
-  document.getElementById("loteria").innerText =
-    "Mega-Sena: " + data.dezenas.join(" ");
+  let c=document.getElementById("numeros");
+  c.innerHTML="";
+
+  d.dezenas.forEach(n=>{
+    let div=document.createElement("div");
+    div.className="bola";
+    div.innerText=n;
+    c.appendChild(div);
+  });
 }
 loteria();
 </script>
