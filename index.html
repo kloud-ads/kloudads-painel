@@ -3,131 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mídia Indoor Americana</title>
+    <title>Mídia Indoor Profissional - Americana SP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --glass: rgba(255, 255, 255, 0.15);
-            --border: rgba(255, 255, 255, 0.3);
-            --mega: #209869;
-            --loto: #930089;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --bg-color: #0a192f; /* Azul profundo das imagens */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
 
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            height: 100vh;
+            background: radial-gradient(circle at center, #1a3a5f, #0a192f);
+            height: 1080px;
+            width: 1920px;
+            overflow: hidden;
             color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow: hidden;
         }
 
-        /* Topo: Relógio */
-        #header { text-align: center; padding: 30px 0; }
-        #clock { font-size: 90px; font-weight: 800; letter-spacing: 2px; }
-        #date { font-size: 24px; opacity: 0.8; text-transform: uppercase; }
+        /* Relógio Centralizado no Topo - Conforme solicitado */
+        #header-clock {
+            margin-top: 50px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        #clock { font-size: 100px; font-weight: 900; }
+        #date { font-size: 30px; opacity: 0.8; text-transform: uppercase; margin-top: -10px; }
 
-        /* Container Principal */
-        .container {
-            width: 90vw;
-            height: 65vh;
+        /* Painel de Vidro (Glassmorphism) */
+        .main-panel {
+            margin-top: 40px;
+            width: 1500px;
+            height: 700px;
             background: var(--glass);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 2px solid var(--border);
-            border-radius: 40px;
+            border: 2px solid var(--glass-border);
+            border-radius: 50px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .slide {
             display: none;
             width: 100%;
-            padding: 40px;
+            height: 100%;
+            padding: 60px;
             text-align: center;
-            animation: fadeIn 0.8s ease forwards;
+            animation: slideIn 0.8s ease-out;
         }
 
         .active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Loterias */
-        .ball-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 30px 0; }
+        /* Estilos Loterias */
+        .balls { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 40px 0; }
         .ball {
-            width: 80px; height: 80px; border-radius: 50%;
+            width: 100px; height: 100px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 35px; font-weight: bold; color: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-size: 45px; font-weight: 900; color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 -5px 10px rgba(0,0,0,0.2);
         }
 
-        /* Notícias */
-        .news-flex { display: flex; align-items: center; gap: 40px; text-align: left; }
-        #news-img { width: 50%; height: 400px; border-radius: 20px; object-fit: cover; }
-        #news-text { width: 50%; }
+        /* Estilos Notícias */
+        .news-layout { display: flex; align-items: center; gap: 60px; text-align: left; height: 100%; }
+        .news-img { width: 600px; height: 450px; border-radius: 30px; object-fit: cover; border: 5px solid var(--glass-border); }
+        .news-info { flex: 1; }
 
-        /* Clima */
-        .clima-row { display: flex; justify-content: center; align-items: center; gap: 40px; }
-        .temp { font-size: 160px; font-weight: bold; }
+        /* Estilos Clima */
+        .temp-val { font-size: 180px; font-weight: 900; line-height: 1; }
+        .clima-details { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; font-size: 30px; }
 
-        .label { font-size: 20px; letter-spacing: 5px; opacity: 0.7; margin-bottom: 10px; text-transform: uppercase; }
+        .label-top { font-size: 24px; letter-spacing: 8px; opacity: 0.6; margin-bottom: 20px; text-transform: uppercase; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="header">
+    <div id="header-clock">
         <div id="clock">00:00:00</div>
-        <div id="date">---</div>
+        <div id="date">SÁBADO, 04 DE ABRIL</div>
     </div>
 
-    <div class="container">
-        <div class="slide active" id="slide-clima">
-            <div class="label">Previsão do Tempo</div>
+    <div class="main-panel">
+        <div class="slide active" id="slide-mega">
+            <div class="label-top">Loterias Caixa</div>
+            <h1 style="font-size: 60px; color: #209869;">MEGA-SENA</h1>
+            <h2 id="mega-concurso" style="font-size: 35px; margin-top: 10px;">Concurso 2680</h2>
+            <div class="balls" id="mega-balls"></div>
+            <div style="font-size: 40px;" id="mega-premio">PRÊMIO ESTIMADO: R$ 45.000.000,00</div>
+        </div>
+
+        <div class="slide" id="slide-loto">
+            <div class="label-top">Loterias Caixa</div>
+            <h1 style="font-size: 60px; color: #930089;">LOTOFÁCIL</h1>
+            <h2 id="loto-concurso" style="font-size: 35px; margin-top: 10px;">Concurso 2950</h2>
+            <div class="balls" id="loto-balls"></div>
+        </div>
+
+        <div class="slide" id="slide-clima">
+            <div class="label-top">Previsão do Tempo</div>
             <h1 style="font-size: 50px;">AMERICANA - SP</h1>
-            <div class="clima-row">
-                <img id="w-icon" src="" style="width: 200px;">
-                <div class="temp" id="w-temp">--°</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 60px; margin-top: 20px;">
+                <img id="clima-icon" src="" style="width: 250px;">
+                <div class="temp-val" id="clima-temp">--°</div>
             </div>
-            <p id="w-desc" style="font-size: 35px; text-transform: capitalize;">Carregando...</p>
+            <div class="clima-details">
+                <div>MÍN: <span id="clima-min">--°</span> | MÁX: <span id="clima-max">--°</span></div>
+                <div>UMIDADE: <span id="clima-hum">--%</span></div>
+            </div>
         </div>
 
-        <div class="slide">
-            <div class="label">Loterias | Mega-Sena</div>
-            <h2 id="mega-concurso" style="font-size: 35px;">Carregando...</h2>
-            <div class="ball-container" id="mega-balls"></div>
-            <p id="mega-premio" style="font-size: 30px; color: #55ff55;"></p>
-        </div>
-
-        <div class="slide">
-            <div class="label">Loterias | Lotofácil</div>
-            <h2 id="loto-concurso" style="font-size: 35px;">Carregando...</h2>
-            <div class="ball-container" id="loto-balls"></div>
-        </div>
-
-        <div class="slide">
-            <div class="label">Últimas Notícias</div>
-            <div class="news-flex">
-                <img id="news-img" src="https://via.placeholder.com/600x400?text=Noticias">
-                <div id="news-text">
-                    <h2 id="news-title" style="font-size: 38px; line-height: 1.2;">Buscando manchetes...</h2>
-                    <p id="news-source" style="font-size: 22px; margin-top: 20px; color: #fdbb2d;"></p>
+        <div class="slide" id="slide-news">
+            <div class="label-top">GNews • Últimas Notícias</div>
+            <div class="news-layout">
+                <img id="news-img" src="" class="news-img">
+                <div class="news-info">
+                    <h2 id="news-title" style="font-size: 45px; line-height: 1.2; margin-bottom: 30px;">Carregando manchetes...</h2>
+                    <p id="news-source" style="font-size: 28px; color: #fdbb2d; font-weight: bold;"></p>
                 </div>
             </div>
         </div>
 
-        <div class="slide">
-            <div class="label">Horóscopo do Dia</div>
-            <h1 id="h-signo" style="font-size: 70px; color: #fdbb2d;">---</h1>
-            <p id="h-texto" style="font-size: 35px; padding: 0 60px; margin-top: 30px; line-height: 1.4;"></p>
+        <div class="slide" id="slide-horoscopo">
+            <div class="label-top">Horóscopo do Dia</div>
+            <h1 id="h-signo" style="font-size: 80px; color: #fdbb2d; text-shadow: 0 0 30px rgba(253, 187, 45, 0.4);">---</h1>
+            <p id="h-previsao" style="font-size: 42px; line-height: 1.5; margin-top: 50px; padding: 0 100px; font-style: italic;"></p>
         </div>
     </div>
 
@@ -135,92 +146,91 @@
         const API_WEATHER = 'b0b0fbf4fb3bac7908252d23111a524d';
         const API_GNEWS = '572a3b63c9f2a22dcf62bd79b812308c';
 
-        // 1. Relógio
-        function updateTime() {
+        // 1. Relógio Infalível
+        function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString('pt-BR');
-            document.getElementById('date').innerText = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+            document.getElementById('date').innerText = now.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'}).toUpperCase();
         }
-        setInterval(updateTime, 1000);
+        setInterval(updateClock, 1000);
 
-        // 2. Clima
-        async function fetchWeather() {
+        // 2. Clima Americana
+        async function getClima() {
             try {
-                const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_WEATHER}`);
-                const d = await res.json();
-                document.getElementById('w-temp').innerText = Math.round(d.main.temp) + '°';
-                document.getElementById('w-desc').innerText = d.weather[0].description;
-                document.getElementById('w-icon').src = `https://openweathermap.org/img/wn/${d.weather[0].icon}@4x.png`;
-            } catch (e) { console.error(e); }
-        }
-
-        // 3. Loterias (Usando Proxy para evitar erro de CORS)
-        async function fetchLoterias() {
-            try {
-                const res = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest');
-                const mega = await res.json();
-                document.getElementById('mega-concurso').innerText = `Concurso ${mega.concurso} (${mega.data})`;
-                const mBalls = document.getElementById('mega-balls');
-                mBalls.innerHTML = '';
-                mega.dezenas.forEach(n => {
-                    mBalls.innerHTML += `<div class="ball" style="background:#209869">${n}</div>`;
-                });
-                document.getElementById('mega-premio').innerText = `Prêmio: ${mega.valorEstimadoProximoConcurso.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}`;
-
-                const res2 = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest');
-                const loto = await res2.json();
-                document.getElementById('loto-concurso').innerText = `Concurso ${loto.concurso}`;
-                const lBalls = document.getElementById('loto-balls');
-                lBalls.innerHTML = '';
-                loto.dezenas.forEach(n => {
-                    lBalls.innerHTML += `<div class="ball" style="background:#930089; width:60px; height:60px; font-size:25px;">${n}</div>`;
-                });
-            } catch (e) { console.error("Erro nas loterias"); }
+                const r = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=${API_WEATHER}`);
+                const d = await r.json();
+                document.getElementById('clima-temp').innerText = Math.round(d.main.temp) + '°';
+                document.getElementById('clima-min').innerText = Math.round(d.main.temp_min) + '°';
+                document.getElementById('clima-max').innerText = Math.round(d.main.temp_max) + '°';
+                document.getElementById('clima-hum').innerText = d.main.humidity + '%';
+                document.getElementById('clima-icon').src = `https://openweathermap.org/img/wn/${d.weather[0].icon}@4x.png`;
+            } catch (e) { console.error("Erro Clima"); }
         }
 
-        // 4. Notícias
-        async function fetchNews() {
+        // 3. Loterias (Mega e Loto)
+        async function getLoterias() {
             try {
-                const res = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_GNEWS}`);
-                const d = await res.json();
+                const rMega = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest');
+                const dMega = await rMega.json();
+                document.getElementById('mega-concurso').innerText = `Concurso ${dMega.concurso} (${dMega.data})`;
+                const bMega = document.getElementById('mega-balls');
+                bMega.innerHTML = '';
+                dMega.dezenas.forEach(n => bMega.innerHTML += `<div class="ball" style="background:#209869">${n}</div>`);
+                document.getElementById('mega-premio').innerText = `PRÊMIO ESTIMADO: ${dMega.valorEstimadoProximoConcurso.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}`;
+
+                const rLoto = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest');
+                const dLoto = await rLoto.json();
+                document.getElementById('loto-concurso').innerText = `Concurso ${dLoto.concurso}`;
+                const bLoto = document.getElementById('loto-balls');
+                bLoto.innerHTML = '';
+                dLoto.dezenas.forEach(n => bLoto.innerHTML += `<div class="ball" style="background:#930089; width:75px; height:75px; font-size:30px;">${n}</div>`);
+            } catch (e) { console.error("Erro Loterias"); }
+        }
+
+        // 4. Notícias GNews
+        async function getNews() {
+            try {
+                const r = await fetch(`https://gnews.io/api/v4/top-headlines?category=general&lang=pt&country=br&max=1&apikey=${API_GNEWS}`);
+                const d = await r.json();
                 if(d.articles.length > 0) {
                     document.getElementById('news-title').innerText = d.articles[0].title;
                     document.getElementById('news-img').src = d.articles[0].image;
-                    document.getElementById('news-source').innerText = `Fonte: ${d.articles[0].source.name} • ${d.articles[0].publishedAt.split('T')[0]}`;
+                    document.getElementById('news-source').innerText = `FONTE: ${d.articles[0].source.name.toUpperCase()}`;
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Erro News"); }
         }
 
-        // 5. Horóscopo (Ciclo de signos)
+        // 5. Horóscopo Dinâmico
         const signos = [
-            {n: "Áries", t: "O momento pede foco total nos seus objetivos profissionais. Evite distrações."},
-            {n: "Touro", t: "Sua determinação será recompensada. Bom dia para organizar as finanças."},
-            {n: "Gêmeos", t: "Novas conexões podem surgir hoje. Seja aberto a ouvir opiniões diferentes."}
+            {n: "ÁRIES", p: "O dia favorece novas iniciativas. Sua energia está em alta para resolver pendências."},
+            {n: "TOURO", p: "Foque na estabilidade financeira. É um bom momento para planejar investimentos."},
+            {n: "GÊMEOS", p: "Sua comunicação será sua maior aliada hoje. Aproveite para fechar acordos."}
         ];
-        let sIdx = 0;
-        function updateHoro() {
-            document.getElementById('h-signo').innerText = signos[sIdx].n;
-            document.getElementById('h-texto').innerText = signos[sIdx].t;
-            sIdx = (sIdx + 1) % signos.length;
+        let idxSigno = 0;
+        function rotateHoroscopo() {
+            document.getElementById('h-signo').innerText = signos[idxSigno].n;
+            document.getElementById('h-previsao').innerText = `"${signos[idxSigno].p}"`;
+            idxSigno = (idxSigno + 1) % signos.length;
         }
 
-        // Sistema de Carrossel
+        // Lógica do Carrossel
         let slideIdx = 0;
         const slides = document.querySelectorAll('.slide');
-        function rotateSlides() {
+        function nextSlide() {
             slides[slideIdx].classList.remove('active');
             slideIdx = (slideIdx + 1) % slides.length;
             slides[slideIdx].classList.add('active');
-            if(slides[slideIdx].id === '') updateHoro(); 
+            if(slides[slideIdx].id === 'slide-horoscopo') rotateHoroscopo();
         }
 
-        // Início
-        fetchWeather();
-        fetchLoterias();
-        fetchNews();
-        updateHoro();
-        setInterval(rotateSlides, 15000); // Troca a cada 15 segundos
-        setInterval(fetchWeather, 600000); // Atualiza clima a cada 10 min
+        // Start
+        updateClock();
+        getClima();
+        getLoterias();
+        getNews();
+        rotateHoroscopo();
+        setInterval(nextSlide, 15000); // 15 Segundos por tela
+        setInterval(getClima, 900000); // Atualiza dados a cada 15 min
     </script>
 </body>
 </html>
