@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KloudAds Elite - Americana</title>
+    <title>Painel KloudAds Elite V3</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
@@ -16,73 +16,81 @@
             overflow: hidden;
         }
 
-        /* Inversão: Data em cima, Hora embaixo */
+        /* Topo: Data e Hora Invertidos com Respiro */
         #topo { 
-            position: absolute; 
-            top: 40px; 
-            text-align: center; 
-            width: 100%; 
-            z-index: 10;
+            position: absolute; top: 35px; 
+            text-align: center; width: 100%; z-index: 10;
         }
         #data-extenso { 
-            font-size: 35px; 
-            text-transform: uppercase; 
-            font-weight: 700;
-            opacity: 0.9; 
-            letter-spacing: 3px;
+            font-size: 28px; text-transform: uppercase; 
+            font-weight: 700; opacity: 0.8; letter-spacing: 3px;
             margin-bottom: 5px;
         }
         #relogio { 
-            font-size: 100px; 
-            font-weight: 900; 
-            line-height: 1; 
+            font-size: 115px; font-weight: 900; line-height: 1; 
             text-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
 
         .painel-vidro {
-            width: 90%; height: 52%;
+            width: 92%; height: 58%;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-            margin-top: 140px; 
-            position: relative;
+            margin-top: 140px; position: relative;
         }
 
         .slide { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease; padding: 20px; }
         .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .tag { font-size: 18px; letter-spacing: 5px; opacity: 0.6; text-transform: uppercase; margin-bottom: 15px; display: block; color: #00d2ff; }
+        .tag { font-size: 18px; letter-spacing: 5px; opacity: 0.6; text-transform: uppercase; margin-bottom: 20px; display: block; color: #00d2ff; }
         
         /* Clima */
-        .clima-row { display: flex; align-items: center; justify-content: center; gap: 30px; }
-        #clima-emoji { font-size: 120px; }
-        .temp-txt { font-size: 150px; font-weight: 900; }
-        .desc-clima { font-size: 30px; opacity: 0.9; text-transform: capitalize; }
+        #clima-emoji { font-size: 140px; display: block; margin-bottom: 5px; }
+        .temp-txt { font-size: 170px; font-weight: 900; line-height: 1; }
+        .desc-clima { font-size: 35px; opacity: 0.9; text-transform: capitalize; }
 
-        /* Loterias */
-        .lot-titulo { font-size: 60px; font-weight: 900; margin-bottom: 10px; }
-        .bolas-wrap { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        /* Loterias - Ajuste Estratégico */
+        .lot-titulo { font-size: 70px; font-weight: 900; margin-bottom: 10px; }
+        
+        /* Grade Geral */
+        .bolas-wrap { 
+            display: grid; 
+            gap: 15px; 
+            justify-content: center; 
+            margin: 0 auto;
+        }
+
+        /* Mega-Sena: 1 linha de 6 */
+        #mega-balls { grid-template-columns: repeat(6, 1fr); max-width: 700px; }
+
+        /* LOTOFÁCIL: 3 linhas de 5 (Sua sugestão) */
+        #loto-balls { 
+            grid-template-columns: repeat(5, 1fr); 
+            max-width: 550px; 
+            gap: 12px;
+        }
+        
         .bola-num {
-            width: 65px; height: 65px; border-radius: 50%;
+            width: 80px; height: 80px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 30px; font-weight: 900; border: 2px solid rgba(255,255,255,0.3);
+            font-size: 38px; font-weight: 900; border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
         }
 
         /* News */
-        .news-titulo { font-size: 40px; font-weight: 700; line-height: 1.3; padding: 0 60px; }
+        .news-titulo { font-size: 45px; font-weight: 700; line-height: 1.3; padding: 0 60px; color: #fff; }
 
-        /* Logo no Rodapé */
-        #rodape-logo {
-            position: absolute;
-            bottom: 30px;
-            width: 250px; /* Ajuste o tamanho conforme necessário */
-            opacity: 0.9;
+        /* Logo Rodapé */
+        #container-logo {
+            position: absolute; bottom: 25px;
+            width: 100%; display: flex; justify-content: center;
         }
+        #rodape-logo { height: 90px; width: auto; object-fit: contain; }
     </style>
 </head>
 <body>
@@ -95,35 +103,34 @@
     <div class="painel-vidro">
         <div class="slide active">
             <span class="tag">Previsão do Tempo</span>
-            <div style="font-size: 30px; color: #fdbb2d; margin-bottom: 10px;">AMERICANA - SP</div>
-            <div class="clima-row">
-                <div id="clima-emoji">☀️</div>
-                <div class="temp-txt" id="display-temp">--°C</div>
-            </div>
+            <div id="clima-emoji">☀️</div>
+            <div class="temp-txt" id="display-temp">--°C</div>
             <div class="desc-clima" id="display-desc">Atualizando...</div>
         </div>
 
         <div class="slide">
-            <span class="tag">Notícias Regionais 019</span>
-            <div class="news-titulo" id="news-txt">Buscando manchetes...</div>
+            <span class="tag">Notícias Americana e Região</span>
+            <div class="news-titulo" id="news-txt">Sincronizando as principais notícias da região...</div>
         </div>
 
         <div class="slide">
             <span class="tag">Loterias Caixa</span>
             <div class="lot-titulo" style="color: #209869;">MEGA-SENA</div>
-            <div id="mega-info" style="margin-bottom:15px; opacity:0.7">---</div>
+            <div id="mega-info" style="margin-bottom:20px; opacity:0.8; font-size: 24px;">---</div>
             <div class="bolas-wrap" id="mega-balls"></div>
         </div>
 
         <div class="slide">
             <span class="tag">Loterias Caixa</span>
             <div class="lot-titulo" style="color: #930089;">LOTOFÁCIL</div>
-            <div id="loto-info" style="margin-bottom:15px; opacity:0.7">---</div>
+            <div id="loto-info" style="margin-bottom:20px; opacity:0.8; font-size: 24px;">---</div>
             <div class="bolas-wrap" id="loto-balls"></div>
         </div>
     </div>
 
-    <img src="image.png" id="rodape-logo" alt="KloudAds Logo">
+    <div id="container-logo">
+        <img src="image.png" id="rodape-logo" onerror="console.log('Logo não encontrada')">
+    </div>
 
     <script>
         function updateClock() {
@@ -141,20 +148,17 @@
                 const data = await res.json();
                 document.getElementById('display-temp').innerText = Math.round(data.main.temp) + '°C';
                 document.getElementById('display-desc').innerText = data.weather[0].description;
-                // Emojis simples baseados na condição
-                const icon = data.weather[0].icon;
-                const emojiMap = {'01d':'☀️','01n':'🌙','02d':'⛅','02n':'☁️','03d':'☁️','04d':'☁️','09d':'🌧️','10d':'🌦️','11d':'⛈️'};
-                document.getElementById('clima-emoji').innerText = emojiMap[icon] || '🌤️';
+                const emojiMap = {'01d':'☀️','01n':'🌙','02d':'⛅','02n':'☁️','03d':'☁️','04d':'☁️','09d':'🌧️','10d':'🌦️','11d':'⛈️','13d':'❄️','50d':'🌫️'};
+                document.getElementById('clima-emoji').innerText = emojiMap[data.weather[0].icon] || '🌤️';
             } catch (e) {}
         }
 
         async function getNews() {
             try {
-                const rssUrl = encodeURIComponent('https://g1.globo.com/sp/campinas-regiao/rss/g1/');
-                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fg1.globo.com%2Fsp%2Fcampinas-regiao%2Frss%2Fg1%2F`);
                 const data = await res.json();
-                if(data.items) {
-                    const i = Math.floor(Math.random() * 5);
+                if(data.items && data.items.length > 0) {
+                    const i = Math.floor(Math.random() * Math.min(data.items.length, 10));
                     document.getElementById('news-txt').innerText = data.items[i].title;
                 }
             } catch (e) {}
@@ -163,11 +167,11 @@
         async function getLoterias() {
             try {
                 const mega = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest').then(r => r.json());
-                document.getElementById('mega-info').innerText = `Concurso ${mega.concurso} - ${mega.data}`;
+                document.getElementById('mega-info').innerText = `Concurso ${mega.concurso} • ${mega.data}`;
                 document.getElementById('mega-balls').innerHTML = mega.dezenas.map(n => `<div class="bola-num" style="background:#209869">${n}</div>`).join('');
 
                 const loto = await fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest').then(r => r.json());
-                document.getElementById('loto-info').innerText = `Concurso ${loto.concurso} - ${loto.data}`;
+                document.getElementById('loto-info').innerText = `Concurso ${loto.concurso} • ${loto.data}`;
                 document.getElementById('loto-balls').innerHTML = loto.dezenas.map(n => `<div class="bola-num" style="background:#930089">${n}</div>`).join('');
             } catch (e) {}
         }
