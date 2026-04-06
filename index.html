@@ -48,8 +48,9 @@
 
     .layout {
       display: flex;
-      width: 100%;
-      height: 100%
+      width: 1920px;
+      height: 1080px;
+      transform-origin: top left;
     }
 
     .sidebar {
@@ -716,12 +717,13 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
       </div>
       <div class="weather-wrap">
         <div class="glass" style="text-align:center">
-          <div class="weather-city" id="wCity">Carregando...</div>
-          <div id="wIcon" style="font-size:75px;line-height:1.2;margin:8px 0;text-shadow:0 8px 24px rgba(0,0,0,0.3)">🌤️
-          </div>
-          <div style="display:flex;align-items:baseline;justify-content:center">
-            <span class="weather-temp" id="wTemp">--</span>
-            <span class="weather-unit">°C</span>
+          <div class="weather-city" id="wCity" style="margin-bottom:16px;">Carregando...</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:12px;">
+            <div id="wIcon" style="font-size:80px;line-height:1;text-shadow:0 8px 24px rgba(0,0,0,0.3)">🌤️</div>
+            <div style="display:flex;align-items:baseline;">
+              <span class="weather-temp" id="wTemp">--</span>
+              <span class="weather-unit">°C</span>
+            </div>
           </div>
           <div class="weather-minmax">mín: <strong id="wMin">--</strong>° / máx: <strong id="wMax">--</strong>°</div>
           <div class="weather-desc" id="wDesc"></div>
@@ -765,6 +767,17 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
   </div>
 
   <script>
+    // ========== RESPONSIVIDADE (ESCALA INTELIGENTE PARA 4K / SMART TVS) ==========
+    function scaleLayout() {
+      const el = document.querySelector('.layout');
+      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      el.style.transform = `scale(${scale})`;
+      el.style.marginLeft = `${(window.innerWidth - (1920 * scale)) / 2}px`;
+      el.style.marginTop = `${(window.innerHeight - (1080 * scale)) / 2}px`;
+    }
+    window.addEventListener('resize', scaleLayout);
+    scaleLayout();
+
     // ========== FERRAMENTAS UTILITÁRIAS ==========
     const IS_LOCAL = false; // Permitindo que o arquivo faça fetch() livremente (as APIs suportadas tem allow-origin)
     function lsGet(k) { try { return JSON.parse(localStorage.getItem('kloudads_' + k)); } catch { return null; } }
