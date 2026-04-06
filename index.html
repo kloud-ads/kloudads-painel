@@ -701,11 +701,11 @@
   </style>
 </head>
 
-<!--O sistema foi desenvolvido com o código totalmente organizado e devidamente comentado,
-facilitando futuras manutenções, ajustes e possíveis expansões.
-Cada parte do código contém explicações claras para que qualquer alteração possa ser realizada de forma simples e segura, 
-mesmo em atualizações futuras.
-Isso garante mais autonomia, estabilidade e facilidade caso seja necessário adaptar o painel conforme novas necessidades.-->
+<!--O sistema foi desenvolvido com o cÃ³digo totalmente organizado e devidamente comentado,
+facilitando futuras manutenÃ§Ãµes, ajustes e possÃ­veis expansÃµes.
+Cada parte do cÃ³digo contÃ©m explicaÃ§Ãµes claras para que qualquer alteraÃ§Ã£o possa ser realizada de forma simples e segura, 
+mesmo em atualizaÃ§Ãµes futuras.
+Isso garante mais autonomia, estabilidade e facilidade caso seja necessÃ¡rio adaptar o painel conforme novas necessidades.-->
 
 <body>
   <div class="layout">
@@ -719,13 +719,13 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
         <div class="glass" style="text-align:center">
           <div class="weather-city" id="wCity" style="margin-bottom:16px;">Carregando...</div>
           <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:12px;">
-            <div id="wIcon" style="font-size:80px;line-height:1;text-shadow:0 8px 24px rgba(0,0,0,0.3)">🌤️</div>
+            <div id="wIcon" style="font-size:80px;line-height:1;text-shadow:0 8px 24px rgba(0,0,0,0.3)">ðŸŒ¤ï¸</div>
             <div style="display:flex;align-items:baseline;">
               <span class="weather-temp" id="wTemp">--</span>
-              <span class="weather-unit">°C</span>
+              <span class="weather-unit">Â°C</span>
             </div>
           </div>
-          <div class="weather-minmax">mín: <strong id="wMin">--</strong>° / máx: <strong id="wMax">--</strong>°</div>
+          <div class="weather-minmax">mÃ­n: <strong id="wMin">--</strong>Â° / mÃ¡x: <strong id="wMax">--</strong>Â°</div>
           <div class="weather-desc" id="wDesc"></div>
         </div>
       </div>
@@ -743,21 +743,21 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
         <!-- NEWS SLIDE -->
         <div class="slide" id="slide-news">
           <div class="slide-header">
-            <h2>Notícias da Região</h2><span class="badge">Atualizado agora</span>
+            <h2>NotÃ­cias da RegiÃ£o</h2><span class="badge">Atualizado agora</span>
           </div>
           <div class="news-grid" id="newsGrid"></div>
         </div>
         <!-- LOTTERY SLIDE -->
         <div class="slide" id="slide-lottery">
           <div class="slide-header">
-            <h2>Loterias Caixa</h2><span class="badge">Últimos Resultados</span>
+            <h2>Loterias Caixa</h2><span class="badge">Ãšltimos Resultados</span>
           </div>
           <div id="lotteryContent"></div>
         </div>
         <!-- HOROSCOPE SLIDE -->
         <div class="slide" id="slide-horoscope">
           <div class="slide-header">
-            <h2>Horóscopo do Dia</h2><span class="badge" id="horoDate"></span>
+            <h2>HorÃ³scopo do Dia</h2><span class="badge" id="horoDate"></span>
           </div>
           <div class="horo-grid" id="horoGrid"></div>
         </div>
@@ -778,39 +778,39 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
     window.addEventListener('resize', scaleLayout);
     scaleLayout();
 
-    // ========== FERRAMENTAS UTILITÁRIAS ==========
-    const IS_LOCAL = false; // Permitindo que o arquivo faça fetch() livremente (as APIs suportadas tem allow-origin)
+    // ========== FERRAMENTAS UTILITÃRIAS ==========
+    const IS_LOCAL = false; // Permitindo que o arquivo faÃ§a fetch() livremente (as APIs suportadas tem allow-origin)
     function lsGet(k) { try { return JSON.parse(localStorage.getItem('kloudads_' + k)); } catch { return null; } }
     function lsSet(k, v) { try { localStorage.setItem('kloudads_' + k, JSON.stringify(v)); } catch { } }
 
-    // ========== MÓDULO DE RELÓGIO ==========
-    const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-    const DAYS = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+    // ========== MÃ“DULO DE RELÃ“GIO ==========
+    const MONTHS = ['Janeiro', 'Fevereiro', 'MarÃ§o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const DAYS = ['Domingo', 'Segunda-feira', 'TerÃ§a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'SÃ¡bado'];
     function updateClock() {
       const n = new Date(), h = n.getHours().toString().padStart(2, '0'), m = n.getMinutes().toString().padStart(2, '0');
       document.getElementById('clockTime').textContent = h + ':' + m;
       document.getElementById('clockDate').textContent = DAYS[n.getDay()] + ', ' + n.getDate().toString().padStart(2, '0') + ' de ' + MONTHS[n.getMonth()] + ' de ' + n.getFullYear();
       
-      // Auto-Reload da Madrugada (04:00:00) para limpar cache/memória do navegador da TV
+      // Auto-Reload da Madrugada (04:00:00) para limpar cache/memÃ³ria do navegador da TV
       if (n.getHours() === 4 && n.getMinutes() === 0 && n.getSeconds() === 0) {
         window.location.reload(true);
       }
     }
     updateClock(); setInterval(updateClock, 1000);
 
-    // ========== MÓDULO DE CLIMA ==========
-    function nightIcon(icon) { const h = new Date().getHours(); if (h >= 18 || h < 6) { if (icon === '☀️' || icon === '🌤️') return '🌙'; if (icon === '⛅') return '☁️'; } return icon; }
+    // ========== MÃ“DULO DE CLIMA ==========
+    function nightIcon(icon) { const h = new Date().getHours(); if (h >= 18 || h < 6) { if (icon === 'â˜€ï¸' || icon === 'ðŸŒ¤ï¸') return 'ðŸŒ™'; if (icon === 'â›…') return 'â˜ï¸'; } return icon; }
     const CITIES = [
-      { name: 'Campinas, SP', temp: 26, min: 20, max: 29, desc: 'Céu limpo com poucas nuvens', icon: '☀️' },
-      { name: 'Americana, SP', temp: 28, min: 22, max: 31, desc: 'Sol com nuvens esparsas', icon: '⛅' },
-      { name: 'São Paulo, SP', temp: 23, min: 18, max: 25, desc: 'Parcialmente nublado', icon: '🌤️' },
-      { name: 'Limeira, SP', temp: 27, min: 21, max: 30, desc: 'Tempo seco e ensolarado', icon: '☀️' },
-      { name: 'Piracicaba, SP', temp: 25, min: 19, max: 28, desc: 'Possibilidade de chuva leve', icon: '🌦️' },
+      { name: 'Campinas, SP', temp: 26, min: 20, max: 29, desc: 'CÃ©u limpo com poucas nuvens', icon: 'â˜€ï¸' },
+      { name: 'Americana, SP', temp: 28, min: 22, max: 31, desc: 'Sol com nuvens esparsas', icon: 'â›…' },
+      { name: 'SÃ£o Paulo, SP', temp: 23, min: 18, max: 25, desc: 'Parcialmente nublado', icon: 'ðŸŒ¤ï¸' },
+      { name: 'Limeira, SP', temp: 27, min: 21, max: 30, desc: 'Tempo seco e ensolarado', icon: 'â˜€ï¸' },
+      { name: 'Piracicaba, SP', temp: 25, min: 19, max: 28, desc: 'Possibilidade de chuva leve', icon: 'ðŸŒ¦ï¸' },
     ];
     let cityIdx = 0, useApi = true;
     function setWeather(w) {
       document.getElementById('wCity').textContent = w.name;
-      document.getElementById('wIcon').textContent = w.icon || '🌤️';
+      document.getElementById('wIcon').textContent = w.icon || 'ðŸŒ¤ï¸';
       document.getElementById('wTemp').textContent = w.temp;
       document.getElementById('wMin').textContent = w.min;
       document.getElementById('wMax').textContent = w.max;
@@ -834,11 +834,11 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
            dMin = Math.min(...todayList.map(item => Math.floor(item.main.temp_min)));
            dMax = Math.max(...todayList.map(item => Math.ceil(item.main.temp_max)));
         }
-        if (dMin === dMax) { dMin -= 2; dMax += 3; } // Garantia estética caso a API trave a oscilação no presente
+        if (dMin === dMax) { dMin -= 2; dMax += 3; } // Garantia estÃ©tica caso a API trave a oscilaÃ§Ã£o no presente
         
-        const emojiMap = { '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️', '03d': '☁️', '04d': '☁️', '04n': '☁️', '09d': '🌧️', '09n': '🌧️', '10d': '🌦️', '10n': '🌦️', '11d': '⛈️', '11n': '⛈️', '13d': '❄️', '13n': '❄️', '50d': '🌫️', '50n': '🌫️' };
+        const emojiMap = { '01d': 'â˜€ï¸', '01n': 'ðŸŒ™', '02d': 'â›…', '02n': 'â˜ï¸', '03d': 'â˜ï¸', '04d': 'â˜ï¸', '04n': 'â˜ï¸', '09d': 'ðŸŒ§ï¸', '09n': 'ðŸŒ§ï¸', '10d': 'ðŸŒ¦ï¸', '10n': 'ðŸŒ¦ï¸', '11d': 'â›ˆï¸', '11n': 'â›ˆï¸', '13d': 'â„ï¸', '13n': 'â„ï¸', '50d': 'ðŸŒ«ï¸', '50n': 'ðŸŒ«ï¸' };
         const desc = d.weather[0].description;
-        const w = { name: 'Americana, SP', temp: Math.round(d.main.temp), min: dMin, max: dMax, desc: desc.charAt(0).toUpperCase() + desc.slice(1), icon: emojiMap[d.weather[0].icon] || '🌤️' };
+        const w = { name: 'Americana, SP', temp: Math.round(d.main.temp), min: dMin, max: dMax, desc: desc.charAt(0).toUpperCase() + desc.slice(1), icon: emojiMap[d.weather[0].icon] || 'ðŸŒ¤ï¸' };
         setWeather(w); lsSet('weather', w);
         useApi = true;
       } catch {
@@ -857,10 +857,10 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
     fetchWeather(); setInterval(fetchWeather, 600000);
     setInterval(() => { if (!useApi) rotateCities(); }, 15000);
 
-    // ========== MÓDULO DOS SLIDES (ROTAÇÃO) ==========
+    // ========== MÃ“DULO DOS SLIDES (ROTAÃ‡ÃƒO) ==========
     const SLIDE_KEYS = ['news', 'lottery', 'horoscope'];
     const SLIDE_COLORS = ['#90caf9', '#c71585', '#ffd700'];
-    const SLIDE_LABELS = ['Notícias', 'Loterias', 'Horóscopo'];
+    const SLIDE_LABELS = ['NotÃ­cias', 'Loterias', 'HorÃ³scopo'];
     let currentSlide = 0;
     function showSlide(idx) {
       SLIDE_KEYS.forEach((k, i) => { document.getElementById('slide-' + k).classList.toggle('active', i === idx); });
@@ -875,15 +875,15 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
       indEl.appendChild(d);
     });
     showSlide(0);
-    // TEMPO DOS SLIDES: Edite o número "10000" abaixo para alterar o tempo de exibição de cada tela (Exemplo: 5000 = 5 segundos, 15000 = 15 segundos)
+    // TEMPO DOS SLIDES: Edite o nÃºmero "10000" abaixo para alterar o tempo de exibiÃ§Ã£o de cada tela (Exemplo: 5000 = 5 segundos, 15000 = 15 segundos)
     setInterval(() => showSlide((currentSlide + 1) % 3), 10000);
 
-    // ========== MÓDULO DE NOTÍCIAS ==========
-    const CATEGORIES = ['🔴 Destaque', 'Regional', 'Política', 'Economia', 'Cotidiano', 'Educação', 'Saúde', 'Cultura', 'Tecnologia', 'Esporte'];
+    // ========== MÃ“DULO DE NOTÃCIAS ==========
+    const CATEGORIES = ['ðŸ”´ Destaque', 'Regional', 'PolÃ­tica', 'Economia', 'Cotidiano', 'EducaÃ§Ã£o', 'SaÃºde', 'Cultura', 'Tecnologia', 'Esporte'];
     const fallbackNews = [
-      { title: 'Região: acompanhe notícias e serviços em Campinas e cidades vizinhas', category: '🔴 Destaque', source: 'G1 Campinas e Região', image: null, bullets: ['Dados ao vivo dependem da conexão com o feed RSS.', 'Verifique firewall e CORS ao abrir o arquivo localmente.'] },
-      { title: 'Ato do 8 de fevereiro discutirá impactos das enchentes em Campinas', category: 'Política', source: 'G1 Campinas' },
-      { title: 'Economia regional: empresas acompanham indicadores e investimentos na área', category: 'Economia', source: 'G1 Regional' },
+      { title: 'RegiÃ£o: acompanhe notÃ­cias e serviÃ§os em Campinas e cidades vizinhas', category: 'ðŸ”´ Destaque', source: 'G1 Campinas e RegiÃ£o', image: null, bullets: ['Dados ao vivo dependem da conexÃ£o com o feed RSS.', 'Verifique firewall e CORS ao abrir o arquivo localmente.'] },
+      { title: 'Ato do 8 de fevereiro discutirÃ¡ impactos das enchentes em Campinas', category: 'PolÃ­tica', source: 'G1 Campinas' },
+      { title: 'Economia regional: empresas acompanham indicadores e investimentos na Ã¡rea', category: 'Economia', source: 'G1 Regional' },
     ];
     let allNews = [], newsPage = 0;
     function stripHtml(h) { const d = document.createElement('div'); d.innerHTML = h; return (d.textContent || '').replace(/\s+/g, ' ').trim(); }
@@ -898,7 +898,7 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
           const items = d.items.map((item, idx) => {
             const el = document.createElement('div'); el.innerHTML = item.title || '';
             const title = (el.textContent || '').trim(); if (!title) return null;
-            return { title, category: CATEGORIES[idx % CATEGORIES.length], source: 'G1 Campinas e Região', image: extractImage(item), bullets: idx === 0 ? getBullets(item.content || item.description || '') : undefined };
+            return { title, category: CATEGORIES[idx % CATEGORIES.length], source: 'G1 Campinas e RegiÃ£o', image: extractImage(item), bullets: idx === 0 ? getBullets(item.content || item.description || '') : undefined };
           }).filter(Boolean);
           allNews = items.length >= 3 ? items : fallbackNews;
           if (allNews !== fallbackNews) lsSet('news', allNews);
@@ -920,7 +920,7 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
       const featured = display[0], others = display.slice(1);
       const g = document.getElementById('newsGrid');
       let html = '<div class="news-featured glass fade-in"><div class="news-featured-inner">';
-      html += '<div class="news-featured-img">' + (featured.image ? '<img src="' + featured.image + '" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:0.35;background:linear-gradient(135deg,rgba(21,101,192,0.3),rgba(128,0,255,0.2))">📰</div>') + '</div>';
+      html += '<div class="news-featured-img">' + (featured.image ? '<img src="' + featured.image + '" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:0.35;background:linear-gradient(135deg,rgba(21,101,192,0.3),rgba(128,0,255,0.2))">ðŸ“°</div>') + '</div>';
       html += '<div class="news-featured-content"><div class="news-cat">' + safeHTML(featured.category) + '</div><div class="news-title-gold">' + safeHTML(featured.title) + '</div>';
       if (featured.bullets?.length) { html += '<ul class="news-bullets">'; featured.bullets.forEach(b => { html += '<li>' + safeHTML(b) + '</li>'; }); html += '</ul>'; }
       html += '<div class="news-source">' + safeHTML(featured.source) + '</div></div></div></div>';
@@ -949,9 +949,9 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
           fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest'),
           fetch('https://loteriascaixa-api.herokuapp.com/api/quina/latest'),
         ]);
-        if (mR.status === 'fulfilled' && mR.value.ok) { const d = await mR.value.json(); megaData = { c: (d.concurso ? d.concurso + ' — ' + d.data : '2.XXX'), n: d.dezenas ? d.dezenas.map(Number) : genNums(6, 60), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(48500000), acumulou: d.acumulou === true }; }
-        if (lR.status === 'fulfilled' && lR.value.ok) { const d = await lR.value.json(); lotoData = { c: (d.concurso ? d.concurso + ' — ' + d.data : 'X.XXX'), n: d.dezenas ? d.dezenas.map(Number) : genNums(15, 25), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(1700000) }; }
-        if (qR.status === 'fulfilled' && qR.value.ok) { const d = await qR.value.json(); quinaData = { c: (d.concurso ? d.concurso + ' — ' + d.data : 'X.XXX'), n: d.dezenas ? d.dezenas.map(Number).slice(0, 5) : genNums(5, 80), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(2500000) }; }
+        if (mR.status === 'fulfilled' && mR.value.ok) { const d = await mR.value.json(); megaData = { c: (d.concurso ? d.concurso + ' â€” ' + d.data : '2.XXX'), n: d.dezenas ? d.dezenas.map(Number) : genNums(6, 60), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(48500000), acumulou: d.acumulou === true }; }
+        if (lR.status === 'fulfilled' && lR.value.ok) { const d = await lR.value.json(); lotoData = { c: (d.concurso ? d.concurso + ' â€” ' + d.data : 'X.XXX'), n: d.dezenas ? d.dezenas.map(Number) : genNums(15, 25), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(1700000) }; }
+        if (qR.status === 'fulfilled' && qR.value.ok) { const d = await qR.value.json(); quinaData = { c: (d.concurso ? d.concurso + ' â€” ' + d.data : 'X.XXX'), n: d.dezenas ? d.dezenas.map(Number).slice(0, 5) : genNums(5, 80), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(2500000) }; }
         lsSet('lottery', { mega: megaData, loto: lotoData, quina: quinaData });
       } catch {
         const cached = lsGet('lottery');
@@ -968,57 +968,57 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
       const el = document.getElementById('lotteryContent');
       let h = '<div class="lotto-col" style="margin-bottom:28px"><div class="lotto-badge" style="background:var(--mega-green);border-color:rgba(255,255,255,0.28)">MEGA-SENA</div><div class="lotto-concurso">Concurso ' + megaData.c + '</div><div class="ball-grid" style="grid-template-columns:repeat(6,1fr);max-width:460px">';
       megaData.n.forEach(n => { h += '<div class="ball ball-mega">' + pad2(n) + '</div>'; });
-      h += '</div><div class="lotto-prize">Prêmio: <strong' + (megaData.acumulou ? ' class="acumulou"' : '') + ' style="color:var(--color-gold)">' + megaData.p + '</strong></div></div>';
-      h += '<div class="lotto-grid"><div class="lotto-col"><div class="lotto-badge magenta">LOTOFÁCIL</div><div class="lotto-concurso">Concurso ' + lotoData.c + '</div><div class="ball-grid cols5">';
+      h += '</div><div class="lotto-prize">PrÃªmio: <strong' + (megaData.acumulou ? ' class="acumulou"' : '') + ' style="color:var(--color-gold)">' + megaData.p + '</strong></div></div>';
+      h += '<div class="lotto-grid"><div class="lotto-col"><div class="lotto-badge magenta">LOTOFÃCIL</div><div class="lotto-concurso">Concurso ' + lotoData.c + '</div><div class="ball-grid cols5">';
       lotoData.n.forEach(n => { h += '<div class="ball ball-purple">' + pad2(n) + '</div>'; });
-      h += '</div><div class="lotto-prize">Prêmio: <strong class="pink">' + lotoData.p + '</strong></div></div>';
+      h += '</div><div class="lotto-prize">PrÃªmio: <strong class="pink">' + lotoData.p + '</strong></div></div>';
       h += '<div class="lotto-col"><div class="lotto-badge blue">QUINA</div><div class="lotto-concurso">Concurso ' + quinaData.c + '</div><div class="ball-grid cols5">';
       quinaData.n.forEach(n => { h += '<div class="ball ball-blue">' + pad2(n) + '</div>'; });
-      h += '</div><div class="lotto-prize">Prêmio: <strong class="blue">' + quinaData.p + '</strong></div></div></div>';
+      h += '</div><div class="lotto-prize">PrÃªmio: <strong class="blue">' + quinaData.p + '</strong></div></div></div>';
       el.innerHTML = h;
     }
     fetchLottery(); setInterval(fetchLottery, 300000);
 
     // ========== Horoscopo 
     const ZODIAC = [
-      { sign: 'Áries', symbol: '♈', dates: '21/03 - 19/04', keywords: ['Energia', 'Coragem', 'Ação'] },
-      { sign: 'Touro', symbol: '♉', dates: '20/04 - 20/05', keywords: ['Estabilidade', 'Amor', 'Paciência'] },
-      { sign: 'Gêmeos', symbol: '♊', dates: '21/05 - 20/06', keywords: ['Comunicação', 'Versatilidade'] },
-      { sign: 'Câncer', symbol: '♋', dates: '21/06 - 22/07', keywords: ['Família', 'Proteção', 'Intuição'] },
-      { sign: 'Leão', symbol: '♌', dates: '23/07 - 22/08', keywords: ['Criatividade', 'Liderança'] },
-      { sign: 'Virgem', symbol: '♍', dates: '23/08 - 22/09', keywords: ['Organização', 'Saúde', 'Detalhe'] },
-      { sign: 'Libra', symbol: '♎', dates: '23/09 - 22/10', keywords: ['Harmonia', 'Equilíbrio'] },
-      { sign: 'Escorpião', symbol: '♏', dates: '23/10 - 21/11', keywords: ['Transformação', 'Intensidade'] },
-      { sign: 'Sagitário', symbol: '♐', dates: '22/11 - 21/12', keywords: ['Aventura', 'Otimismo'] },
-      { sign: 'Capricórnio', symbol: '♑', dates: '22/12 - 19/01', keywords: ['Disciplina', 'Ambição'] },
-      { sign: 'Aquário', symbol: '♒', dates: '20/01 - 18/02', keywords: ['Inovação', 'Liberdade'] },
-      { sign: 'Peixes', symbol: '♓', dates: '19/02 - 20/03', keywords: ['Sensibilidade', 'Sonhos'] },
+      { sign: 'Ãries', symbol: 'â™ˆ', dates: '21/03 - 19/04', keywords: ['Energia', 'Coragem', 'AÃ§Ã£o'] },
+      { sign: 'Touro', symbol: 'â™‰', dates: '20/04 - 20/05', keywords: ['Estabilidade', 'Amor', 'PaciÃªncia'] },
+      { sign: 'GÃªmeos', symbol: 'â™Š', dates: '21/05 - 20/06', keywords: ['ComunicaÃ§Ã£o', 'Versatilidade'] },
+      { sign: 'CÃ¢ncer', symbol: 'â™‹', dates: '21/06 - 22/07', keywords: ['FamÃ­lia', 'ProteÃ§Ã£o', 'IntuiÃ§Ã£o'] },
+      { sign: 'LeÃ£o', symbol: 'â™Œ', dates: '23/07 - 22/08', keywords: ['Criatividade', 'LideranÃ§a'] },
+      { sign: 'Virgem', symbol: 'â™', dates: '23/08 - 22/09', keywords: ['OrganizaÃ§Ã£o', 'SaÃºde', 'Detalhe'] },
+      { sign: 'Libra', symbol: 'â™Ž', dates: '23/09 - 22/10', keywords: ['Harmonia', 'EquilÃ­brio'] },
+      { sign: 'EscorpiÃ£o', symbol: 'â™', dates: '23/10 - 21/11', keywords: ['TransformaÃ§Ã£o', 'Intensidade'] },
+      { sign: 'SagitÃ¡rio', symbol: 'â™', dates: '22/11 - 21/12', keywords: ['Aventura', 'Otimismo'] },
+      { sign: 'CapricÃ³rnio', symbol: 'â™‘', dates: '22/12 - 19/01', keywords: ['Disciplina', 'AmbiÃ§Ã£o'] },
+      { sign: 'AquÃ¡rio', symbol: 'â™’', dates: '20/01 - 18/02', keywords: ['InovaÃ§Ã£o', 'Liberdade'] },
+      { sign: 'Peixes', symbol: 'â™“', dates: '19/02 - 20/03', keywords: ['Sensibilidade', 'Sonhos'] },
     ];
     const HORO_MSGS = [
       'Dia de novas oportunidades. Mantenha-se aberto a propostas inesperadas que podem surgir.',
-      'Foque na sua saúde e bem-estar. Cuidar de si mesmo deve ser prioridade hoje.',
-      'Sua criatividade está em alta. Aproveite para desenvolver projetos pessoais importantes.',
-      'Momento favorável para decisões financeiras. Planeje com cuidado seus investimentos.',
-      'A comunicação flui bem hoje. Ótimo momento para resolver pendências e diálogos.',
-      'Concentre-se no que realmente importa. Evite distrações e mantenha o foco nos objetivos.',
-      'Relacionamentos ganham destaque. Valorize quem está ao seu lado e demonstre carinho.',
-      'Bom momento para reflexão interior. Meditar pode trazer clareza sobre questões importantes.',
-      'Surpresas positivas podem chegar. Esteja preparado para mudanças favoráveis.',
-      'A energia do dia favorece novos começos. Não tenha medo de recomeçar algo.',
-      'Uma fase de transformação se inicia. Abrace as mudanças com confiança e determinação.',
-      'O universo conspira a seu favor. Confie na sua intuição e siga em frente.',
-      'Dia propício para fortalecer laços familiares. Dedique tempo a quem você ama.',
-      'Sua determinação será recompensada. Continue firme em seus propósitos e colha os frutos.',
-      'Novas conexões podem abrir portas importantes. Esteja receptivo a conhecer pessoas.',
+      'Foque na sua saÃºde e bem-estar. Cuidar de si mesmo deve ser prioridade hoje.',
+      'Sua criatividade estÃ¡ em alta. Aproveite para desenvolver projetos pessoais importantes.',
+      'Momento favorÃ¡vel para decisÃµes financeiras. Planeje com cuidado seus investimentos.',
+      'A comunicaÃ§Ã£o flui bem hoje. Ã“timo momento para resolver pendÃªncias e diÃ¡logos.',
+      'Concentre-se no que realmente importa. Evite distraÃ§Ãµes e mantenha o foco nos objetivos.',
+      'Relacionamentos ganham destaque. Valorize quem estÃ¡ ao seu lado e demonstre carinho.',
+      'Bom momento para reflexÃ£o interior. Meditar pode trazer clareza sobre questÃµes importantes.',
+      'Surpresas positivas podem chegar. Esteja preparado para mudanÃ§as favorÃ¡veis.',
+      'A energia do dia favorece novos comeÃ§os. NÃ£o tenha medo de recomeÃ§ar algo.',
+      'Uma fase de transformaÃ§Ã£o se inicia. Abrace as mudanÃ§as com confianÃ§a e determinaÃ§Ã£o.',
+      'O universo conspira a seu favor. Confie na sua intuiÃ§Ã£o e siga em frente.',
+      'Dia propÃ­cio para fortalecer laÃ§os familiares. Dedique tempo a quem vocÃª ama.',
+      'Sua determinaÃ§Ã£o serÃ¡ recompensada. Continue firme em seus propÃ³sitos e colha os frutos.',
+      'Novas conexÃµes podem abrir portas importantes. Esteja receptivo a conhecer pessoas.',
       'O momento pede cautela nas palavras. Pense antes de falar e evite mal-entendidos.',
       'Aproveite a energia positiva para organizar sua rotina e planejar o futuro.',
-      'A generosidade será sua aliada. Ajudar os outros trará satisfação pessoal profunda.',
+      'A generosidade serÃ¡ sua aliada. Ajudar os outros trarÃ¡ satisfaÃ§Ã£o pessoal profunda.',
       'Momento ideal para aprender algo novo. Invista em conhecimento e crescimento pessoal.',
-      'Confie no seu potencial. Você tem todas as ferramentas para superar os desafios do dia.',
-      'O equilíbrio entre trabalho e lazer é essencial hoje. Reserve tempo para relaxar.',
-      'Sua intuição estará aguçada. Use-a para tomar decisões importantes com sabedoria.',
-      'Boas notícias podem chegar de longe. Mantenha os canais de comunicação abertos.',
-      'A perseverança é a chave do sucesso hoje. Não desista diante dos obstáculos.'
+      'Confie no seu potencial. VocÃª tem todas as ferramentas para superar os desafios do dia.',
+      'O equilÃ­brio entre trabalho e lazer Ã© essencial hoje. Reserve tempo para relaxar.',
+      'Sua intuiÃ§Ã£o estarÃ¡ aguÃ§ada. Use-a para tomar decisÃµes importantes com sabedoria.',
+      'Boas notÃ­cias podem chegar de longe. Mantenha os canais de comunicaÃ§Ã£o abertos.',
+      'A perseveranÃ§a Ã© a chave do sucesso hoje. NÃ£o desista diante dos obstÃ¡culos.'
     ];
     function horoHash(idx, doy) { return ((idx * 7 + doy * 13 + idx * doy) % HORO_MSGS.length + HORO_MSGS.length) % HORO_MSGS.length; }
     function renderHoroscope() {
@@ -1040,7 +1040,7 @@ Isso garante mais autonomia, estabilidade e facilidade caso seja necessário ada
     }
     renderHoroscope();
 
-    // ========== LOGO (PNG embutido em base64; ficheiro externo não necessário) nao esquecer disso Estevan==
+    // ========== LOGO (PNG embutido em base64; ficheiro externo nÃ£o necessÃ¡rio) nao esquecer disso Estevan==
   </script>
 </body>
 
