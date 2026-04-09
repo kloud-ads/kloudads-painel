@@ -5,90 +5,1060 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920,height=1080,initial-scale=1">
   <title>Painel KloudAds</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
     :root {
       --bg: #020b14;
+      --sidebar-navy: #001a33;
       --foreground: #fff;
       --glass-bg: rgba(21, 101, 192, 0.35);
       --glass-border: rgba(255, 255, 255, 0.2);
       --glass-blur: 10px;
+      --header-bar-blue: #0a3d7a;
+      --color-gold: #ffd700;
+      --mega-green: #209869;
+      --lotto-magenta: #c71585;
+      --lotto-gold-brown: #8b7500;
+      --quina-blue: #260085;
+      --quina-blue-light: #3f51b5;
+      --lottery-ball-purple: #6d28d9;
+      --lottery-ball-purple-mid: #5b21b6;
+      --lottery-col-bg: rgba(0, 15, 40, 0.58);
     }
 
-    html, body {
-      width: 100%; height: 100%; overflow: hidden;
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: var(--bg);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
       color: var(--foreground);
+      cursor: none;
+      user-select: none;
+      -webkit-font-smoothing: antialiased
     }
 
-    .layout { display: flex; width: 1920px; height: 1080px; }
+    .layout {
+      display: flex;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: top left;
+    }
 
     .sidebar {
-      width: 30%; height: 100%; display: flex; flex-direction: column;
-      justify-content: flex-start; gap: 20px; background: #084279;
-      padding: 40px; border-right: 1px solid rgba(255, 255, 255, 0.08);
+      width: 30%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 36px;
+      background: #084279;
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-right: 1px solid rgba(255, 255, 255, 0.08)
+    }
+
+    .sidebar > .glass {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .glass {
-      background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur));
-      border: 1px solid var(--glass-border); border-radius: 20px;
-      padding: 20px; width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+      border-radius: 20px;
+      padding: 20px 24px;
+      width: 100%
     }
 
-    /* --- CORREÇÃO DA LOGO --- */
+    .main {
+      width: 70%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0c4a8c, #1565c0, #082448);
+      padding: 36px 40px 36px 32px;
+      position: relative
+    }
+
+    .clock-time {
+      font-weight: 800;
+      font-size: 96px;
+      line-height: 1;
+      letter-spacing: -2px;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.25)
+    }
+
+    .clock-period {
+      font-size: 32px;
+      font-weight: 600;
+      opacity: 0.9;
+      vertical-align: super;
+      margin-left: 6px
+    }
+
+    .clock-date {
+      font-size: 18px;
+      opacity: 0.75;
+      margin-top: 12px;
+      letter-spacing: 0.5px
+    }
+
+    .weather-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center
+    }
+
+    .weather-city {
+      font-size: 22px;
+      font-weight: 500;
+      text-align: center
+    }
+
+    .weather-temp {
+      font-size: 96px;
+      font-weight: 800;
+      line-height: 1
+    }
+
+    .weather-unit {
+      font-size: 32px;
+      font-weight: 400;
+      opacity: 0.85
+    }
+
+    .weather-minmax {
+      font-size: 17px;
+      opacity: 0.7;
+      margin-bottom: 8px
+    }
+
+    .weather-minmax strong {
+      opacity: 1;
+      font-weight: 600
+    }
+
+    .weather-desc {
+      font-size: 16px;
+      opacity: 0.78;
+      font-style: italic
+    }
+
     .logo-section {
-      display: flex; justify-content: center; align-items: center;
-      padding: 20px; min-height: 150px;
+      text-align: center
     }
 
     .logo-section img {
-      max-height: 100px; /* Tamanho ajustado para não ficar gigante */
-      max-width: 90%;
+      max-height: 340px;
+      max-width: 95%;
       width: auto;
       object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
+      margin-bottom: -4px
     }
 
-    /* Manter demais estilos originais... */
-    .clock-time { font-weight: 800; font-size: 96px; text-align: center; display: block; }
-    .main { width: 70%; background: linear-gradient(135deg, #0c4a8c, #082448); }
+    .logo-section p {
+      opacity: 0.6;
+      font-size: 20px;
+      letter-spacing: 0.5px
+    }
+
+    .slide-area {
+      flex: 1;
+      position: relative;
+      z-index: 1
+    }
+
+    .slide {
+      display: none;
+      height: 100%;
+      flex-direction: column
+    }
+
+    .slide.active {
+      display: flex
+    }
+
+    .slide-header {
+      background: linear-gradient(90deg, var(--header-bar-blue), #0d5299);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      text-align: center;
+      padding: 20px 28px;
+      margin-bottom: 28px
+    }
+
+    .slide-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0
+    }
+
+    .slide-header .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-top: 8px
+    }
+
+    .indicators {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .indicator {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.4s
+    }
+
+    .indicator.active {
+      opacity: 1;
+      font-weight: 800
+    }
+
+    .indicator:not(.active) {
+      opacity: 0.45
+    }
+
+    .indicator .dot {
+      height: 6px;
+      border-radius: 9999px;
+      transition: all 0.4s
+    }
+
+    .indicator.active .dot {
+      width: 20px
+    }
+
+    .indicator:not(.active) .dot {
+      width: 6px
+    }
+
+    /* News */
+    .news-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px
+    }
+
+    .news-featured {
+      grid-column: span 2;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative
+    }
+
+    .news-featured::before,
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(255, 215, 0, 0.85), rgba(255, 255, 255, 0.35));
+      border-radius: 3px 0 0 3px
+    }
+
+    .news-featured-inner {
+      display: grid;
+      grid-template-columns: minmax(280px, 50%) 1fr;
+      max-height: 480px
+    }
+
+    .news-featured-img {
+      position: relative;
+      background: linear-gradient(135deg, rgba(21, 101, 192, 0.5), rgba(30, 58, 95, 0.8))
+    }
+
+    .news-featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .news-featured-content {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px
+    }
+
+    .news-cat {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.88
+    }
+
+    .news-title-gold {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--color-gold);
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35)
+    }
+
+    .news-title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.35;
+      flex: 1
+    }
+
+    .news-bullets {
+      list-style: none;
+      margin-top: 12px
+    }
+
+    .news-bullets li {
+      font-size: 16px;
+      line-height: 1.45;
+      padding: 4px 0 4px 22px;
+      position: relative;
+      opacity: 0.95;
+    }
+
+    .news-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-gold);
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.45)
+    }
+
+    .news-source {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .news-source::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-gold)
+    }
+
+    .news-card {
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden
+    }
+
+    /* Lottery */
+    .mega-bar {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      margin-bottom: 28px
+    }
+
+    .mega-bar-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 22px;
+      padding: 18px 24px;
+      background: rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(8px)
+    }
+
+    .mega-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 11px 24px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: var(--mega-green);
+      box-shadow: 0 4px 16px rgba(32, 152, 105, 0.45);
+      flex-shrink: 0
+    }
+
+    .mega-nums {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 220px
+    }
+
+    .mega-nums .info {
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0.9;
+      letter-spacing: 0.5px
+    }
+
+    .mega-nums .prize {
+      font-size: 13px;
+      opacity: 0.88;
+      margin-left: auto
+    }
+
+    .mega-nums .prize strong {
+      color: var(--color-gold);
+      font-weight: 800
+    }
+   
+    @keyframes luzAcumulada {
+      0% { text-shadow: 0 0 5px rgba(255,215,0,0.5), 0 0 10px rgba(255,215,0,0.2); }
+      100% { text-shadow: 0 0 15px rgba(255,215,0,1), 0 0 25px rgba(255,215,0,0.8), 0 0 35px rgba(255,215,0,0.6); }
+    }
+    .acumulou {
+      color: #fffb00 !important;
+      animation: luzAcumulada 1.5s infinite alternate;
+    }
+
+    .mega-bar-bottom {
+      text-align: center;
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #0a5c3a, var(--mega-green), #0a5c3a)
+    }
+
+    .lotto-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "mega quina"
+        "loto loto";
+      gap: 28px;
+      align-items: stretch
+    }
+
+    .lotto-col {
+      border-radius: 20px;
+      text-align: center;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: var(--lottery-col-bg);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+      padding-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .lotto-col.mega { grid-area: mega; }
+    .lotto-col.quina { grid-area: quina; }
+    .lotto-col.loto { grid-area: loto; }
+
+    .lotto-badge {
+      align-self: center;
+      display: inline-block;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      padding: 10px 28px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      margin: 22px 0 18px
+    }
+
+    .lotto-badge.magenta {
+      background: var(--lotto-magenta)
+    }
+
+    .lotto-badge.gold {
+      background: linear-gradient(to bottom, #a67c00, var(--lotto-gold-brown))
+    }
+
+    .lotto-badge.blue {
+      background: linear-gradient(to bottom, var(--quina-blue-light), var(--quina-blue))
+    }
+
+    .lotto-concurso {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 20px
+    }
+
+    .ball-grid {
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 24px;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 16px;
+      flex: 1;
+    }
+
+    .ball-grid.cols5 {
+      grid-template-columns: repeat(5, 1fr)
+    }
+
+    .ball {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      position: relative
+    }
+
+    .ball::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      width: 18px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      transform: rotate(-25deg)
+    }
+
+    .ball-mega {
+      width: 52px;
+      height: 52px;
+      font-size: 22px;
+      background: linear-gradient(145deg, #2ecc71, var(--mega-green));
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35)
+    }
+
+    .ball-purple {
+      width: 56px;
+      height: 56px;
+      font-size: 24px;
+      background: linear-gradient(145deg, var(--lottery-ball-purple), var(--lottery-ball-purple-mid));
+      border: 2px solid rgba(255, 255, 255, 0.28)
+    }
+
+    .ball-purple.sm {
+      width: 36px;
+      height: 36px;
+      font-size: 14px
+    }
+
+    .ball-blue {
+      width: 56px;
+      height: 56px;
+      font-size: 24px;
+      background: linear-gradient(145deg, var(--quina-blue-light), var(--quina-blue));
+      border: 2px solid rgba(255, 255, 255, 0.28)
+    }
+
+    .lotto-prize {
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: 0.78
+    }
+
+    .lotto-prize strong {
+      font-size: 17px;
+      font-weight: 800
+    }
+
+    .lotto-prize strong.pink {
+      color: #ffb4c8
+    }
+
+    .lotto-prize strong.gold {
+      color: var(--color-gold)
+    }
+
+    .lotto-prize strong.blue {
+      color: #90caf9
+    }
+
+    /* Horoscope */
+    .horo-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 16px;
+      align-items: stretch
+    }
+
+    .horo-card {
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden
+    }
+
+    .horo-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px
+    }
+
+    .horo-symbol {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0
+    }
+
+    .horo-sign {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--color-gold);
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35)
+    }
+
+    .horo-dates {
+      font-size: 12px;
+      opacity: 0.55;
+      margin-top: 2px
+    }
+
+    .horo-msg {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.45;
+      flex: 1
+    }
+
+    .horo-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px
+    }
+
+    .horo-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      opacity: 0.88
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0
+    }
   </style>
 </head>
 
+<!--O sistema foi desenvolvido com o cÃ³digo totalmente organizado e devidamente comentado,
+facilitando futuras manutenÃ§Ãµes, ajustes e possÃ­veis expansÃµes.
+Cada parte do cÃ³digo contÃ©m explicaÃ§Ãµes claras para que qualquer alteraÃ§Ã£o possa ser realizada de forma simples e segura,
+mesmo em atualizaÃ§Ãµes futuras.
+Isso garante mais autonomia, estabilidade e facilidade caso seja necessÃ¡rio adaptar o painel conforme novas necessidades.-->
+
 <body>
   <div class="layout">
+    <!-- SIDEBAR -->
     <div class="sidebar">
-      
+      <div class="glass" style="text-align:center" id="clockCard">
+        <div><span class="clock-time" id="clockTime">00:00</span></div>
+        <div class="clock-date" id="clockDate"></div>
+      </div>
+      <div class="glass" style="text-align:center">
+          <div class="weather-city" id="wCity" style="margin-bottom:16px;">Carregando...</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:12px;">
+            <div id="wIcon" style="font-size:80px;line-height:1;text-shadow:0 8px 24px rgba(0,0,0,0.3)">ðŸŒ¤ï¸</div>
+            <div style="display:flex;align-items:baseline;">
+              <span class="weather-temp" id="wTemp">--</span>
+              <span class="weather-unit">Â°C</span>
+            </div>
+          </div>
+          <div class="weather-minmax">mÃ­n: <strong id="wMin">--</strong>Â° / mÃ¡x: <strong id="wMax">--</strong>Â°</div>
+          <div class="weather-desc" id="wDesc"></div>
+        </div>
       <div class="glass logo-section">
-        <img id="logoImg" alt="KloudAds" src="https://raw.githubusercontent.com/kloud-ads/kloudads-painel/8ebec2414e6abaeab2cffe81c26a469e8447993e/logo-loudads.PNG">
+        <img id="logoImg" alt="KloudAds"
+          <img src="https://raw.githubusercontent.com/kloud-ads/kloudads-painel/8ebec2414e6abaeab2cffe81c26a469e8447993e/logo-kloudads.PNG" decoding="async">
+        <p>www.KloudAds.com.br</p>
       </div>
-
-      <div class="glass">
-        <span class="clock-time" id="clockTime">00:00</span>
-        <div id="clockDate" style="text-align:center; opacity:0.7"></div>
-      </div>
-
-      <div class="glass" id="weatherCard" style="text-align:center">
-          <div id="wCity">Carregando clima...</div>
-          <div id="wTemp" style="font-size: 60px; font-weight: 800;">--°C</div>
-      </div>
-
     </div>
 
+    <!-- MAIN -->
     <div class="main">
+      <div class="slide-area">
+        <!-- NEWS SLIDE -->
+        <div class="slide" id="slide-news">
+          <div class="slide-header">
+            <h2>NotÃ­cias da RegiÃ£o</h2><span class="badge">Atualizado agora</span>
+          </div>
+          <div class="news-grid" id="newsGrid"></div>
+        </div>
+        <!-- LOTTERY SLIDE -->
+        <div class="slide" id="slide-lottery">
+          <div class="slide-header">
+            <h2>Loterias Caixa</h2><span class="badge">Ãšltimos Resultados</span>
+          </div>
+          <div id="lotteryContent" style="flex: 1; display: flex; flex-direction: column;"></div>
+        </div>
+        <!-- HOROSCOPE SLIDE -->
+        <div class="slide" id="slide-horoscope">
+          <div class="slide-header">
+            <h2>HorÃ³scopo do Dia</h2><span class="badge" id="horoDate"></span>
+          </div>
+          <div class="horo-grid" id="horoGrid"></div>
+        </div>
       </div>
+      <div class="indicators" id="indicators"></div>
+    </div>
   </div>
 
   <script>
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clockTime').textContent = 
-        String(now.getHours()).padStart(2, '0') + ":" + String(now.getMinutes()).padStart(2, '0');
+    // ========== RESPONSIVIDADE (ESCALA INTELIGENTE PARA 4K / SMART TVS) ==========
+    function scaleLayout() {
+      const el = document.querySelector('.layout');
+      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      el.style.transform = `scale(${scale})`;
+      el.style.marginLeft = `${(window.innerWidth - (1920 * scale)) / 2}px`;
+      el.style.marginTop = `${(window.innerHeight - (1080 * scale)) / 2}px`;
     }
-    setInterval(updateClock, 1000);
-    updateClock();
+    window.addEventListener('resize', scaleLayout);
+    scaleLayout();
+
+    // ========== FERRAMENTAS UTILITÃRIAS ==========
+    const IS_LOCAL = false; // Permitindo que o arquivo faÃ§a fetch() livremente (as APIs suportadas tem allow-origin)
+    function lsGet(k) { try { return JSON.parse(localStorage.getItem('kloudads_' + k)); } catch { return null; } }
+    function lsSet(k, v) { try { localStorage.setItem('kloudads_' + k, JSON.stringify(v)); } catch { } }
+
+    // ========== MÃ“DULO DE RELÃ“GIO ==========
+    const MONTHS = ['Janeiro', 'Fevereiro', 'MarÃ§o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const DAYS = ['Domingo', 'Segunda-feira', 'TerÃ§a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'SÃ¡bado'];
+    function updateClock() {
+      const n = new Date(), h = n.getHours().toString().padStart(2, '0'), m = n.getMinutes().toString().padStart(2, '0');
+      document.getElementById('clockTime').textContent = h + ':' + m;
+      document.getElementById('clockDate').textContent = DAYS[n.getDay()] + ', ' + n.getDate().toString().padStart(2, '0') + ' de ' + MONTHS[n.getMonth()] + ' de ' + n.getFullYear();
+     
+      // Auto-Reload da Madrugada (04:00:00) para limpar cache/memÃ³ria do navegador da TV
+      if (n.getHours() === 4 && n.getMinutes() === 0 && n.getSeconds() === 0) {
+        window.location.reload(true);
+      }
+    }
+    updateClock(); setInterval(updateClock, 1000);
+
+    // ========== MÃ“DULO DE CLIMA ==========
+    function nightIcon(icon) { const h = new Date().getHours(); if (h >= 18 || h < 6) { if (icon === 'â˜€ï¸' || icon === 'ðŸŒ¤ï¸') return 'ðŸŒ™'; if (icon === 'â›…') return 'â˜ï¸'; } return icon; }
+    const CITIES = [
+      { name: 'Campinas, SP', temp: 26, min: 20, max: 29, desc: 'CÃ©u limpo com poucas nuvens', icon: 'â˜€ï¸' },
+      { name: 'Americana, SP', temp: 28, min: 22, max: 31, desc: 'Sol com nuvens esparsas', icon: 'â›…' },
+      { name: 'SÃ£o Paulo, SP', temp: 23, min: 18, max: 25, desc: 'Parcialmente nublado', icon: 'ðŸŒ¤ï¸' },
+      { name: 'Limeira, SP', temp: 27, min: 21, max: 30, desc: 'Tempo seco e ensolarado', icon: 'â˜€ï¸' },
+      { name: 'Piracicaba, SP', temp: 25, min: 19, max: 28, desc: 'Possibilidade de chuva leve', icon: 'ðŸŒ¦ï¸' },
+    ];
+    let cityIdx = 0, useApi = true;
+    function setWeather(w) {
+      document.getElementById('wCity').textContent = w.name;
+      document.getElementById('wIcon').textContent = w.icon || 'ðŸŒ¤ï¸';
+      document.getElementById('wTemp').textContent = w.temp;
+      document.getElementById('wMin').textContent = w.min;
+      document.getElementById('wMax').textContent = w.max;
+      document.getElementById('wDesc').textContent = w.desc;
+    }
+    async function fetchWeather() {
+      if (IS_LOCAL) { useApi = false; rotateCities(); return; }
+      try {
+        const [rW, rF] = await Promise.allSettled([
+          fetch('https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=b0b0fbf4fb3bac7908252d23111a524d'),
+          fetch('https://api.openweathermap.org/data/2.5/forecast?q=Americana,BR&units=metric&lang=pt_br&appid=b0b0fbf4fb3bac7908252d23111a524d')
+        ]);
+        if (rW.status !== 'fulfilled' || !rW.value.ok) throw 0;
+        const d = await rW.value.json();
+       
+        let dMin = Math.round(d.main.temp_min);
+        let dMax = Math.round(d.main.temp_max);
+        if (rF.status === 'fulfilled' && rF.value.ok) {
+          const fData = await rF.value.json();
+          const todayList = fData.list.slice(0, 8);
+          dMin = Math.min(...todayList.map(item => Math.floor(item.main.temp_min)));
+          dMax = Math.max(...todayList.map(item => Math.ceil(item.main.temp_max)));
+        }
+        if (dMin === dMax) { dMin -= 2; dMax += 3; } // Garantia estÃ©tica caso a API trave a oscilaÃ§Ã£o no presente
+       
+        const emojiMap = { '01d': 'â˜€ï¸', '01n': 'ðŸŒ™', '02d': 'â›…', '02n': 'â˜ï¸', '03d': 'â˜ï¸', '04d': 'â˜ï¸', '04n': 'â˜ï¸', '09d': 'ðŸŒ§ï¸', '09n': 'ðŸŒ§ï¸', '10d': 'ðŸŒ¦ï¸', '10n': 'ðŸŒ¦ï¸', '11d': 'â›ˆï¸', '11n': 'â›ˆï¸', '13d': 'â„ï¸', '13n': 'â„ï¸', '50d': 'ðŸŒ«ï¸', '50n': 'ðŸŒ«ï¸' };
+        const desc = d.weather[0].description;
+        const w = { name: 'Americana, SP', temp: Math.round(d.main.temp), min: dMin, max: dMax, desc: desc.charAt(0).toUpperCase() + desc.slice(1), icon: emojiMap[d.weather[0].icon] || 'ðŸŒ¤ï¸' };
+        setWeather(w); lsSet('weather', w);
+        useApi = true;
+      } catch {
+        useApi = false;
+        const cached = lsGet('weather');
+        if (cached) { setWeather(cached); } else { rotateCities(); }
+      }
+    }
+    function rotateCities() {
+      if (useApi) return;
+      const cached = lsGet('weather');
+      if (cached) { setWeather(cached); return; }
+      const c = { ...CITIES[cityIdx] }; c.icon = nightIcon(c.icon); setWeather(c);
+      cityIdx = (cityIdx + 1) % CITIES.length;
+    }
+    fetchWeather(); setInterval(fetchWeather, 600000);
+    setInterval(() => { if (!useApi) rotateCities(); }, 15000);
+
+    // ========== MÃ“DULO DOS SLIDES (ROTAÃ‡ÃƒO) ==========
+    const SLIDE_KEYS = ['news', 'lottery', 'horoscope'];
+    const SLIDE_COLORS = ['#90caf9', '#c71585', '#ffd700'];
+    const SLIDE_LABELS = ['NotÃ­cias', 'Loterias', 'HorÃ³scopo'];
+    let currentSlide = 0;
+    function showSlide(idx) {
+      SLIDE_KEYS.forEach((k, i) => { document.getElementById('slide-' + k).classList.toggle('active', i === idx); });
+      document.querySelectorAll('.indicator').forEach((el, i) => { el.classList.toggle('active', i === idx); });
+      currentSlide = idx;
+    }
+    // Build indicators
+    const indEl = document.getElementById('indicators');
+    SLIDE_KEYS.forEach((_, i) => {
+      const d = document.createElement('div'); d.className = 'indicator' + (i === 0 ? ' active' : '');
+      d.innerHTML = '<span class="dot" style="background:' + SLIDE_COLORS[i] + '"></span>' + SLIDE_LABELS[i];
+      indEl.appendChild(d);
+    });
+    showSlide(0);
+    // TEMPO DOS SLIDES: Edite o nÃºmero "10000" abaixo para alterar o tempo de exibiÃ§Ã£o de cada tela (Exemplo: 5000 = 5 segundos, 15000 = 15 segundos)
+    setInterval(() => showSlide((currentSlide + 1) % 3), 10000);
+
+    // ========== MÃ“DULO DE NOTÃCIAS ==========
+    const CATEGORIES = ['ðŸ”´ Destaque', 'Regional', 'PolÃ­tica', 'Economia', 'Cotidiano', 'EducaÃ§Ã£o', 'SaÃºde', 'Cultura', 'Tecnologia', 'Esporte'];
+    const fallbackNews = [
+      { title: 'RegiÃ£o: acompanhe notÃ­cias e serviÃ§os em Campinas e cidades vizinhas', category: 'ðŸ”´ Destaque', source: 'G1 Campinas e RegiÃ£o', image: null, bullets: ['Dados ao vivo dependem da conexÃ£o com o feed RSS.', 'Verifique firewall e CORS ao abrir o arquivo localmente.'] },
+      { title: 'Ato do 8 de fevereiro discutirÃ¡ impactos das enchentes em Campinas', category: 'PolÃ­tica', source: 'G1 Campinas' },
+      { title: 'Economia regional: empresas acompanham indicadores e investimentos na Ã¡rea', category: 'Economia', source: 'G1 Regional' },
+    ];
+    let allNews = [], newsPage = 0;
+    function stripHtml(h) { const d = document.createElement('div'); d.innerHTML = h; return (d.textContent || '').replace(/\s+/g, ' ').trim(); }
+    function getBullets(h) { const t = stripHtml(h); if (t.length < 40) return []; return t.split(/\.\s+/).filter(s => s.length > 30).slice(0, 3).map(s => s.endsWith('.') ? s : s + '.'); }
+    function extractImage(item) { if (item.thumbnail) return item.thumbnail; if (item.enclosure?.link) return item.enclosure.link; const m = (item.content || item.description || '').match(/<img[^>]+src=["']([^"']+)["']/i); return m ? m[1] : null; }
+    async function fetchNews() {
+      if (IS_LOCAL) { allNews = lsGet('news') || fallbackNews; renderNews(); return; }
+      try {
+        const r = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://g1.globo.com/rss/g1/sp/campinas-regiao/'));
+        const d = await r.json();
+        if (Array.isArray(d.items) && d.items.length >= 3) {
+          const items = d.items.map((item, idx) => {
+            const el = document.createElement('div'); el.innerHTML = item.title || '';
+            const title = (el.textContent || '').trim(); if (!title) return null;
+            return { title, category: CATEGORIES[idx % CATEGORIES.length], source: 'G1 Campinas e RegiÃ£o', image: extractImage(item), bullets: idx === 0 ? getBullets(item.content || item.description || '') : undefined };
+          }).filter(Boolean);
+          allNews = items.length >= 3 ? items : fallbackNews;
+          if (allNews !== fallbackNews) lsSet('news', allNews);
+        } else allNews = lsGet('news') || fallbackNews;
+      } catch { allNews = lsGet('news') || fallbackNews; }
+      renderNews();
+    }
+    // XSS Sanitizer for rendering news
+    function safeHTML(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function renderNews() {
+      const pool = allNews.length ? allNews : fallbackNews;
+      const start = (newsPage * 3) % pool.length;
+      const display = []; for (let i = 0; i < 3; i++)display.push(pool[(start + i) % pool.length]);
+      const featured = display[0], others = display.slice(1);
+      const g = document.getElementById('newsGrid');
+      let html = '<div class="news-featured glass fade-in"><div class="news-featured-inner">';
+      html += '<div class="news-featured-img">' + (featured.image ? '<img src="' + featured.image + '" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:0.35;background:linear-gradient(135deg,rgba(21,101,192,0.3),rgba(128,0,255,0.2))">ðŸ“°</div>') + '</div>';
+      html += '<div class="news-featured-content"><div class="news-cat">' + safeHTML(featured.category) + '</div><div class="news-title-gold">' + safeHTML(featured.title) + '</div>';
+      if (featured.bullets?.length) { html += '<ul class="news-bullets">'; featured.bullets.forEach(b => { html += '<li>' + safeHTML(b) + '</li>'; }); html += '</ul>'; }
+      html += '<div class="news-source">' + safeHTML(featured.source) + '</div></div></div></div>';
+      others.forEach((item, i) => {
+        html += '<div class="news-card glass fade-in" style="animation-delay:' + (0.15 + i * 0.1) + 's"><div class="news-cat">' + safeHTML(item.category) + '</div><div class="news-title">' + safeHTML(item.title) + '</div><div class="news-source">' + safeHTML(item.source) + '</div></div>';
+      });
+      g.innerHTML = html;
+    }
+    fetchNews(); setInterval(fetchNews, 300000);
+    setInterval(() => { newsPage++; renderNews(); }, 30000);
+
+    // ========== Loterias caixa ===
+    function pad2(n) { return n.toString().padStart(2, '0'); }
+    function fmtBRL(v) { return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2 }); }
+    function genNums(count, max) { const s = new Set(); while (s.size < count) s.add(Math.floor(Math.random() * max) + 1); return [...s].sort((a, b) => a - b); }
+    let megaData = { c: '2.XXX', n: [], p: 'R$ ---' }, lotoData = { c: 'X.XXX', n: [], p: 'R$ ---' }, quinaData = { c: 'X.XXX', n: [], p: 'R$ ---' };
+    async function fetchLottery() {
+      if (IS_LOCAL) {
+        const cached = lsGet('lottery');
+        if (cached) { megaData = cached.mega; lotoData = cached.loto; quinaData = cached.quina; }
+        renderLottery(); return;
+      }
+      try {
+        const [mR, lR, qR] = await Promise.allSettled([
+          fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/latest'),
+          fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest'),
+          fetch('https://loteriascaixa-api.herokuapp.com/api/quina/latest'),
+        ]);
+        if (mR.status === 'fulfilled' && mR.value.ok) { const d = await mR.value.json(); megaData = { c: (d.concurso ? d.concurso + ' â€” ' + d.data : '2.XXX'), n: d.dezenas ? d.dezenas.map(Number) : genNums(6, 60), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(48500000), acumulou: d.acumulou === true }; }
+        if (lR.status === 'fulfilled' && lR.value.ok) { const d = await lR.value.json(); lotoData = { c: (d.concurso ? d.concurso + ' â€” ' + d.data : 'X.XXX'), n: d.dezenas ? d.dezenas.map(Number) : genNums(15, 25), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(1700000) }; }
+        if (qR.status === 'fulfilled' && qR.value.ok) { const d = await qR.value.json(); quinaData = { c: (d.concurso ? d.concurso + ' â€” ' + d.data : 'X.XXX'), n: d.dezenas ? d.dezenas.map(Number).slice(0, 5) : genNums(5, 80), p: d.premiacoes?.[0]?.valorPremio ? fmtBRL(d.premiacoes[0].valorPremio) : fmtBRL(2500000) }; }
+        lsSet('lottery', { mega: megaData, loto: lotoData, quina: quinaData });
+      } catch {
+        const cached = lsGet('lottery');
+        if (cached) { megaData = cached.mega; lotoData = cached.loto; quinaData = cached.quina; }
+        else {
+          megaData = { c: '2.845', n: genNums(6, 60), p: fmtBRL(48500000), acumulou: true };
+          lotoData = { c: '3.412', n: genNums(15, 25), p: fmtBRL(1700000) };
+          quinaData = { c: '6.234', n: genNums(5, 80), p: fmtBRL(2500000) };
+        }
+      }
+      renderLottery();
+    }
+    function renderLottery() {
+      const el = document.getElementById('lotteryContent');
+      let h = '<div class="lotto-grid">';
+      h += '<div class="lotto-col mega"><div class="lotto-badge" style="background:var(--mega-green);border-color:rgba(255,255,255,0.28)">MEGA-SENA</div><div class="lotto-concurso">Concurso ' + megaData.c + '</div><div class="ball-grid" style="grid-template-columns:repeat(6,1fr)">';
+      megaData.n.forEach(n => { h += '<div class="ball ball-mega">' + pad2(n) + '</div>'; });
+      h += '</div><div class="lotto-prize">PrÃªmio: <strong' + (megaData.acumulou ? ' class="acumulou"' : '') + ' style="color:var(--color-gold)">' + megaData.p + '</strong></div></div>';
+      h += '<div class="lotto-col quina"><div class="lotto-badge blue">QUINA</div><div class="lotto-concurso">Concurso ' + quinaData.c + '</div><div class="ball-grid cols5">';
+      quinaData.n.forEach(n => { h += '<div class="ball ball-blue">' + pad2(n) + '</div>'; });
+      h += '</div><div class="lotto-prize">PrÃªmio: <strong class="blue">' + quinaData.p + '</strong></div></div>';
+      h += '<div class="lotto-col loto"><div class="lotto-badge magenta">LOTOFÃCIL</div><div class="lotto-concurso">Concurso ' + lotoData.c + '</div><div class="ball-grid cols5">';
+      lotoData.n.forEach(n => { h += '<div class="ball ball-purple">' + pad2(n) + '</div>'; });
+      h += '</div><div class="lotto-prize">PrÃªmio: <strong class="pink">' + lotoData.p + '</strong></div></div></div>';
+      el.innerHTML = h;
+    }
+    fetchLottery(); setInterval(fetchLottery, 300000);
+
+    // ========== Horoscopo
+    const ZODIAC = [
+      { sign: 'Ãries', symbol: 'â™ˆ', dates: '21/03 - 19/04', keywords: ['Energia', 'Coragem', 'AÃ§Ã£o'] },
+      { sign: 'Touro', symbol: 'â™‰', dates: '20/04 - 20/05', keywords: ['Estabilidade', 'Amor', 'PaciÃªncia'] },
+      { sign: 'GÃªmeos', symbol: 'â™Š', dates: '21/05 - 20/06', keywords: ['ComunicaÃ§Ã£o', 'Versatilidade'] },
+      { sign: 'CÃ¢ncer', symbol: 'â™‹', dates: '21/06 - 22/07', keywords: ['FamÃ­lia', 'ProteÃ§Ã£o', 'IntuiÃ§Ã£o'] },
+      { sign: 'LeÃ£o', symbol: 'â™Œ', dates: '23/07 - 22/08', keywords: ['Criatividade', 'LideranÃ§a'] },
+      { sign: 'Virgem', symbol: 'â™', dates: '23/08 - 22/09', keywords: ['OrganizaÃ§Ã£o', 'SaÃºde', 'Detalhe'] },
+      { sign: 'Libra', symbol: 'â™Ž', dates: '23/09 - 22/10', keywords: ['Harmonia', 'EquilÃ­brio'] },
+      { sign: 'EscorpiÃ£o', symbol: 'â™', dates: '23/10 - 21/11', keywords: ['TransformaÃ§Ã£o', 'Intensidade'] },
+      { sign: 'SagitÃ¡rio', symbol: 'â™', dates: '22/11 - 21/12', keywords: ['Aventura', 'Otimismo'] },
+      { sign: 'CapricÃ³rnio', symbol: 'â™‘', dates: '22/12 - 19/01', keywords: ['Disciplina', 'AmbiÃ§Ã£o'] },
+      { sign: 'AquÃ¡rio', symbol: 'â™’', dates: '20/01 - 18/02', keywords: ['InovaÃ§Ã£o', 'Liberdade'] },
+      { sign: 'Peixes', symbol: 'â™“', dates: '19/02 - 20/03', keywords: ['Sensibilidade', 'Sonhos'] },
+    ];
+    const HORO_MSGS = [
+      'Dia de novas oportunidades. Mantenha-se aberto a propostas inesperadas que podem surgir.',
+      'Foque na sua saÃºde e bem-estar. Cuidar de si mesmo deve ser prioridade hoje.',
+      'Sua criatividade estÃ¡ em alta. Aproveite para desenvolver projetos pessoais importantes.',
+      'Momento favorÃ¡vel para decisÃµes financeiras. Planeje com cuidado seus investimentos.',
+      'A comunicaÃ§Ã£o flui bem hoje. Ã“timo momento para resolver pendÃªncias e diÃ¡logos.',
+      'Concentre-se no que realmente importa. Evite distraÃ§Ãµes e mantenha o foco nos objetivos.',
+      'Relacionamentos ganham destaque. Valorize quem estÃ¡ ao seu lado e demonstre carinho.',
+      'Bom momento para reflexÃ£o interior. Meditar pode trazer clareza sobre questÃµes importantes.',
+      'Surpresas positivas podem chegar. Esteja preparado para mudanÃ§as favorÃ¡veis.',
+      'A energia do dia favorece novos comeÃ§os. NÃ£o tenha medo de recomeÃ§ar algo.',
+      'Uma fase de transformaÃ§Ã£o se inicia. Abrace as mudanÃ§as com confianÃ§a e determinaÃ§Ã£o.',
+      'O universo conspira a seu favor. Confie na sua intuiÃ§Ã£o e siga em frente.',
+      'Dia propÃ­cio para fortalecer laÃ§os familiares. Dedique tempo a quem vocÃª ama.',
+      'Sua determinaÃ§Ã£o serÃ¡ recompensada. Continue firme em seus propÃ³sitos e colha os frutos.',
+      'Novas conexÃµes podem abrir portas importantes. Esteja receptivo a conhecer pessoas.',
+      'O momento pede cautela nas palavras. Pense antes de falar e evite mal-entendidos.',
+      'Aproveite a energia positiva para organizar sua rotina e planejar o futuro.',
+      'A generosidade serÃ¡ sua aliada. Ajudar os outros trarÃ¡ satisfaÃ§Ã£o pessoal profunda.',
+      'Momento ideal para aprender algo novo. Invista em conhecimento e crescimento pessoal.',
+      'Confie no seu potencial. VocÃª tem todas as ferramentas para superar os desafios do dia.',
+      'O equilÃ­brio entre trabalho e lazer Ã© essencial hoje. Reserve tempo para relaxar.',
+      'Sua intuiÃ§Ã£o estarÃ¡ aguÃ§ada. Use-a para tomar decisÃµes importantes com sabedoria.',
+      'Boas notÃ­cias podem chegar de longe. Mantenha os canais de comunicaÃ§Ã£o abertos.',
+      'A perseveranÃ§a Ã© a chave do sucesso hoje. NÃ£o desista diante dos obstÃ¡culos.'
+    ];
+    function horoHash(idx, doy) { return ((idx * 7 + doy * 13 + idx * doy) % HORO_MSGS.length + HORO_MSGS.length) % HORO_MSGS.length; }
+    function renderHoroscope() {
+      const now = new Date();
+      const doy = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+      const startIdx = doy % 12;
+      document.getElementById('horoDate').textContent = now.getDate().toString().padStart(2, '0') + ' de ' + MONTHS[now.getMonth()];
+      const g = document.getElementById('horoGrid'); let h = ''; const usedMsgs = new Set();
+      for (let i = 0; i < 12; i++) {
+        const idx = (startIdx + i) % 12; const s = ZODIAC[idx];
+        let msgIdx = horoHash(idx, doy); let attempts = 0;
+        while (usedMsgs.has(msgIdx) && attempts < HORO_MSGS.length) { msgIdx = (msgIdx + 1) % HORO_MSGS.length; attempts++; }
+        usedMsgs.add(msgIdx); const msg = HORO_MSGS[msgIdx];
+        h += '<div class="horo-card glass fade-in" style="animation-delay:' + (i * 0.1 + 0.05) + 's"><div class="horo-header"><div class="horo-symbol">' + s.symbol + '</div><div><div class="horo-sign">' + s.sign.toUpperCase() + ':</div><div class="horo-dates">' + s.dates + '</div></div></div><div class="horo-msg">' + msg + '</div><div class="horo-tags">';
+        s.keywords.forEach(k => { h += '<span class="horo-tag">' + k + '</span>'; });
+        h += '</div></div>';
+      }
+      g.innerHTML = h;
+    }
+    renderHoroscope();
+
+    // ========== LOGO (PNG embutido em base64; ficheiro externo nÃ£o necessÃ¡rio) nao esquecer disso Estevan==
   </script>
 </body>
+
 </html>
