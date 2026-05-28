@@ -18,7 +18,7 @@
       --loto: #941156;
       --bg-blue: #003366;
       --bg-gradient: radial-gradient(circle at 10% 10%, #00509e 0%, #003366 45%),
-                      radial-gradient(circle at 90% 90%, #004080 0%, #003366 45%);
+                    radial-gradient(circle at 90% 90%, #004080 0%, #003366 45%);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; border: none !important; }
@@ -42,17 +42,19 @@
       width: 100%; height: 100%;
     }
 
+    /* SIDEBAR */
     .sidebar {
       background: rgba(0, 30, 60, 0.6);
       backdrop-filter: blur(30px);
       padding: 40px 30px; 
-      display: flex; flex-direction: column;
-      border-right: 2px solid var(--glass-border);
+      display: flex; 
+      flex-direction: column;
       justify-content: space-between;
+      border-right: 2px solid var(--glass-border);
       height: 100vh;
     }
 
-    .clock-section { text-align: center; flex-shrink: 0; }
+    .clock-section { text-align: center; }
     .clock {
       font-size: 110px; font-weight: 800; line-height: 0.9;
       letter-spacing: -5px; color: var(--accent);
@@ -60,36 +62,40 @@
     }
 
     .date {
-      font-size: 16px; 
-      text-transform: uppercase; 
-      letter-spacing: 1px; 
-      margin-top: 15px; 
-      color: #fff; 
-      opacity: 0.9; 
-      font-weight: 600;
-      white-space: nowrap; 
-      display: block;
-      width: 100%;
+      font-size: 16px; text-transform: uppercase; letter-spacing: 1px; 
+      margin-top: 15px; color: #fff; opacity: 0.9; font-weight: 600;
+      white-space: nowrap; display: block;
     }
 
     .weather-card {
-      background: var(--glass);
-      border-radius: 40px; 
-      padding: 30px 20px; 
-      margin: 20px 0; 
-      text-align: center;
+      background: var(--glass); border-radius: 40px; 
+      padding: 30px 20px; text-align: center;
       border: 1px solid var(--glass-border) !important;
-      flex-shrink: 0;
     }
 
-    .w-icon-main { font-size: 90px; margin-bottom: 5px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
-    .temp-main { font-size: 75px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
-    .w-desc { font-size: 20px; opacity: 0.9; text-transform: capitalize; font-weight: 500; }
+    .city-name { font-size: 26px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
+    .w-icon-main { font-size: 80px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
+    .temp-now { font-size: 85px; font-weight: 800; line-height: 1; }
+    .w-desc { font-size: 19px; opacity: 0.9; text-transform: capitalize; margin-bottom: 15px; }
 
-    .logo-area { text-align: center; padding-bottom: 10px; flex-shrink: 0; }
-    .logo-area img { width: 100%; max-width: 280px; }
+    .w-minmax-row {
+      display: flex; gap: 30px; justify-content: center;
+      margin-bottom: 20px; border-top: 1px solid var(--glass-border) !important;
+      padding-top: 15px; width: 85%; margin: 0 auto 20px;
+    }
+    .w-mm-val { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 4px; }
+
+    .w-footer-info {
+      display: flex; justify-content: space-around;
+      background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px;
+    }
+    .w-f-val { font-size: 19px; font-weight: 800; }
+
+    .logo-area { text-align: center; padding-bottom: 10px; }
+    .logo-area img { width: 100%; max-width: 280px; height: auto; object-fit: contain; }
     .site-url { font-size: 13px; letter-spacing: 3px; opacity: 0.6; margin-top: 15px; }
 
+    /* MAIN AREA */
     .main-area { position: relative; padding: 50px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
     .slide {
@@ -99,132 +105,52 @@
       visibility: hidden;
       display: flex; flex-direction: column;
     }
-
     .slide.active { opacity: 1; transform: translateY(0); visibility: visible; }
 
-    .slide-title {
-      font-size: 44px; font-weight: 800; margin-bottom: 35px;
-      display: flex; align-items: center; gap: 25px; flex-shrink: 0;
-    }
-    .slide-title::after {
-      content: ''; height: 4px; flex: 1;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      border-radius: 2px;
-    }
+    .slide-title { font-size: 44px; font-weight: 800; margin-bottom: 35px; display: flex; align-items: center; gap: 25px; }
+    .slide-title::after { content: ''; height: 4px; flex: 1; background: linear-gradient(90deg, var(--accent), transparent); border-radius: 2px; }
 
+    /* LOTERIAS */
+    .lotto-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; flex: 1; margin-bottom: 50px; }
+    .lotto-card { background: rgba(255,255,255,0.05); border-radius: 55px; padding: 30px 20px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: space-between; height: 680px; }
+    .lotto-header { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; } 
+    .lotto-logo { height: 75px; width: auto; max-width: 90%; object-fit: contain; margin-bottom: 15px; }
+    .lotto-info { font-size: 18px; font-weight: 700; opacity: 0.8; letter-spacing: 1px; }
+    .ball-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px 0; }
+    
+    /* Layout Padrão das Bolas (Quina e Lotofacil) */
+    .ball-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; max-width: 450px; }
+    
+    /* Ajuste exclusivo para Mega-Sena */
+    .ball-grid.mega-line { flex-wrap: nowrap !important; max-width: 100% !important; gap: 8px; }
+    .ball-grid.mega-line .ball-item { width: 60px; height: 60px; font-size: 24px; }
+
+    .ball-item { width: 68px; height: 68px; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 28px; box-shadow: inset -3px -3px 8px rgba(0,0,0,0.4); flex-shrink: 0; }
+    
+    .prize-box { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-top: 1px solid rgba(255,255,255,0.1) !important; }
+    .prize-label { font-size: 18px; font-weight: 700; opacity: 0.6; text-transform: uppercase; margin-bottom: 8px; }
+    .prize-amount { font-size: 48px; font-weight: 800; color: var(--accent); text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+    /* NOTÍCIAS */
     .news-wrapper { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr 1fr; gap: 30px; flex: 1; overflow: hidden; margin-bottom: 50px; }
-    .news-featured { grid-row: 1 / 3; position: relative; border-radius: 50px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); background: #004080; }
-    .news-featured img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s; }
+    .news-featured { grid-row: 1 / 3; position: relative; border-radius: 50px; overflow: hidden; background: #004080; }
+    .news-featured img { width: 100%; height: 100%; object-fit: cover; }
     .news-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 80px 50px 50px; background: linear-gradient(transparent, rgba(0,30,60,0.98)); }
     .news-overlay h3 { font-size: 44px; line-height: 1.1; margin-bottom: 15px; color: var(--accent); }
     .news-overlay p { font-size: 21px; opacity: 0.95; line-height: 1.5; }
-    
     .news-secondary { display: grid; grid-template-rows: repeat(3, 1fr); gap: 20px; }
-    
-    .news-item { 
-        background: var(--glass); 
-        border-radius: 25px; 
-        padding: 25px 30px; 
-        border: 1px solid var(--glass-border) !important; 
-        display: flex; 
-        flex-direction: column; 
-        justify-content: center; 
-        align-items: flex-start;
-    }
-    .news-item h4 { font-size: 23px; font-weight: 600; line-height: 1.3; margin-bottom: 8px; }
-    .news-item p { font-size: 16px; opacity: 0.7; line-height: 1.4; font-weight: 400; }
+    .news-item { background: var(--glass); border-radius: 25px; padding: 25px 30px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: center; }
+    .news-item h4 { font-size: 23px; font-weight: 600; line-height: 1.3; }
 
-    .lotto-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; flex: 1; margin-bottom: 50px; }
-    
-    .lotto-card {
-      background: rgba(255,255,255,0.05); 
-      border-radius: 55px;
-      padding: 40px 20px;
-      border: 1px solid var(--glass-border) !important;
-      display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
-      text-align: center;
-    }
-    
-    .lotto-header { 
-      margin-top: 100px; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center;
-      width: 100%;
-      margin-bottom: 40px;
-    } 
+    /* HORÓSCOPO */
+    .horo-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 15px; flex: 1; margin-bottom: 50px; min-height: 0; }
+    .horo-box { background: var(--glass); border-radius: 25px; padding: 18px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; overflow: hidden; }
+    .horo-box header { display: flex; justify-content: space-between; color: var(--accent); font-size: 26px; font-weight: 800; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1) !important; padding-bottom: 6px; flex-shrink: 0; }
+    .horo-box p { font-size: 17px; line-height: 1.25; color: #f1f5f9; font-weight: 500; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; text-overflow: ellipsis; }
 
-    .lotto-name { 
-      font-size: 32px; font-weight: 800; 
-      padding: 12px 50px; border-radius: 100px; 
-      margin-bottom: 15px; display: inline-block;
-      white-space: nowrap;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      color: #fff;
-    }
-    
-    .lotto-info { font-size: 16px; font-weight: 700; opacity: 0.9; letter-spacing: 2px; }
-    
-    .ball-grid { 
-      display: flex; flex-wrap: wrap; justify-content: center; 
-      gap: 12px; margin: 10px 0; 
-      min-height: 130px; align-content: center;
-    }
-    
-    /* --- ESTILO DAS BOLAS DA LOTERIA (DISCRETO) --- */
-    .ball-item {
-      width: 58px; height: 58px;
-      color: #fff;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 24px;
-      position: relative;
-      /* Sombra e profundidade suavizadas */
-      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.3);
-      border: none !important;
-      overflow: hidden;
-    }
-
-    /* Brilho superior mais suave */
-    .ball-item::after {
-      content: "";
-      position: absolute;
-      top: 4px;
-      left: 8px;
-      width: 50%;
-      height: 30%;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
-      border-radius: 50%;
-    }
-
-    .prize-box { margin-top: auto; padding-top: 20px; }
-    .prize-amount { font-size: 38px; font-weight: 800; color: var(--accent); margin-top: 5px; }
-
-    .horo-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 20px; flex: 1; margin-bottom: 50px; }
-    .horo-box { background: var(--glass); border-radius: 35px; padding: 25px 30px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
-    .horo-box header { display: flex; justify-content: space-between; align-items: center; color: var(--accent); font-size: 28px; font-weight: 800; }
-    
-    .horo-box p { 
-      font-size: 18px; 
-      line-height: 1.5; 
-      opacity: 0.95; 
-      font-weight: 500; 
-      max-height: 100px; 
-      overflow: hidden; 
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-    }
-
+    /* PROGRESS BAR */
     .progress-container { position: absolute; bottom: 30px; left: 50px; right: 50px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; }
-    .progress-bar { 
-      height: 100%; 
-      background: linear-gradient(90deg, var(--accent), #fff); 
-      width: 0%; 
-      border-radius: 10px; 
-      box-shadow: 0 0 20px var(--accent);
-      transition: width 0.1s linear;
-    }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #fff); width: 0%; border-radius: 10px; transition: width 0.1s linear; }
   </style>
 </head>
 <body>
@@ -237,14 +163,20 @@
         <div class="clock" id="clock">00:00</div>
         <div class="date" id="date">--</div>
       </div>
-
       <div class="weather-card">
+        <div class="city-name">AMERICANA - SP</div>
         <div id="wIcon" class="w-icon-main">--</div>
-        <div class="temp-main"><span id="wTemp">--</span>°C</div>
+        <div class="temp-now"><span id="wTemp">--</span>°</div>
         <div class="w-desc" id="wDesc">Carregando...</div>
-        <div style="margin-top: 15px; font-size: 16px; opacity: 0.7; font-weight: 700; letter-spacing: 2px;">AMERICANA - SP</div>
+        <div class="w-minmax-row">
+          <div class="w-mm-item"><span class="w-mm-val" style="color: #60a5fa;">↓<span id="wMin">--</span>°</span></div>
+          <div class="w-mm-item"><span class="w-mm-val" style="color: #ef4444;">↑<span id="wMax">--</span>°</span></div>
+        </div>
+        <div class="w-footer-info">
+           <div class="w-f-item"><span class="w-f-val"><span id="wFeels">--</span>°C</span></div>
+           <div class="w-f-item"><span class="w-f-val"><span id="wHumi">--</span>% UR</span></div>
+        </div>
       </div>
-
       <div class="logo-area">
         <img src="https://site.wpmaster.com.br/wp-content/uploads/2026/04/logo-kloudads-e1776133415159.png" alt="KloudAds">
         <div class="site-url">WWW.KLOUDADS.COM.BR</div>
@@ -263,19 +195,10 @@
             </div>
           </div>
           <div class="news-secondary">
-            <div class="news-item">
-                <h4 id="newsTitle1">...</h4>
-                <p id="newsDesc1"></p>
-            </div>
-            <div class="news-item">
-                <h4 id="newsTitle2">...</h4>
-                <p id="newsDesc2"></p>
-            </div>
-            <div class="news-item">
-                <h4 id="newsTitle3">...</h4>
-                <p id="newsDesc3"></p>
-            </div>
-            </div>
+            <div class="news-item"><h4 id="newsTitle1">...</h4><p id="newsDesc1"></p></div>
+            <div class="news-item"><h4 id="newsTitle2">...</h4><p id="newsDesc2"></p></div>
+            <div class="news-item"><h4 id="newsTitle3">...</h4><p id="newsDesc3"></p></div>
+          </div>
         </div>
       </section>
 
@@ -296,19 +219,28 @@
   </div>
 
   <script>
-    const SLIDE_DURATION = 15000;
+    const SLIDE_DURATION = 10000; 
     let currentSlide = 0;
     const totalSlides = 3;
     let allNews = [];
     let currentNewsIndex = 0;
 
+    const NINJAS_API_KEY = 'SUA_CHAVE_AQUI'; 
+
+    const ZODIAC_DATA = [
+      {s:'Áries', slug:'aries', i:'♈'}, {s:'Touro', slug:'taurus', i:'♉'},
+      {s:'Gêmeos', slug:'gemini', i:'♊'}, {s:'Câncer', slug:'cancer', i:'♋'},
+      {s:'Leão', slug:'leo', i:'♌'}, {s:'Virgem', slug:'virgo', i:'♍'},
+      {s:'Libra', slug:'libra', i:'♎'}, {s:'Escorpião', slug:'scorpio', i:'♏'},
+      {s:'Sagitário', slug:'sagittarius', i:'♐'}, {s:'Capricórnio', slug:'capricorn', i:'♑'},
+      {s:'Aquário', slug:'aquarius', i:'♒'}, {s:'Peixes', slug:'pisces', i:'♓'}
+    ];
+
     function updateClock() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
       const dateOptions = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
-      let dateText = now.toLocaleDateString('pt-BR', dateOptions).toUpperCase();
-      dateText = dateText.replace('-FEIRA', '');
-      document.getElementById('date').textContent = dateText;
+      document.getElementById('date').textContent = now.toLocaleDateString('pt-BR', dateOptions).toUpperCase();
     }
     setInterval(updateClock, 1000);
     updateClock();
@@ -338,17 +270,26 @@
 
     async function fetchWeather() {
       try {
-        const r = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Americana,BR&units=metric&lang=pt_br&appid=b0b0fbf4fb3bac7908252d23111a524d');
-        const d = await r.json();
-        document.getElementById('wTemp').textContent = Math.round(d.main.temp);
-        document.getElementById('wDesc').textContent = d.weather[0].description;
-        const iconCode = d.weather[0].icon;
-        const iconMap = {"01": "☀️","02": "⛅","03": "☁️","04": "🌥️","09": "🌦️","10": "🌧️","11": "⛈️","13": "❄️","50": "🌫️"};
-        document.getElementById('wIcon').textContent = iconMap[iconCode.substring(0,2)] || "☀️";
+        const API_KEY = 'b0b0fbf4fb3bac7908252d23111a524d';
+        const CITY = 'Americana,BR';
+        const [currRes, foreRes] = await Promise.all([
+          fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&lang=pt_br&appid=${API_KEY}`),
+          fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&units=metric&lang=pt_br&appid=${API_KEY}`)
+        ]);
+        const currData = await currRes.json();
+        const foreData = await foreRes.json();
+        document.getElementById('wTemp').textContent = Math.round(currData.main.temp);
+        document.getElementById('wDesc').textContent = currData.weather[0].description;
+        document.getElementById('wFeels').textContent = Math.round(currData.main.feels_like);
+        document.getElementById('wHumi').textContent = currData.main.humidity;
+        const next24h = foreData.list.slice(0, 8);
+        document.getElementById('wMin').textContent = Math.floor(Math.min(...next24h.map(i => i.main.temp_min)));
+        document.getElementById('wMax').textContent = Math.ceil(Math.max(...next24h.map(i => i.main.temp_max)));
+        const iconMap = {"01d":"☀️","01n":"🌙","02d":"⛅","02n":"☁️","03d":"☁️","03n":"☁️","04d":"🌥️","04n":"☁️","09d":"🌦️","09n":"🌧️","10d":"🌧️","10n":"🌧️","11d":"⛈️","11n":"⛈️","13d":"❄️","13n":"❄️","50d":"🌫️","50n":"🌫️"};
+        document.getElementById('wIcon').textContent = iconMap[currData.weather[0].icon] || "☀️";
       } catch (e) {}
     }
     fetchWeather();
-    setInterval(fetchWeather, 600000);
 
     async function fetchNews() {
       try {
@@ -357,22 +298,21 @@
         if (d.status === 'ok') { allNews = d.items; updateNewsDisplay(); }
       } catch (e) {}
     }
-
     function updateNewsDisplay() {
       if (allNews.length === 0) return;
       const clean = (t) => t.replace(/<[^>]*>?/gm, '').trim();
       const main = allNews[currentNewsIndex];
+      const backupImg = 'https://images.unsplash.com/photo-1504711432869-efd597cdd04b?q=80&w=1200&auto=format&fit=crop';
+      const mainImgElement = document.getElementById('newsImg0');
+      let imageUrl = main.thumbnail || (main.enclosure ? main.enclosure.link : '');
+      mainImgElement.src = imageUrl || backupImg;
+      mainImgElement.onerror = function() { this.src = backupImg; };
       document.getElementById('newsTitle0').textContent = main.title;
       document.getElementById('newsDesc0').textContent = clean(main.description).substring(0, 160) + '...';
-      let imageUrl = main.thumbnail || (main.enclosure ? main.enclosure.link : null);
-      if (!imageUrl) { const imgMatch = main.description.match(/<img[^>]+src="([^">]+)"/); if (imgMatch) imageUrl = imgMatch[1]; }
-      document.getElementById('newsImg0').src = imageUrl || 'https://images.unsplash.com/photo-1504711432869-efd597cdd04b?w=1200';
       for(let i=1; i<=3; i++) {
-        const nextIdx = (currentNewsIndex + i) % allNews.length;
-        if(allNews[nextIdx]) {
-            document.getElementById(`newsTitle${i}`).textContent = allNews[nextIdx].title;
-            document.getElementById(`newsDesc${i}`).textContent = clean(allNews[nextIdx].description).substring(0, 100) + '...';
-        }
+        const n = allNews[(currentNewsIndex + i) % allNews.length];
+        document.getElementById(`newsTitle${i}`).textContent = n.title;
+        document.getElementById(`newsDesc${i}`).textContent = clean(n.description).substring(0, 100) + '...';
       }
       currentNewsIndex = (currentNewsIndex + 1) % allNews.length;
     }
@@ -387,102 +327,71 @@
           fetch('https://loteriascaixa-api.herokuapp.com/api/lotofacil/latest').then(r => r.json())
         ]);
         const data = [
-          {name: 'MEGA-SENA', d: mega, c: 'var(--mega)'},
-          {name: 'QUINA', d: quina, c: 'var(--quina)'},
-          {name: 'LOTOFÁCIL', d: loto, c: 'var(--loto)'}
+          { id: 'mega', name: 'MEGA-SENA', logo: 'https://kloudads.com.br/wp-content/uploads/2026/04/mega.png', d: mega, c: 'var(--mega)' },
+          { id: 'quina', name: 'QUINA', logo: 'https://kloudads.com.br/wp-content/uploads/2026/04/quina.png', d: quina, c: 'var(--quina)' },
+          { id: 'loto', name: 'LOTOFÁCIL', logo: 'https://kloudads.com.br/wp-content/uploads/2026/04/lotofacil.png', d: loto, c: 'var(--loto)' }
         ];
         container.innerHTML = data.map(g => `
           <div class="lotto-card">
             <div class="lotto-header">
-               <div class="lotto-name" style="background: ${g.c}">${g.name}</div>
-               <div class="lotto-info">CONCURSO ${g.d.concurso} • ${g.d.data}</div>
+              <img src="${g.logo}" alt="${g.name}" class="lotto-logo">
+              <div class="lotto-info">CONCURSO ${g.d.concurso} • ${g.d.data}</div>
             </div>
-            <div class="ball-grid">
-              ${g.d.dezenas.map(n => `<div class="ball-item" style="background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.15) 0%, ${g.c} 75%)">${n}</div>`).join('')}
+            <div class="ball-container">
+              <div class="ball-grid ${g.id === 'mega' ? 'mega-line' : ''}">
+                ${g.d.dezenas.map(n => `<div class="ball-item" style="background: ${g.c}">${n}</div>`).join('')}
+              </div>
             </div>
             <div class="prize-box">
-              <p style="font-size:14px; opacity:0.6; margin-bottom:5px; letter-spacing:2px;">ESTIMATIVA PRÊMIO</p>
+              <p class="prize-label">Prêmio Estimado</p>
               <p class="prize-amount">R$ ${g.d.valorEstimadoProximoConcurso.toLocaleString('pt-BR')}</p>
             </div>
-          </div>
-        `).join('');
+          </div>`).join('');
       } catch (e) {}
     }
     fetchLotto();
 
-    const ZODIAC_DATA = [
-      {s:'Áries', slug:'aries', i:'♈'}, {s:'Touro', slug:'touro', i:'♉'}, {s:'Gêmeos', slug:'gemeos', i:'♊'}, {s:'Câncer', slug:'cancer', i:'♋'}, 
-      {s:'Leão', slug:'leao', i:'♌'}, {s:'Virgem', slug:'virgem', i:'♍'}, {s:'Libra', slug:'libra', i:'♎'}, {s:'Escorpião', slug:'escorpiao', i:'♏'}, 
-      {s:'Sagitário', slug:'sagitario', i:'♐'}, {s:'Capricórnio', slug:'capricornio', i:'♑'}, {s:'Aquário', slug:'aquario', i:'♒'}, {s:'Peixes', slug:'peixes', i:'♓'}
-    ];
-
-    const FALLBACK_MSGS = [
-      'Dia de novas oportunidades. Mantenha-se aberto a propostas inesperadas.',
-      'Foque na sua saúde e bem-estar. Cuidar de si mesmo deve ser prioridade.',
-      'Sua criatividade está em alta. Aproveite para desenvolver projetos.',
-      'Momento favorável para decisões financeiras. Planeje seus investimentos.',
-      'A comunicação flui bem hoje. Ótimo momento para resolver pendências.',
-      'Concentre-se no que realmente importa. Evite distrações inúteis.',
-      'Relacionamentos ganham destaque. Valorize quem está ao seu lado.',
-      'Bom momento para reflexão interior. A meditação trará clareza.',
-      'Surpresas positivas podem chegar. Esteja preparado para mudanças.',
-      'A energia do dia favorece novos começos. Não tenha medo de arriscar.',
-      'Uma fase de transformação se inicia. Abrace o novo com confiança.',
-      'O universo conspira a seu favor. Confie na sua intuição hoje.',
-      'Dia propício para fortalecer laços familiares e amizades antigas.',
-      'Sua determinação será recompensada. Continue firme nos propósitos.',
-      'Novas conexões podem abrir portas. Esteja receptivo a conhecer pessoas.',
-      'O momento pede cautela nas palavras. Pense bem antes de agir.',
-      'Aproveite a energia positiva para organizar sua rotina e o futuro.',
-      'A generosidade será sua aliada. Ajudar os outros trará satisfação.',
-      'Momento ideal para aprender algo novo e expandir horizontes.',
-      'Confie no seu potencial. Você tem ferramentas para superar desafios.',
-      'O equilíbrio entre trabalho e lazer é essencial. Reserve um tempo.',
-      'Sua intuição estará aguçada. Use-a para tomar decisões importantes.',
-      'Boas notícias podem chegar de longe. Mantenha os canais abertos.',
-      'A perseverança é a chave do sucesso hoje. Não desista agora.'
-    ];
-
-    function horoHash(idx, doy) { 
-        return ((idx * 7 + doy * 13 + idx * doy) % FALLBACK_MSGS.length + FALLBACK_MSGS.length) % FALLBACK_MSGS.length; 
+    async function translateText(text) {
+      try {
+        const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q=${encodeURIComponent(text)}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data[0].map(item => item[0]).join('');
+      } catch (e) { return text; }
     }
 
     async function fetchHoroscope() {
       const grid = document.getElementById('horoGrid');
-      const now = new Date();
-      const doy = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-      
-      const requests = ZODIAC_DATA.map(z => {
-        return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://horoscopo-free-api.vercel.app/api/v1/get-horoscopo/diario?signo=${z.slug}`)}`)
-          .then(res => res.json())
-          .then(data => JSON.parse(data.contents))
-          .catch(() => null);
-      });
-
-      try {
-        const results = await Promise.all(requests);
-        const usedMsgs = new Set();
-
-        grid.innerHTML = ZODIAC_DATA.map((item, index) => {
-          let text = results[index]?.texto || results[index]?.horoscopo;
-          if (!text) {
-             let msgIdx = horoHash(index, doy);
-             while(usedMsgs.has(msgIdx)) { msgIdx = (msgIdx + 1) % FALLBACK_MSGS.length; }
-             usedMsgs.add(msgIdx);
-             text = FALLBACK_MSGS[msgIdx];
+      const promises = ZODIAC_DATA.map(async (signoObj) => {
+        try {
+          const res = await fetch(`https://api.api-ninjas.com/v1/horoscope?zodiac=${signoObj.slug}`, {
+            headers: { 'X-Api-Key': NINJAS_API_KEY }
+          });
+          const data = await res.json();
+          let textPortuguese = await translateText(data.horoscope || "");
+          let firstPoint = textPortuguese.indexOf('.');
+          let secondPoint = textPortuguese.indexOf('.', firstPoint + 1);
+          if (secondPoint !== -1) {
+            textPortuguese = textPortuguese.substring(0, secondPoint + 1);
+          } else if (firstPoint !== -1) {
+            textPortuguese = textPortuguese.substring(0, firstPoint + 1);
           }
-          return `
-            <div class="horo-box">
-              <header><span>${item.s}</span> <span>${item.i}</span></header>
-              <p>${text}</p>
-            </div>
-          `;
-        }).join('');
-      } catch (e) { console.error(e); }
+          return { ...signoObj, texto: textPortuguese };
+        } catch (e) {
+          return { ...signoObj, texto: "As estrelas estão preparando novidades." };
+        }
+      });
+      const results = await Promise.all(promises);
+      grid.innerHTML = results.map(item => `
+        <div class="horo-box">
+          <header><span>${item.s}</span><span>${item.i}</span></header>
+          <p>${item.texto}</p>
+        </div>
+      `).join('');
     }
 
     fetchHoroscope();
-    setInterval(fetchHoroscope, 21600000);
+    setInterval(fetchHoroscope, 43200000);
   </script>
 </body>
 </html>
