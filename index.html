@@ -6,6 +6,7 @@
   <title>KloudAds Cinema Display 32"</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
+    /* TODO O SEU CSS FOI MANTIDO INTACTO AQUI */
     :root {
       --primary: #020617;
       --accent: #FFD700;
@@ -42,7 +43,6 @@
       width: 100%; height: 100%;
     }
 
-    /* SIDEBAR */
     .sidebar {
       background: rgba(0, 30, 60, 0.6);
       backdrop-filter: blur(30px);
@@ -95,7 +95,6 @@
     .logo-area img { width: 100%; max-width: 280px; height: auto; object-fit: contain; }
     .site-url { font-size: 13px; letter-spacing: 3px; opacity: 0.6; margin-top: 15px; }
 
-    /* MAIN AREA */
     .main-area { position: relative; padding: 50px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
     .slide {
@@ -110,28 +109,20 @@
     .slide-title { font-size: 44px; font-weight: 800; margin-bottom: 35px; display: flex; align-items: center; gap: 25px; }
     .slide-title::after { content: ''; height: 4px; flex: 1; background: linear-gradient(90deg, var(--accent), transparent); border-radius: 2px; }
 
-    /* LOTERIAS */
     .lotto-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; flex: 1; margin-bottom: 50px; }
     .lotto-card { background: rgba(255,255,255,0.05); border-radius: 55px; padding: 30px 20px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: space-between; height: 680px; }
     .lotto-header { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; } 
     .lotto-logo { height: 75px; width: auto; max-width: 90%; object-fit: contain; margin-bottom: 15px; }
     .lotto-info { font-size: 18px; font-weight: 700; opacity: 0.8; letter-spacing: 1px; }
     .ball-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px 0; }
-    
-    /* Layout Padrão das Bolas (Quina e Lotofacil) */
     .ball-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; max-width: 450px; }
-    
-    /* Ajuste exclusivo para Mega-Sena */
     .ball-grid.mega-line { flex-wrap: nowrap !important; max-width: 100% !important; gap: 8px; }
     .ball-grid.mega-line .ball-item { width: 60px; height: 60px; font-size: 24px; }
-
     .ball-item { width: 68px; height: 68px; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 28px; box-shadow: inset -3px -3px 8px rgba(0,0,0,0.4); flex-shrink: 0; }
-    
     .prize-box { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-top: 1px solid rgba(255,255,255,0.1) !important; }
     .prize-label { font-size: 18px; font-weight: 700; opacity: 0.6; text-transform: uppercase; margin-bottom: 8px; }
     .prize-amount { font-size: 48px; font-weight: 800; color: var(--accent); text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
-    /* NOTÍCIAS */
     .news-wrapper { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr 1fr; gap: 30px; flex: 1; overflow: hidden; margin-bottom: 50px; }
     .news-featured { grid-row: 1 / 3; position: relative; border-radius: 50px; overflow: hidden; background: #004080; }
     .news-featured img { width: 100%; height: 100%; object-fit: cover; }
@@ -142,15 +133,14 @@
     .news-item { background: var(--glass); border-radius: 25px; padding: 25px 30px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: center; }
     .news-item h4 { font-size: 23px; font-weight: 600; line-height: 1.3; }
 
-    /* HORÓSCOPO */
     .horo-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 15px; flex: 1; margin-bottom: 50px; min-height: 0; }
     .horo-box { background: var(--glass); border-radius: 25px; padding: 18px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; overflow: hidden; }
     .horo-box header { display: flex; justify-content: space-between; color: var(--accent); font-size: 26px; font-weight: 800; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1) !important; padding-bottom: 6px; flex-shrink: 0; }
     .horo-box p { font-size: 17px; line-height: 1.25; color: #f1f5f9; font-weight: 500; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; text-overflow: ellipsis; }
 
-    /* PROGRESS BAR */
     .progress-container { position: absolute; bottom: 30px; left: 50px; right: 50px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; }
     .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #fff); width: 0%; border-radius: 10px; transition: width 0.1s linear; }
+    .loading-text { text-align: center; padding: 50px; font-size: 24px; color: var(--accent); }
   </style>
 </head>
 <body>
@@ -209,7 +199,9 @@
 
       <section class="slide" id="slide2">
         <h2 class="slide-title">Horóscopo do Dia</h2>
-        <div class="horo-grid-full" id="horoGrid"></div>
+        <div class="horo-grid-full" id="horoGrid">
+          <div class="loading-text">🔮 Carregando horóscopos...</div>
+        </div>
       </section>
 
       <div class="progress-container">
@@ -225,15 +217,13 @@
     let allNews = [];
     let currentNewsIndex = 0;
 
-    const NINJAS_API_KEY = 'SUA_CHAVE_AQUI'; 
-
     const ZODIAC_DATA = [
-      {s:'Áries', slug:'aries', i:'♈'}, {s:'Touro', slug:'taurus', i:'♉'},
-      {s:'Gêmeos', slug:'gemini', i:'♊'}, {s:'Câncer', slug:'cancer', i:'♋'},
-      {s:'Leão', slug:'leo', i:'♌'}, {s:'Virgem', slug:'virgo', i:'♍'},
-      {s:'Libra', slug:'libra', i:'♎'}, {s:'Escorpião', slug:'scorpio', i:'♏'},
-      {s:'Sagitário', slug:'sagittarius', i:'♐'}, {s:'Capricórnio', slug:'capricorn', i:'♑'},
-      {s:'Aquário', slug:'aquarius', i:'♒'}, {s:'Peixes', slug:'pisces', i:'♓'}
+      {s:'Áries', i:'♈'}, {s:'Touro', i:'♉'},
+      {s:'Gêmeos', i:'♊'}, {s:'Câncer', i:'♋'},
+      {s:'Leão', i:'♌'}, {s:'Virgem', i:'♍'},
+      {s:'Libra', i:'♎'}, {s:'Escorpião', i:'♏'},
+      {s:'Sagitário', i:'♐'}, {s:'Capricórnio', i:'♑'},
+      {s:'Aquário', i:'♒'}, {s:'Peixes', i:'♓'}
     ];
 
     function updateClock() {
@@ -287,7 +277,7 @@
         document.getElementById('wMax').textContent = Math.ceil(Math.max(...next24h.map(i => i.main.temp_max)));
         const iconMap = {"01d":"☀️","01n":"🌙","02d":"⛅","02n":"☁️","03d":"☁️","03n":"☁️","04d":"🌥️","04n":"☁️","09d":"🌦️","09n":"🌧️","10d":"🌧️","10n":"🌧️","11d":"⛈️","11n":"⛈️","13d":"❄️","13n":"❄️","50d":"🌫️","50n":"🌫️"};
         document.getElementById('wIcon').textContent = iconMap[currData.weather[0].icon] || "☀️";
-      } catch (e) {}
+      } catch (e) { console.error('Erro clima:', e); }
     }
     fetchWeather();
 
@@ -296,8 +286,9 @@
         const r = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://g1.globo.com/rss/g1/sp/campinas-regiao/');
         const d = await r.json();
         if (d.status === 'ok') { allNews = d.items; updateNewsDisplay(); }
-      } catch (e) {}
+      } catch (e) { console.error('Erro notícias:', e); }
     }
+    
     function updateNewsDisplay() {
       if (allNews.length === 0) return;
       const clean = (t) => t.replace(/<[^>]*>?/gm, '').trim();
@@ -347,42 +338,125 @@
               <p class="prize-amount">R$ ${g.d.valorEstimadoProximoConcurso.toLocaleString('pt-BR')}</p>
             </div>
           </div>`).join('');
-      } catch (e) {}
+      } catch (e) { console.error('Erro loterias:', e); }
     }
     fetchLotto();
 
-    async function translateText(text) {
-      try {
-        const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q=${encodeURIComponent(text)}`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        return data[0].map(item => item[0]).join('');
-      } catch (e) { return text; }
-    }
+    // UTILITÁRIO PARA DELAY (PAUSA)
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
+    // HORÓSCOPO - API Ninjas + Tradutor Inteligente com Cache
     async function fetchHoroscope() {
       const grid = document.getElementById('horoGrid');
-      const promises = ZODIAC_DATA.map(async (signoObj) => {
+      
+      // Chave do dia atual para o cache
+      const dataAtual = new Date().toISOString().split('T')[0];
+      const cacheKey = `horoscopo_${dataAtual}`;
+      
+      // Verifica se já temos o horóscopo de hoje salvo
+      const horoscopoSalvo = localStorage.getItem(cacheKey);
+      
+      if (horoscopoSalvo) {
+        console.log('🔮 Carregando horóscopo do cache local (sem gastar requisições da API)...');
+        const results = JSON.parse(horoscopoSalvo);
+        renderHoroscopeGrid(grid, results);
+        return;
+      }
+
+      grid.innerHTML = '<div class="loading-text">🔮 Sintonizando os astros (pode levar alguns segundos)...</div>';
+      
+      const API_KEY = 'PP5j3plhYKK1qzjtp07cAk0lcZVqNbgvDBWDvAla';
+      const signosMap = {
+        'Áries': 'aries', 'Touro': 'taurus', 'Gêmeos': 'gemini', 'Câncer': 'cancer',
+        'Leão': 'leo', 'Virgem': 'virgo', 'Libra': 'libra', 'Escorpião': 'scorpio',
+        'Sagitário': 'sagittarius', 'Capricórnio': 'capricorn', 'Aquário': 'aquarius', 'Peixes': 'pisces'
+      };
+      
+      const frasesFallback = [
+        "✨ Confie no seu potencial e siga em frente com determinação hoje.",
+        "🌟 Novas oportunidades estão surgindo. Mantenha os olhos abertos.",
+        "💫 Mantenha a calma diante dos desafios e tudo se resolverá bem.",
+        "⭐ O universo está conspirando ao seu favor. Acredite na sua intuição.",
+        "🌙 Acalme sua mente e as respostas que você busca virão naturalmente."
+      ];
+      
+      const results = [];
+
+      // Loop sequencial: Fazemos um de cada vez para evitar bloqueio por excesso de requisições
+      for (const signoObj of ZODIAC_DATA) {
         try {
-          const res = await fetch(`https://api.api-ninjas.com/v1/horoscope?zodiac=${signoObj.slug}`, {
-            headers: { 'X-Api-Key': NINJAS_API_KEY }
+          const signoEn = signosMap[signoObj.s];
+          const urlAPI = `https://api.api-ninjas.com/v1/horoscope?zodiac=${signoEn}`;
+          
+          console.log(`Buscando e traduzindo ${signoObj.s}...`);
+          
+          const response = await fetch(urlAPI, {
+            method: 'GET',
+            headers: { 'X-Api-Key': API_KEY }
           });
-          const data = await res.json();
-          let textPortuguese = await translateText(data.horoscope || "");
-          let firstPoint = textPortuguese.indexOf('.');
-          let secondPoint = textPortuguese.indexOf('.', firstPoint + 1);
+          
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          
+          const data = await response.json();
+          let textoIngles = data.horoscope;
+          
+          if (!textoIngles || textoIngles.length < 10) throw new Error('Sem texto');
+
+          // CORTA O TEXTO EM INGLÊS ANTES DE TRADUZIR:
+          // Isso garante que enviamos frases completas para a API, deixando a tradução muito mais coerente
+          // e economizando o limite de caracteres gratuitos.
+          let firstPoint = textoIngles.indexOf('.');
+          let secondPoint = textoIngles.indexOf('.', firstPoint + 1);
+          
+          let textoParaTraduzir = textoIngles;
           if (secondPoint !== -1) {
-            textPortuguese = textPortuguese.substring(0, secondPoint + 1);
+            textoParaTraduzir = textoIngles.substring(0, secondPoint + 1);
           } else if (firstPoint !== -1) {
-            textPortuguese = textPortuguese.substring(0, firstPoint + 1);
+            textoParaTraduzir = textoIngles.substring(0, firstPoint + 1);
           }
-          return { ...signoObj, texto: textPortuguese };
-        } catch (e) {
-          return { ...signoObj, texto: "As estrelas estão preparando novidades." };
+
+          let textoTraduzido = textoParaTraduzir;
+          
+          try {
+            // Atraso intencional de 800ms para evitar limite de "Too Many Requests" da API gratuita
+            await delay(800); 
+            
+            const urlTrad = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textoParaTraduzir)}&langpair=en|pt-BR`;
+            const resTrad = await fetch(urlTrad);
+            const dataTrad = await resTrad.json();
+            
+            if (dataTrad && dataTrad.responseData && dataTrad.responseData.translatedText) {
+              textoTraduzido = dataTrad.responseData.translatedText;
+            }
+          } catch (errTrad) {
+            console.error(`Erro ao traduzir ${signoObj.s}:`, errTrad);
+          }
+          
+          results.push({ ...signoObj, texto: textoTraduzido });
+          
+        } catch (error) {
+          console.error(`Falha total no signo ${signoObj.s}:`, error.message);
+          const fraseAleatoria = frasesFallback[Math.floor(Math.random() * frasesFallback.length)];
+          results.push({ ...signoObj, texto: fraseAleatoria });
         }
-      });
-      const results = await Promise.all(promises);
-      grid.innerHTML = results.map(item => `
+      }
+      
+      // Salva no cache local (evita baixar de novo hoje)
+      localStorage.setItem(cacheKey, JSON.stringify(results));
+      
+      // Limpa caches antigos (para não acumular lixo no navegador)
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('horoscopo_') && key !== cacheKey) {
+          localStorage.removeItem(key);
+        }
+      }
+
+      renderHoroscopeGrid(grid, results);
+    }
+
+    function renderHoroscopeGrid(gridElement, results) {
+      gridElement.innerHTML = results.map(item => `
         <div class="horo-box">
           <header><span>${item.s}</span><span>${item.i}</span></header>
           <p>${item.texto}</p>
@@ -390,8 +464,12 @@
       `).join('');
     }
 
+    // Executa e define os intervalos
     fetchHoroscope();
-    setInterval(fetchHoroscope, 43200000);
+    setInterval(fetchHoroscope, 43200000); // 12 horas
+    setInterval(fetchLotto, 1800000);
+    setInterval(fetchWeather, 600000);
+    setInterval(fetchNews, 300000);
   </script>
 </body>
 </html>
