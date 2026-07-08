@@ -29,6 +29,9 @@
       overflow: hidden !important; 
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg-blue); color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .bg-animation {
@@ -37,10 +40,16 @@
       z-index: -1;
     }
 
+    /* Alterado apenas para fixar a resolução em 1920x1080 com ponto de origem central */
     .app-container {
       display: grid;
       grid-template-columns: var(--sidebar-width) 1fr;
-      width: 100%; height: 100%;
+      width: 1920px; 
+      height: 1080px;
+      min-width: 1920px;
+      min-height: 1080px;
+      flex-shrink: 0;
+      transform-origin: center center;
     }
 
     .sidebar {
@@ -51,7 +60,7 @@
       flex-direction: column;
       justify-content: space-between;
       border-right: 2px solid var(--glass-border);
-      height: 100vh;
+      height: 100%;
     }
 
     .clock-section { text-align: center; }
@@ -95,7 +104,7 @@
     .logo-area img { width: 100%; max-width: 280px; height: auto; object-fit: contain; }
     .site-url { font-size: 13px; letter-spacing: 3px; opacity: 0.6; margin-top: 15px; }
 
-    .main-area { position: relative; padding: 50px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .main-area { position: relative; padding: 50px; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
     .slide {
       position: absolute; inset: 50px;
@@ -147,7 +156,7 @@
 
   <div class="bg-animation"></div>
 
-  <div class="app-container">
+  <div class="app-container" id="appContainer">
     <aside class="sidebar">
       <div class="clock-section">
         <div class="clock" id="clock">00:00</div>
@@ -225,6 +234,21 @@
       {s:'Sagitário', i:'♐'}, {s:'Capricórnio', i:'♑'},
       {s:'Aquário', i:'♒'}, {s:'Peixes', i:'♓'}
     ];
+
+    // FUNÇÃO ADICIONADA: Ajusta a janela dinamicamente escalando o container 1920x1080 (Proporção 16:9)
+    function adjustResolution() {
+      const container = document.getElementById('appContainer');
+      const targetWidth = 1920;
+      const targetHeight = 1080;
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      const scaleX = windowWidth / targetWidth;
+      const scaleY = windowHeight / targetHeight;
+      const scale = Math.min(scaleX, scaleY);
+      container.style.transform = `scale(${scale})`;
+    }
+    window.addEventListener('resize', adjustResolution);
+    window.addEventListener('DOMContentLoaded', adjustResolution);
 
     function updateClock() {
       const now = new Date();
@@ -342,22 +366,16 @@
     }
     fetchLotto();
 
-    // UTILITÁRIO PARA DELAY (PAUSA)
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
-    // HORÓSCOPO - API Ninjas + Tradutor Inteligente com Cache
     async function fetchHoroscope() {
       const grid = document.getElementById('horoGrid');
-      
-      // Chave do dia atual para o cache
       const dataAtual = new Date().toISOString().split('T')[0];
       const cacheKey = `horoscopo_${dataAtual}`;
-      
-      // Verifica se já temos o horóscopo de hoje salvo
       const horoscopoSalvo = localStorage.getItem(cacheKey);
       
       if (horoscopoSalvo) {
-        console.log('🔮 Carregando horóscopo do cache local (sem gastar requisições da API)...');
+        console.log('🔮 Carregando horóscopo do cache local...');
         const results = JSON.parse(horoscopoSalvo);
         renderHoroscopeGrid(grid, results);
         return;
@@ -373,7 +391,7 @@
       };
       
       const frasesFallback = [
-        "✨ Confie no seu potencial e siga em frente com determinação hoje.",
+        "✨ Confie no seu potential e siga em frente com determinação hoje.",
         "🌟 Novas oportunidades estão surgindo. Mantenha os olhos abertos.",
         "💫 Mantenha a calma diante dos desafios e tudo se resolverá bem.",
         "⭐ O universo está conspirando ao seu favor. Acredite na sua intuição.",
@@ -382,7 +400,6 @@
       
       const results = [];
 
-      // Loop sequencial: Fazemos um de cada vez para evitar bloqueio por excesso de requisições
       for (const signoObj of ZODIAC_DATA) {
         try {
           const signoEn = signosMap[signoObj.s];
@@ -402,9 +419,6 @@
           
           if (!textoIngles || textoIngles.length < 10) throw new Error('Sem texto');
 
-          // CORTA O TEXTO EM INGLÊS ANTES DE TRADUZIR:
-          // Isso garante que enviamos frases completas para a API, deixando a tradução muito mais coerente
-          // e economizando o limite de caracteres gratuitos.
           let firstPoint = textoIngles.indexOf('.');
           let secondPoint = textoIngles.indexOf('.', firstPoint + 1);
           
@@ -418,9 +432,7 @@
           let textoTraduzido = textoParaTraduzir;
           
           try {
-            // Atraso intencional de 800ms para evitar limite de "Too Many Requests" da API gratuita
             await delay(800); 
-            
             const urlTrad = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textoParaTraduzir)}&langpair=en|pt-BR`;
             const resTrad = await fetch(urlTrad);
             const dataTrad = await resTrad.json();
@@ -441,10 +453,8 @@
         }
       }
       
-      // Salva no cache local (evita baixar de novo hoje)
       localStorage.setItem(cacheKey, JSON.stringify(results));
       
-      // Limpa caches antigos (para não acumular lixo no navegador)
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key.startsWith('horoscopo_') && key !== cacheKey) {
@@ -464,9 +474,8 @@
       `).join('');
     }
 
-    // Executa e define os intervalos
     fetchHoroscope();
-    setInterval(fetchHoroscope, 43200000); // 12 horas
+    setInterval(fetchHoroscope, 43200000); 
     setInterval(fetchLotto, 1800000);
     setInterval(fetchWeather, 600000);
     setInterval(fetchNews, 300000);
