@@ -6,7 +6,6 @@
   <title>KloudAds Cinema Display 32"</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
-    /* TODO O SEU CSS FOI MANTIDO INTACTO AQUI */
     :root {
       --primary: #020617;
       --accent: #FFD700;
@@ -40,7 +39,6 @@
       z-index: -1;
     }
 
-    /* Alterado apenas para fixar a resolução em 1920x1080 com ponto de origem central */
     .app-container {
       display: grid;
       grid-template-columns: var(--sidebar-width) 1fr;
@@ -148,8 +146,7 @@
     .horo-box p { font-size: 17px; line-height: 1.25; color: #f1f5f9; font-weight: 500; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; text-overflow: ellipsis; }
 
     .progress-container { position: absolute; bottom: 30px; left: 50px; right: 50px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; }
-    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #fff); width: 0%; border-radius: 10px; transition: width 0.1s linear; }
-    .loading-text { text-align: center; padding: 50px; font-size: 24px; color: var(--accent); }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #fff); width: 0%; border-radius: 10px; }
   </style>
 </head>
 <body>
@@ -208,9 +205,7 @@
 
       <section class="slide" id="slide2">
         <h2 class="slide-title">Horóscopo do Dia</h2>
-        <div class="horo-grid-full" id="horoGrid">
-          <div class="loading-text">🔮 Carregando horóscopos...</div>
-        </div>
+        <div class="horo-grid-full" id="horoGrid"></div>
       </section>
 
       <div class="progress-container">
@@ -225,6 +220,7 @@
     const totalSlides = 3;
     let allNews = [];
     let currentNewsIndex = 0;
+    let slideStartTime = Date.now();
 
     const ZODIAC_DATA = [
       {s:'Áries', i:'♈'}, {s:'Touro', i:'♉'},
@@ -235,7 +231,6 @@
       {s:'Aquário', i:'♒'}, {s:'Peixes', i:'♓'}
     ];
 
-    // FUNÇÃO ADICIONADA: Ajusta a janela dinamicamente escalando o container 1920x1080 (Proporção 16:9)
     function adjustResolution() {
       const container = document.getElementById('appContainer');
       const targetWidth = 1920;
@@ -259,28 +254,29 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    function rotateSlides() {
-      const bar = document.getElementById('progressBar');
-      let start = null;
-      function step(timestamp) {
-        if (!start) start = timestamp;
-        const progress = timestamp - start;
-        const percent = Math.min((progress / SLIDE_DURATION) * 100, 100);
-        bar.style.width = percent + '%';
-        if (progress < SLIDE_DURATION) {
-          window.requestAnimationFrame(step);
-        } else {
-          document.getElementById(`slide${currentSlide}`).classList.remove('active');
-          currentSlide = (currentSlide + 1) % totalSlides;
-          if(currentSlide === 0) updateNewsDisplay();
-          document.getElementById(`slide${currentSlide}`).classList.add('active');
-          start = null;
-          window.requestAnimationFrame(step);
-        }
+    // CORREÇÃO DA TRANSIÇÃO: Controla a troca exata de slides por Interval estável e limpo
+    function changeSlide() {
+      document.getElementById(`slide${currentSlide}`).classList.remove('active');
+      currentSlide = (currentSlide + 1) % totalSlides;
+      
+      if(currentSlide === 0) {
+        updateNewsDisplay();
       }
-      window.requestAnimationFrame(step);
+      
+      document.getElementById(`slide${currentSlide}`).classList.add('active');
+      slideStartTime = Date.now(); // Reinicia marcador de tempo para a barra
     }
-    rotateSlides();
+    setInterval(changeSlide, SLIDE_DURATION);
+
+    // CORREÇÃO DA BARRA: Animação baseada na diferença real de tempo (imune a congelamentos de aba)
+    function updateProgressBar() {
+      const bar = document.getElementById('progressBar');
+      const elapsed = Date.now() - slideStartTime;
+      const percent = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
+      bar.style.width = percent + '%';
+      window.requestAnimationFrame(updateProgressBar);
+    }
+    window.requestAnimationFrame(updateProgressBar);
 
     async function fetchWeather() {
       try {
@@ -368,6 +364,24 @@
 
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
+    function preRenderHoroscopeGrid(gridElement) {
+      gridElement.innerHTML = ZODIAC_DATA.map(item => `
+        <div class="horo-box" id="horo-${item.s.toLowerCase()}">
+          <header><span>${item.s}</span><span>${item.i}</span></header>
+          <p style="opacity: 0.5;">✨ Alinhando os astros...</p>
+        </div>
+      `).join('');
+    }
+
+    function renderHoroscopeGrid(gridElement, results) {
+      gridElement.innerHTML = results.map(item => `
+        <div class="horo-box" id="horo-${item.s.toLowerCase()}">
+          <header><span>${item.s}</span><span>${item.i}</span></header>
+          <p>${item.texto}</p>
+        </div>
+      `).join('');
+    }
+
     async function fetchHoroscope() {
       const grid = document.getElementById('horoGrid');
       const dataAtual = new Date().toISOString().split('T')[0];
@@ -381,7 +395,7 @@
         return;
       }
 
-      grid.innerHTML = '<div class="loading-text">🔮 Sintonizando os astros (pode levar alguns segundos)...</div>';
+      preRenderHoroscopeGrid(grid);
       
       const API_KEY = 'PP5j3plhYKK1qzjtp07cAk0lcZVqNbgvDBWDvAla';
       const signosMap = {
@@ -391,7 +405,7 @@
       };
       
       const frasesFallback = [
-        "✨ Confie no seu potential e siga em frente com determinação hoje.",
+        "✨ Confie no seu potencial e siga em frente com determinação hoje.",
         "🌟 Novas oportunidades estão surgindo. Mantenha os olhos abertos.",
         "💫 Mantenha a calma diante dos desafios e tudo se resolverá bem.",
         "⭐ O universo está conspirando ao seu favor. Acredite na sua intuição.",
@@ -400,12 +414,12 @@
       
       const results = [];
 
-      for (const signoObj of ZODIAC_DATA) {
+      const promessas = ZODIAC_DATA.map(async (signoObj, index) => {
         try {
+          await delay(index * 600); 
+
           const signoEn = signosMap[signoObj.s];
           const urlAPI = `https://api.api-ninjas.com/v1/horoscope?zodiac=${signoEn}`;
-          
-          console.log(`Buscando e traduzindo ${signoObj.s}...`);
           
           const response = await fetch(urlAPI, {
             method: 'GET',
@@ -432,7 +446,6 @@
           let textoTraduzido = textoParaTraduzir;
           
           try {
-            await delay(800); 
             const urlTrad = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textoParaTraduzir)}&langpair=en|pt-BR`;
             const resTrad = await fetch(urlTrad);
             const dataTrad = await resTrad.json();
@@ -444,15 +457,36 @@
             console.error(`Erro ao traduzir ${signoObj.s}:`, errTrad);
           }
           
-          results.push({ ...signoObj, texto: textoTraduzido });
+          const resultadoSigno = { ...signoObj, texto: textoTraduzido };
+          results.push(resultadoSigno);
+
+          const cardSigno = document.getElementById(`horo-${signoObj.s.toLowerCase()}`);
+          if (cardSigno) {
+            const pElement = cardSigno.querySelector('p');
+            if (pElement) {
+              pElement.textContent = textoTraduzido;
+              pElement.style.opacity = "1";
+            }
+          }
           
         } catch (error) {
           console.error(`Falha total no signo ${signoObj.s}:`, error.message);
           const fraseAleatoria = frasesFallback[Math.floor(Math.random() * frasesFallback.length)];
-          results.push({ ...signoObj, texto: fraseAleatoria });
+          const resultadoFallback = { ...signoObj, texto: fraseAleatoria };
+          results.push(resultadoFallback);
+
+          const cardSigno = document.getElementById(`horo-${signoObj.s.toLowerCase()}`);
+          if (cardSigno) {
+            const pElement = cardSigno.querySelector('p');
+            if (pElement) {
+              pElement.textContent = fraseAleatoria;
+              pElement.style.opacity = "1";
+            }
+          }
         }
-      }
-      
+      });
+
+      await Promise.all(promessas);
       localStorage.setItem(cacheKey, JSON.stringify(results));
       
       for (let i = 0; i < localStorage.length; i++) {
@@ -461,17 +495,6 @@
           localStorage.removeItem(key);
         }
       }
-
-      renderHoroscopeGrid(grid, results);
-    }
-
-    function renderHoroscopeGrid(gridElement, results) {
-      gridElement.innerHTML = results.map(item => `
-        <div class="horo-box">
-          <header><span>${item.s}</span><span>${item.i}</span></header>
-          <p>${item.texto}</p>
-        </div>
-      `).join('');
     }
 
     fetchHoroscope();
