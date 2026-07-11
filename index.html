@@ -53,7 +53,7 @@
     .sidebar {
       background: rgba(0, 30, 60, 0.6);
       backdrop-filter: blur(30px);
-      padding: 40px 30px; 
+      padding: 55px 30px 30px; 
       display: flex; 
       flex-direction: column;
       justify-content: space-between;
@@ -98,9 +98,9 @@
     }
     .w-f-val { font-size: 19px; font-weight: 800; }
 
-    .logo-area { text-align: center; padding-bottom: 10px; }
-    .logo-area img { width: 100%; max-width: 280px; height: auto; object-fit: contain; }
-    .site-url { font-size: 13px; letter-spacing: 3px; opacity: 0.6; margin-top: 15px; }
+    .logo-area { text-align: center; padding-bottom: 0; }
+    .logo-area img { width: 100%; max-width: 340px; height: auto; object-fit: contain; }
+    .site-url { font-size: 17px; letter-spacing: 2px; opacity: 0.75; margin-top: 12px; }
 
     .main-area { position: relative; padding: 50px; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
@@ -268,6 +268,15 @@
     }
     setInterval(changeSlide, SLIDE_DURATION);
 
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    slideStartTime = Date.now();
+    const bar=document.getElementById('progressBar');
+    if(bar) bar.style.width='0%';
+  }
+});
+
+
     // CORREÇÃO DA BARRA: Animação baseada na diferença real de tempo (imune a congelamentos de aba)
     function updateProgressBar() {
       const bar = document.getElementById('progressBar');
@@ -416,7 +425,7 @@
 
       const promessas = ZODIAC_DATA.map(async (signoObj, index) => {
         try {
-          await delay(index * 600); 
+          await delay(index * 250); 
 
           const signoEn = signosMap[signoObj.s];
           const urlAPI = `https://api.api-ninjas.com/v1/horoscope?zodiac=${signoEn}`;
@@ -458,7 +467,7 @@
           }
           
           const resultadoSigno = { ...signoObj, texto: textoTraduzido };
-          results.push(resultadoSigno);
+          results[index] = resultadoSigno;
 
           const cardSigno = document.getElementById(`horo-${signoObj.s.toLowerCase()}`);
           if (cardSigno) {
@@ -473,7 +482,7 @@
           console.error(`Falha total no signo ${signoObj.s}:`, error.message);
           const fraseAleatoria = frasesFallback[Math.floor(Math.random() * frasesFallback.length)];
           const resultadoFallback = { ...signoObj, texto: fraseAleatoria };
-          results.push(resultadoFallback);
+          results[index] = resultadoFallback;
 
           const cardSigno = document.getElementById(`horo-${signoObj.s.toLowerCase()}`);
           if (cardSigno) {
