@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KloudAds Cinema Display 32"</title>
+  <title>KloudAds Cinema Display 32" [Versão Alternativa B]</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -12,7 +12,7 @@
       --text: #f8fafc;
       --glass: rgba(255, 255, 255, 0.06);
       --glass-border: rgba(255, 255, 255, 0.15);
-      --sidebar-width: 420px;
+      --sidebar-width: 22vw;
       --mega: #209869;
       --quina: #260085;
       --loto: #941156;
@@ -42,64 +42,67 @@
       width: 100%; height: 100%;
     }
 
-    /* SIDEBAR */
+    /* SIDEBAR RESPONSIVA */
     .sidebar {
       background: rgba(0, 30, 60, 0.6);
       backdrop-filter: blur(30px);
-      padding: 40px 30px; 
+      padding: 4vh 2vw; 
       display: flex; 
       flex-direction: column;
       justify-content: space-between;
       border-right: 2px solid var(--glass-border);
       height: 100vh;
+      min-width: 280px;
     }
 
     .clock-section { text-align: center; }
     .clock {
-      font-size: 110px; font-weight: 800; line-height: 0.9;
-      letter-spacing: -5px; color: var(--accent);
+      font-size: 5.5vw; font-weight: 800; line-height: 0.9;
+      letter-spacing: -3px; color: var(--accent);
       text-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
     }
 
     .date {
-      font-size: 16px; text-transform: uppercase; letter-spacing: 1px; 
-      margin-top: 15px; color: #fff; opacity: 0.9; font-weight: 600;
+      font-size: 0.9vw; text-transform: uppercase; letter-spacing: 1px; 
+      margin-top: 1.5vh; color: #fff; opacity: 0.9; font-weight: 600;
       white-space: nowrap; display: block;
     }
 
+    /* WEATHER CARD RESPONSIVO */
     .weather-card {
-      background: var(--glass); border-radius: 40px; 
-      padding: 30px 20px; text-align: center;
+      background: var(--glass); border-radius: 2vw; 
+      padding: 3vh 1.5vw; text-align: center;
       border: 1px solid var(--glass-border) !important;
+      margin: 2vh 0;
     }
 
-    .city-name { font-size: 26px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
-    .w-icon-main { font-size: 80px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
-    .temp-now { font-size: 85px; font-weight: 800; line-height: 1; }
-    .w-desc { font-size: 19px; opacity: 0.9; text-transform: capitalize; margin-bottom: 15px; }
+    .city-name { font-size: 1.2vw; font-weight: 800; margin-bottom: 1.5vh; text-transform: uppercase; }
+    .w-icon-main { font-size: 4vw; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); line-height: 1.1; }
+    .temp-now { font-size: 4.5vw; font-weight: 800; line-height: 1; }
+    .w-desc { font-size: 1vw; opacity: 0.9; text-transform: capitalize; margin-bottom: 1.5vh; }
 
     .w-minmax-row {
-      display: flex; gap: 30px; justify-content: center;
-      margin-bottom: 20px; border-top: 1px solid var(--glass-border) !important;
-      padding-top: 15px; width: 85%; margin: 0 auto 20px;
+      display: flex; gap: 1.5vw; justify-content: center;
+      margin-bottom: 2vh; border-top: 1px solid var(--glass-border) !important;
+      padding-top: 1.5vh; width: 85%; margin: 0 auto 2vh;
     }
-    .w-mm-val { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 4px; }
+    .w-mm-val { font-size: 1.4vw; font-weight: 800; display: flex; align-items: center; gap: 4px; }
 
     .w-footer-info {
       display: flex; justify-content: space-around;
-      background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px;
+      background: rgba(255,255,255,0.05); padding: 1.2vh 1vw; border-radius: 1vw;
     }
-    .w-f-val { font-size: 19px; font-weight: 800; }
+    .w-f-val { font-size: 1vw; font-weight: 800; }
 
-    .logo-area { text-align: center; padding-bottom: 10px; }
-    .logo-area img { width: 100%; max-width: 280px; height: auto; object-fit: contain; }
-    .site-url { font-size: 13px; letter-spacing: 3px; opacity: 0.6; margin-top: 15px; }
+    .logo-area { text-align: center; padding-bottom: 1vh; }
+    .logo-area img { width: 100%; max-width: 240px; height: auto; object-fit: contain; }
+    .site-url { font-size: 0.65vw; letter-spacing: 3px; opacity: 0.6; margin-top: 1vh; }
 
-    /* MAIN AREA */
-    .main-area { position: relative; padding: 50px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    /* MAIN AREA RESPONSIVA */
+    .main-area { position: relative; padding: 4vh 3vw; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
     .slide {
-      position: absolute; inset: 50px;
+      position: absolute; inset: 4vh 3vw 6vh;
       opacity: 0; transform: translateY(20px);
       transition: all 1s ease-in-out;
       visibility: hidden;
@@ -107,50 +110,67 @@
     }
     .slide.active { opacity: 1; transform: translateY(0); visibility: visible; }
 
-    .slide-title { font-size: 44px; font-weight: 800; margin-bottom: 35px; display: flex; align-items: center; gap: 25px; }
+    .slide-title { font-size: 2.2vw; font-weight: 800; margin-bottom: 3vh; display: flex; align-items: center; gap: 25px; flex-shrink: 0; }
     .slide-title::after { content: ''; height: 4px; flex: 1; background: linear-gradient(90deg, var(--accent), transparent); border-radius: 2px; }
 
-    /* LOTERIAS */
-    .lotto-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; flex: 1; margin-bottom: 50px; }
-    .lotto-card { background: rgba(255,255,255,0.05); border-radius: 55px; padding: 30px 20px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: space-between; height: 680px; }
-    .lotto-header { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; } 
-    .lotto-logo { height: 75px; width: auto; max-width: 90%; object-fit: contain; margin-bottom: 15px; }
-    .lotto-info { font-size: 18px; font-weight: 700; opacity: 0.8; letter-spacing: 1px; }
-    .ball-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px 0; }
+    /* LOTERIAS RESPONSIVAS */
+    .lotto-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2vw; flex: 1; margin-bottom: 2vh; min-height: 0; }
+    .lotto-card { background: rgba(255,255,255,0.05); border-radius: 3vw; padding: 3vh 1.5vw; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+    .lotto-header { display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 1vh; } 
+    .lotto-logo { height: 6.5vh; width: auto; max-width: 90%; object-fit: contain; margin-bottom: 1vh; }
+    .lotto-info { font-size: 0.9vw; font-weight: 700; opacity: 0.8; letter-spacing: 1px; text-align: center; }
+    .ball-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 1vh 0; min-height: 0; }
     
-    /* Layout Padrão das Bolas (Quina e Lotofacil) */
-    .ball-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; max-width: 450px; }
-    
-    /* Ajuste exclusivo para Mega-Sena */
-    .ball-grid.mega-line { flex-wrap: nowrap !important; max-width: 100% !important; gap: 8px; }
-    .ball-grid.mega-line .ball-item { width: 60px; height: 60px; font-size: 24px; }
+    .ball-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.8vw; max-width: 100%; }
+    .ball-grid.mega-line { flex-wrap: nowrap !important; max-width: 100% !important; gap: 0.5vw; }
+    .ball-grid.mega-line .ball-item { width: 3.5vw; height: 3.5vw; font-size: 1.4vw; }
 
-    .ball-item { width: 68px; height: 68px; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 28px; box-shadow: inset -3px -3px 8px rgba(0,0,0,0.4); flex-shrink: 0; }
+    .ball-item { width: 3.8vw; height: 3.8vw; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.6vw; box-shadow: inset -3px -3px 8px rgba(0,0,0,0.4); flex-shrink: 0; }
     
-    .prize-box { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-top: 1px solid rgba(255,255,255,0.1) !important; }
-    .prize-label { font-size: 18px; font-weight: 700; opacity: 0.6; text-transform: uppercase; margin-bottom: 8px; }
-    .prize-amount { font-size: 48px; font-weight: 800; color: var(--accent); text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .prize-box { display: flex; flex-direction: column; justify-content: center; align-items: center; border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 2vh; }
+    .prize-label { font-size: 0.9vw; font-weight: 700; opacity: 0.6; text-transform: uppercase; margin-bottom: 0.5vh; }
+    .prize-amount { font-size: 2.3vw; font-weight: 800; color: var(--accent); text-shadow: 0 4px 10px rgba(0,0,0,0.3); text-align: center; }
 
-    /* NOTÍCIAS */
-    .news-wrapper { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr 1fr; gap: 30px; flex: 1; overflow: hidden; margin-bottom: 50px; }
-    .news-featured { grid-row: 1 / 3; position: relative; border-radius: 50px; overflow: hidden; background: #004080; }
+    /* NOTÍCIAS RESPONSIVAS */
+    .news-wrapper { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2vw; flex: 1; overflow: hidden; margin-bottom: 2vh; min-height: 0; }
+    .news-featured { position: relative; border-radius: 2.5vw; overflow: hidden; background: #004080; height: 100%; }
     .news-featured img { width: 100%; height: 100%; object-fit: cover; }
-    .news-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 80px 50px 50px; background: linear-gradient(transparent, rgba(0,30,60,0.98)); }
-    .news-overlay h3 { font-size: 44px; line-height: 1.1; margin-bottom: 15px; color: var(--accent); }
-    .news-overlay p { font-size: 21px; opacity: 0.95; line-height: 1.5; }
-    .news-secondary { display: grid; grid-template-rows: repeat(3, 1fr); gap: 20px; }
-    .news-item { background: var(--glass); border-radius: 25px; padding: 25px 30px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: center; }
-    .news-item h4 { font-size: 23px; font-weight: 600; line-height: 1.3; }
+    .news-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 10vh 3vw 4vh; background: linear-gradient(transparent, rgba(0,30,60,0.98)); }
+    .news-overlay h3 { font-size: 2.2vw; line-height: 1.2; margin-bottom: 1.5vh; color: var(--accent); font-weight: 800; }
+    .news-overlay p { font-size: 1.1vw; opacity: 0.95; line-height: 1.4; }
+    
+    .news-secondary { display: grid; grid-template-rows: repeat(3, 1fr); gap: 1.5vh; height: 100%; }
+    .news-item { background: var(--glass); border-radius: 1.5vw; padding: 2vh 2vw; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; justify-content: center; }
+    .news-item h4 { font-size: 1.15vw; font-weight: 700; line-height: 1.3; }
 
-    /* HORÓSCOPO */
-    .horo-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 15px; flex: 1; margin-bottom: 50px; min-height: 0; }
-    .horo-box { background: var(--glass); border-radius: 25px; padding: 18px; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; overflow: hidden; }
-    .horo-box header { display: flex; justify-content: space-between; color: var(--accent); font-size: 26px; font-weight: 800; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1) !important; padding-bottom: 6px; flex-shrink: 0; }
-    .horo-box p { font-size: 17px; line-height: 1.25; color: #f1f5f9; font-weight: 500; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; text-overflow: ellipsis; }
+    /* HORÓSCOPO RESPONSIVO */
+    .horo-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 1vw; flex: 1; margin-bottom: 2vh; min-height: 0; }
+    .horo-box { background: var(--glass); border-radius: 1.5vw; padding: 1.5vh 1.2vw; border: 1px solid var(--glass-border) !important; display: flex; flex-direction: column; overflow: hidden; justify-content: space-between; }
+    .horo-box header { display: flex; justify-content: space-between; align-items: center; color: var(--accent); font-size: 1.3vw; font-weight: 800; margin-bottom: 0.8vh; border-bottom: 1px solid rgba(255,255,255,0.1) !important; padding-bottom: 0.5vh; flex-shrink: 0; }
+    .horo-box p { font-size: 0.85vw; line-height: 1.3; color: #f1f5f9; font-weight: 500; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; }
 
     /* PROGRESS BAR */
-    .progress-container { position: absolute; bottom: 30px; left: 50px; right: 50px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .progress-container { position: absolute; bottom: 2vh; left: 3vw; right: 3vw; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; }
     .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #fff); width: 0%; border-radius: 10px; transition: width 0.1s linear; }
+
+    @media (max-width: 1366px), (max-height: 768px) {
+      .sidebar { padding: 3vh 2vw; }
+      .weather-card { padding: 2vh 1.2vw; margin: 1vh 0; }
+      .w-minmax-row { margin-bottom: 1vh; padding-top: 1vh; }
+      .lotto-card { padding: 2.5vh 1.2vw; }
+      .lotto-logo { height: 5vh; }
+      .prize-box { padding-top: 1vh; }
+      .ball-item { width: 3.5vw; height: 3.5vw; font-size: 1.5vw; }
+      .ball-grid.mega-line .ball-item { width: 3vw; height: 3vw; font-size: 1.3vw; }
+      .news-overlay { padding: 8vh 2vw 3vh; }
+      .news-overlay h3 { font-size: 2vw; }
+      .news-overlay p { font-size: 1vw; }
+      .news-item { padding: 1.5vh 1.5vw; }
+      .news-item h4 { font-size: 1.05vw; }
+      .horo-box { padding: 1vh 1vw; }
+      .horo-box header { font-size: 1.1vw; margin-bottom: 0.4vh; }
+      .horo-box p { font-size: 0.78vw; -webkit-line-clamp: 3; line-height: 1.2; }
+    }
   </style>
 </head>
 <body>
@@ -219,11 +239,13 @@
   </div>
 
   <script>
-    const SLIDE_DURATION = 10000; 
-    let currentSlide = 0;
-    const totalSlides = 3;
+    const SLIDE_DURATION_MS = 10000; // 10 segundos por slide
+    const TOTAL_SLIDES = 3;
+    const TOTAL_CYCLE_MS = SLIDE_DURATION_MS * TOTAL_SLIDES; // 30 segundos no total
+
     let allNews = [];
     let currentNewsIndex = 0;
+    let activeSlideIndex = 0;
 
     const NINJAS_API_KEY = 'SUA_CHAVE_AQUI'; 
 
@@ -236,6 +258,7 @@
       {s:'Aquário', slug:'aquarius', i:'♒'}, {s:'Peixes', slug:'pisces', i:'♓'}
     ];
 
+    // ATUALIZA RELÓGIO
     function updateClock() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -245,29 +268,65 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    function rotateSlides() {
-      const bar = document.getElementById('progressBar');
-      let start = null;
-      function step(timestamp) {
-        if (!start) start = timestamp;
-        const progress = timestamp - start;
-        const percent = Math.min((progress / SLIDE_DURATION) * 100, 100);
-        bar.style.width = percent + '%';
-        if (progress < SLIDE_DURATION) {
-          window.requestAnimationFrame(step);
-        } else {
-          document.getElementById(`slide${currentSlide}`).classList.remove('active');
-          currentSlide = (currentSlide + 1) % totalSlides;
-          if(currentSlide === 0) updateNewsDisplay();
-          document.getElementById(`slide${currentSlide}`).classList.add('active');
-          start = null;
-          window.requestAnimationFrame(step);
-        }
-      }
-      window.requestAnimationFrame(step);
-    }
-    rotateSlides();
+    /* =========================================================
+       MÉTODO ALTERNATIVO: ALINHAMENTO DE TEMPO ABSOLUTO
+       Não importa as pausas do navegador, ele calcula onde deveria estar
+       baseado no Timestamp corrente do relógio.
+       ========================================================= */
+    function syncSlidesBySystemTime() {
+      const nowMs = Date.now();
+      
+      // Encontra a posição exata dentro do ciclo atual de 30 segundos
+      const currentCyclePositionMs = nowMs % TOTAL_CYCLE_MS;
+      
+      // Descobre qual slide deve estar ativo (0, 1 ou 2)
+      const targetSlideIndex = Math.floor(currentCyclePositionMs / SLIDE_DURATION_MS);
+      
+      // Descobre a porcentagem de progresso do slide corrente
+      const currentSlideProgressMs = currentCyclePositionMs % SLIDE_DURATION_MS;
+      const progressPercent = (currentSlideProgressMs / SLIDE_DURATION_MS) * 100;
 
+      // Aplica o progresso na barra
+      document.getElementById('progressBar').style.width = progressPercent + '%';
+
+      // Se o slide mudou, atualiza a classe ativa
+      if (targetSlideIndex !== activeSlideIndex) {
+        document.getElementById(`slide${activeSlideIndex}`).classList.remove('active');
+        activeSlideIndex = targetSlideIndex;
+        
+        // Se voltou para o slide 0, rotaciona a notícia
+        if (activeSlideIndex === 0) {
+          updateNewsDisplay();
+        }
+        
+        document.getElementById(`slide${activeSlideIndex}`).classList.add('active');
+      }
+
+      // Requisita o próximo frame
+      requestAnimationFrame(syncSlidesBySystemTime);
+    }
+
+    // Inicializador seguro de armazenamento de dados locais (híbrido)
+    function safeSetCache(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {
+        try {
+          sessionStorage.setItem(key, JSON.stringify(data));
+        } catch(err){}
+      }
+    }
+
+    function safeGetCache(key) {
+      try {
+        const d = localStorage.getItem(key) || sessionStorage.getItem(key);
+        return d ? JSON.parse(d) : null;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    // CLIMA
     async function fetchWeather() {
       try {
         const API_KEY = 'b0b0fbf4fb3bac7908252d23111a524d';
@@ -291,13 +350,25 @@
     }
     fetchWeather();
 
+    // NOTÍCIAS (Carregamento Ultrarápido com Cache)
     async function fetchNews() {
+      const cachedNews = safeGetCache('kloud_cached_news');
+      if (cachedNews) {
+        allNews = cachedNews;
+        updateNewsDisplay();
+      }
+
       try {
         const r = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://g1.globo.com/rss/g1/sp/campinas-regiao/');
         const d = await r.json();
-        if (d.status === 'ok') { allNews = d.items; updateNewsDisplay(); }
+        if (d.status === 'ok' && d.items && d.items.length > 0) { 
+          allNews = d.items; 
+          safeSetCache('kloud_cached_news', d.items);
+          updateNewsDisplay(); 
+        }
       } catch (e) {}
     }
+
     function updateNewsDisplay() {
       if (allNews.length === 0) return;
       const clean = (t) => t.replace(/<[^>]*>?/gm, '').trim();
@@ -318,6 +389,7 @@
     }
     fetchNews();
 
+    // LOTERIAS
     async function fetchLotto() {
       const container = document.getElementById('lottoContent');
       try {
@@ -351,6 +423,7 @@
     }
     fetchLotto();
 
+    // TRADUTOR
     async function translateText(text) {
       try {
         const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q=${encodeURIComponent(text)}`;
@@ -360,8 +433,13 @@
       } catch (e) { return text; }
     }
 
+    // HORÓSCOPO (Carregamento Ultrarápido com Cache)
     async function fetchHoroscope() {
-      const grid = document.getElementById('horoGrid');
+      const cachedHoro = safeGetCache('kloud_cached_horo');
+      if (cachedHoro) {
+        renderHoroscope(cachedHoro);
+      }
+
       const promises = ZODIAC_DATA.map(async (signoObj) => {
         try {
           const res = await fetch(`https://api.api-ninjas.com/v1/horoscope?zodiac=${signoObj.slug}`, {
@@ -381,8 +459,15 @@
           return { ...signoObj, texto: "As estrelas estão preparando novidades." };
         }
       });
+      
       const results = await Promise.all(promises);
-      grid.innerHTML = results.map(item => `
+      safeSetCache('kloud_cached_horo', results);
+      renderHoroscope(results);
+    }
+
+    function renderHoroscope(data) {
+      const grid = document.getElementById('horoGrid');
+      grid.innerHTML = data.map(item => `
         <div class="horo-box">
           <header><span>${item.s}</span><span>${item.i}</span></header>
           <p>${item.texto}</p>
@@ -391,7 +476,10 @@
     }
 
     fetchHoroscope();
-    setInterval(fetchHoroscope, 43200000);
+    setInterval(fetchHoroscope, 43200000); // 12 horas
+
+    // Ativa o alinhamento de tempo instantâneo
+    syncSlidesBySystemTime();
   </script>
 </body>
 </html>
