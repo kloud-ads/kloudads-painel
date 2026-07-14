@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KloudAds Cinema Display 32" [Versão Alternativa B]</title>
+  <title>KloudAds Cinema Display 32"</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -121,7 +121,10 @@
     .lotto-info { font-size: 0.9vw; font-weight: 700; opacity: 0.8; letter-spacing: 1px; text-align: center; }
     .ball-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 1vh 0; min-height: 0; }
     
+    /* Layout Padrão das Bolas */
     .ball-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.8vw; max-width: 100%; }
+    
+    /* Ajuste exclusivo para Mega-Sena */
     .ball-grid.mega-line { flex-wrap: nowrap !important; max-width: 100% !important; gap: 0.5vw; }
     .ball-grid.mega-line .ball-item { width: 3.5vw; height: 3.5vw; font-size: 1.4vw; }
 
@@ -153,6 +156,7 @@
     .progress-container { position: absolute; bottom: 2vh; left: 3vw; right: 3vw; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; }
     .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #fff); width: 0%; border-radius: 10px; transition: width 0.1s linear; }
 
+    /* CONFIGURAÇÕES DE RESOLUÇÃO EM HD */
     @media (max-width: 1366px), (max-height: 768px) {
       .sidebar { padding: 3vh 2vw; }
       .weather-card { padding: 2vh 1.2vw; margin: 1vh 0; }
@@ -239,13 +243,13 @@
   </div>
 
   <script>
-    const SLIDE_DURATION_MS = 10000; // 10 segundos por slide
-    const TOTAL_SLIDES = 3;
-    const TOTAL_CYCLE_MS = SLIDE_DURATION_MS * TOTAL_SLIDES; // 30 segundos no total
-
+    const SLIDE_DURATION = 10000; 
+    let currentSlide = 0;
+    const totalSlides = 3;
     let allNews = [];
     let currentNewsIndex = 0;
-    let activeSlideIndex = 0;
+    let slideAnimationId = null;
+    let slideStartTime = null;
 
     const NINJAS_API_KEY = 'SUA_CHAVE_AQUI'; 
 
@@ -258,7 +262,6 @@
       {s:'Aquário', slug:'aquarius', i:'♒'}, {s:'Peixes', slug:'pisces', i:'♓'}
     ];
 
-    // ATUALIZA RELÓGIO
     function updateClock() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -268,65 +271,61 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    /* =========================================================
-       MÉTODO ALTERNATIVO: ALINHAMENTO DE TEMPO ABSOLUTO
-       Não importa as pausas do navegador, ele calcula onde deveria estar
-       baseado no Timestamp corrente do relógio.
-       ========================================================= */
-    function syncSlidesBySystemTime() {
-      const nowMs = Date.now();
+    // Inicia e controla a rotação dos slides de forma precisa e passível de reset
+    function startSlideRotation() {
+      if (slideAnimationId) {
+        cancelAnimationFrame(slideAnimationId);
+      }
+      slideStartTime = null;
       
-      // Encontra a posição exata dentro do ciclo atual de 30 segundos
-      const currentCyclePositionMs = nowMs % TOTAL_CYCLE_MS;
-      
-      // Descobre qual slide deve estar ativo (0, 1 ou 2)
-      const targetSlideIndex = Math.floor(currentCyclePositionMs / SLIDE_DURATION_MS);
-      
-      // Descobre a porcentagem de progresso do slide corrente
-      const currentSlideProgressMs = currentCyclePositionMs % SLIDE_DURATION_MS;
-      const progressPercent = (currentSlideProgressMs / SLIDE_DURATION_MS) * 100;
-
-      // Aplica o progresso na barra
-      document.getElementById('progressBar').style.width = progressPercent + '%';
-
-      // Se o slide mudou, atualiza a classe ativa
-      if (targetSlideIndex !== activeSlideIndex) {
-        document.getElementById(`slide${activeSlideIndex}`).classList.remove('active');
-        activeSlideIndex = targetSlideIndex;
+      function step(timestamp) {
+        if (!slideStartTime) slideStartTime = timestamp;
+        const progress = timestamp - slideStartTime;
+        const percent = Math.min((progress / SLIDE_DURATION) * 100, 100);
+        document.getElementById('progressBar').style.width = percent + '%';
         
-        // Se voltou para o slide 0, rotaciona a notícia
-        if (activeSlideIndex === 0) {
-          updateNewsDisplay();
+        if (progress < SLIDE_DURATION) {
+          slideAnimationId = window.requestAnimationFrame(step);
+        } else {
+          goToNextSlide();
+          slideStartTime = null;
+          slideAnimationId = window.requestAnimationFrame(step);
         }
-        
-        document.getElementById(`slide${activeSlideIndex}`).classList.add('active');
       }
-
-      // Requisita o próximo frame
-      requestAnimationFrame(syncSlidesBySystemTime);
+      slideAnimationId = window.requestAnimationFrame(step);
     }
 
-    // Inicializador seguro de armazenamento de dados locais (híbrido)
-    function safeSetCache(key, data) {
-      try {
-        localStorage.setItem(key, JSON.stringify(data));
-      } catch (e) {
-        try {
-          sessionStorage.setItem(key, JSON.stringify(data));
-        } catch(err){}
-      }
+    function goToNextSlide() {
+      document.getElementById(`slide${currentSlide}`).classList.remove('active');
+      currentSlide = (currentSlide + 1) % totalSlides;
+      if (currentSlide === 0) updateNewsDisplay();
+      document.getElementById(`slide${currentSlide}`).classList.add('active');
     }
 
-    function safeGetCache(key) {
-      try {
-        const d = localStorage.getItem(key) || sessionStorage.getItem(key);
-        return d ? JSON.parse(d) : null;
-      } catch(e) {
-        return null;
+    // Função que força o reset do painel para o estado inicial
+    function resetPanelToStart() {
+      // Para qualquer animação em andamento
+      if (slideAnimationId) cancelAnimationFrame(slideAnimationId);
+      
+      // Remove classe ativa de todos os slides e força o slide 0
+      for (let i = 0; i < totalSlides; i++) {
+        document.getElementById(`slide${i}`).classList.remove('active');
       }
+      currentSlide = 0;
+      document.getElementById('slide0').classList.add('active');
+      document.getElementById('progressBar').style.width = '0%';
+      
+      // Recomeça a rotação limpa
+      startSlideRotation();
     }
 
-    // CLIMA
+    // Detecta quando o player volta a exibir a página (Resume)
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        resetPanelToStart();
+      }
+    });
+
     async function fetchWeather() {
       try {
         const API_KEY = 'b0b0fbf4fb3bac7908252d23111a524d';
@@ -350,11 +349,12 @@
     }
     fetchWeather();
 
-    // NOTÍCIAS (Carregamento Ultrarápido com Cache)
+    // Busca notícias com mecanismo de cache instantâneo local (localStorage)
     async function fetchNews() {
-      const cachedNews = safeGetCache('kloud_cached_news');
+      // Carrega do cache instantaneamente se existir
+      const cachedNews = localStorage.getItem('kloud_cached_news');
       if (cachedNews) {
-        allNews = cachedNews;
+        allNews = JSON.parse(cachedNews);
         updateNewsDisplay();
       }
 
@@ -363,7 +363,7 @@
         const d = await r.json();
         if (d.status === 'ok' && d.items && d.items.length > 0) { 
           allNews = d.items; 
-          safeSetCache('kloud_cached_news', d.items);
+          localStorage.setItem('kloud_cached_news', JSON.stringify(d.items));
           updateNewsDisplay(); 
         }
       } catch (e) {}
@@ -389,7 +389,6 @@
     }
     fetchNews();
 
-    // LOTERIAS
     async function fetchLotto() {
       const container = document.getElementById('lottoContent');
       try {
@@ -423,7 +422,6 @@
     }
     fetchLotto();
 
-    // TRADUTOR
     async function translateText(text) {
       try {
         const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q=${encodeURIComponent(text)}`;
@@ -433,11 +431,14 @@
       } catch (e) { return text; }
     }
 
-    // HORÓSCOPO (Carregamento Ultrarápido com Cache)
+    // Busca horóscopo com mecanismo de cache instantâneo local (localStorage)
     async function fetchHoroscope() {
-      const cachedHoro = safeGetCache('kloud_cached_horo');
+      const grid = document.getElementById('horoGrid');
+      
+      // Carrega do cache instantaneamente se existir
+      const cachedHoro = localStorage.getItem('kloud_cached_horo');
       if (cachedHoro) {
-        renderHoroscope(cachedHoro);
+        renderHoroscope(JSON.parse(cachedHoro));
       }
 
       const promises = ZODIAC_DATA.map(async (signoObj) => {
@@ -461,7 +462,7 @@
       });
       
       const results = await Promise.all(promises);
-      safeSetCache('kloud_cached_horo', results);
+      localStorage.setItem('kloud_cached_horo', JSON.stringify(results));
       renderHoroscope(results);
     }
 
@@ -478,8 +479,8 @@
     fetchHoroscope();
     setInterval(fetchHoroscope, 43200000); // 12 horas
 
-    // Ativa o alinhamento de tempo instantâneo
-    syncSlidesBySystemTime();
+    // Inicialização segura do ciclo de slides
+    startSlideRotation();
   </script>
 </body>
 </html>
